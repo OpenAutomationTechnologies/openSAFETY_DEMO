@@ -134,7 +134,7 @@ architecture rtl of toplevel is
             -- BENCHMARK PCP
             pcp_0_benchmark_pio_export              : out   std_logic_vector(7 downto 0);
             -- SYNC IRQ
-            openmac_0_mactimerout_export            : out   std_logic_vector(1 downto 0)
+            openmac_0_mactimerout_irq               : out   std_logic
         );
     end component cnPcpSpi;
 
@@ -156,7 +156,7 @@ architecture rtl of toplevel is
     signal pllLocked        : std_logic;
     signal sramAddr         : std_logic_vector(SRAM_ADDR'high downto 0);
     signal plk_status_error : std_logic_vector(1 downto 0);
-    signal timer_out        : std_logic_vector(1 downto 0);
+    signal timer_out        : std_logic;
 begin
     SRAM_ADDR   <= sramAddr(SRAM_ADDR'range);
 
@@ -165,7 +165,7 @@ begin
 
     LEDG        <= "000000" & plk_status_error;
 
-    SYNC_IRQ    <= timer_out(1);
+    SYNC_IRQ    <= timer_out;
 
     inst: cnPcpSpi
         port map (
@@ -208,7 +208,7 @@ begin
             -- BENCHMARK PCP
             pcp_0_benchmark_pio_export                      => BENCHMARK_PCP,
             -- SYNC IRQ
-            openmac_0_mactimerout_export                    => timer_out
+            openmac_0_mactimerout_irq                    => timer_out
         );
 
     -- Pll Instance

@@ -71,7 +71,7 @@ triple buffers.
 // global function prototypes
 //------------------------------------------------------------------------------
 
-extern tOplkError cc_obdAccessCb(tObdCbParam MEM* pParam_p);
+extern tOplkError cc_obdAccessCb(tObdAlConHdl MEM* pParam_p);
 
 //============================================================================//
 //            P R I V A T E   D E F I N I T I O N S                           //
@@ -242,7 +242,7 @@ channel objects the local object list needs to be forwarded.
 \ingroup module_main
 */
 //------------------------------------------------------------------------------
-tOplkError cc_obdAccessCb(tObdCbParam MEM* pParam_p)
+tOplkError cc_obdAccessCb(tObdAlConHdl MEM* pParam_p)
 {
     tOplkError oplkret = kErrorOk;
     tConfChanObject  object;
@@ -256,46 +256,19 @@ tOplkError cc_obdAccessCb(tObdCbParam MEM* pParam_p)
         goto Exit;
     }
 
-    switch(pParam_p->obdEvent)
+    // Make object size global
+     occInstance_l.objSize_m = pParam_p->totalPendSize;
+
+    object.objIdx_m = pParam_p->index;
+    object.objSubIdx_m = pParam_p->subIndex;
+    object.objSize_m = (UINT16)occInstance_l.objSize_m;
+    PSI_MEMCPY(&object.objPayloadLow_m, pParam_p->pSrcData, occInstance_l.objSize_m);
+
+    if(ccobject_writeObject(&object) == FALSE)
     {
-        case kObdEvInitWrite:
-        {
-            objSize = *(UINT16*)pParam_p->pArg;
-
-            // Check object size (pArg is size of object!)
-            if(objSize > sizeof(UINT64))
-            {
-                oplkret = kErrorObdValueLengthError;
-            }
-            else
-            {
-                // Make object size global
-                occInstance_l.objSize_m = objSize;
-            }
-
-            break;
-        }
-
-        case kObdEvPostWrite:
-        {
-            object.objIdx_m = pParam_p->index;
-            object.objSubIdx_m = pParam_p->subIndex;
-            object.objSize_m = (UINT16)occInstance_l.objSize_m;
-            PSI_MEMCPY(&object.objPayloadLow_m, pParam_p->pArg, occInstance_l.objSize_m);
-
-            if(ccobject_writeObject(&object) == FALSE)
-            {
-                oplkret = kErrorObdAccessViolation;
-            }
-
-            break;
-        }
-        default:
-        {
-            // no action on other events
-            break;
-        }
+        oplkret = kErrorObdAccessViolation;
     }
+
 
 Exit:
     return oplkret;

@@ -1,16 +1,14 @@
 /**
 ********************************************************************************
-\file   edrv2veth.h
+\file   socketwrapper-int.h
 
-\brief  IP stack to Ethernet driver wrapper
+\brief  Internal definitions for socketwrapper
 
-This module converts the driver interface of the IP stack to the interface
-provided from the Virtual Ethernet driver NoOs.
-
+The file contains internal definitions for the socketwrapper.
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
-Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+Copyright (c) 2016, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,36 +34,36 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ------------------------------------------------------------------------------*/
 
-#ifndef _INC_edrv2veth_H_
-#define _INC_edrv2veth_H_
+#ifndef _INC_socketwrapper_int_H_
+#define _INC_socketwrapper_int_H_
 
 //------------------------------------------------------------------------------
 // includes
 //------------------------------------------------------------------------------
-
+#include <oplk/oplk.h>
 #include <ip.h>
 
-//---------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // const defines
-//---------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
-
-//---------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // typedef
-//---------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
-
-//---------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // function prototypes
-//---------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
-tOplkError edrv2veth_init (eth_addr* pEthMac);
-void edrv2veth_exit (void);
-void edrv2veth_changeAddress( UINT32 ipAddr_p, UINT32 subNetMask_p, UINT16 mtu_p );
-void edrv2veth_changeGateway( UINT32 defGateway_p );
-void edrv2veth_setNmtState(tNmtState nmtState_p);
-tOplkError edrv2veth_receiveHandler(UINT8* pFrame_p, UINT32 frameSize_p);
-tOplkError edrv2veth_process(void);
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
+tOplkError      socketwrapper_setIpStackHandle(IP_STACK_H pHandle_p);
 
-#endif /* _INC_edrv2veth_H_ */
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* _INC_socketwrapper_int_H_ */

@@ -52,6 +52,7 @@ and forwards the data to the target in the LOGStub.
 #include <psi/logbook.h>
 
 #include <psi/status.h>
+#include <libpsicommon/ami.h>
 
 //============================================================================//
 //            G L O B A L   D E F I N I T I O N S                             //

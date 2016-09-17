@@ -45,7 +45,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifdef PSI_BUILD_PCP
   #include <pcptarget/target.h>
-  #include <oplk/ami.h>
+  #include <common/ami.h>
 #else
   #include <apptarget/target.h>
   #include <libpsicommon/ami.h>
