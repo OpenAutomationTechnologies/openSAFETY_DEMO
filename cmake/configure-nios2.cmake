@@ -31,6 +31,12 @@
 MESSAGE ( STATUS "Generating build files for platform Altera/Nios2 ..." )
 
 ################################################################################
+# Setup information for used HW
+SET(TARGET_HW altera)
+SET(BOARD_NAME terasic-de2-115)
+SET(EXAMPLE_NAME cn-single-gpio)
+
+################################################################################
 # Handle target specific includes
 SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/nios2" ${CMAKE_MODULE_PATH})
 

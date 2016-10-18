@@ -40,6 +40,8 @@ SET(IP_BASE_DIR ${CMAKE_SOURCE_DIR}/blackchannel/POWERLINK/stacks/ip)
 SET(OPLK_STACK_DIR ${OPLK_BASE_DIR}/stack)
 SET(OPLK_APPS_DIR ${OPLK_BASE_DIR}/apps)
 SET(OPLK_HW_DIR ${OPLK_BASE_DIR}/hardware)
+SET(OPLK_BOARD_DIR ${OPLK_HW_DIR}/boards/${BOARD_NAME})
+SET(OPLK_BOARD_EXAMPLE_DIR ${OPLK_BOARD_DIR}/${EXAMPLE_NAME})
 SET(OPLK_OMETHLIB_DIR ${OPLK_HW_DIR}/drivers/openmac)
 
 ########################################################################
@@ -144,6 +146,7 @@ SET(OPLK_INCS
     ${DEMO_CONFIG_DIR}/pcp
     ${OBJDICT_DIR}/generic
     ${CONTRIB_SOURCE_DIR}/socketwrapper
+    ${OPLK_BOARD_EXAMPLE_DIR}/include
    )
 
 SET(OMETHLIB_INCS

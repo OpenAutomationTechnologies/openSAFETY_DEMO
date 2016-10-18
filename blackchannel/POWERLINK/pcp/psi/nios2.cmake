@@ -57,7 +57,7 @@ SET(ALT_TARGET_SRCS
     ${ARCH_SOURCE_DIR}/altera-nios2/openmac-nios2.c
     ${ARCH_SOURCE_DIR}/altera-nios2/lock-localnoos.c
     ${ARCH_SOURCE_DIR}/altera-nios2/target-mutex.c
-    ${OPLK_HW_DIR}/boards/terasic-de2-115/common/drivers/openmac/omethlib_phycfg.c
+    ${OPLK_BOARD_DIR}/common/drivers/openmac/omethlib_phycfg.c
    )
 
 # Create Altera source list
