@@ -14,6 +14,7 @@ triple buffers.
 * License Agreement
 *
 * Copyright 2014 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2016, Kalycito Infotech Private Ltd
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -71,7 +72,7 @@ triple buffers.
 // global function prototypes
 //------------------------------------------------------------------------------
 
-extern tOplkError cc_obdAccessCb(tObdCbParam MEM* pParam_p);
+extern tOplkError cc_obdAccessCb(tObdAlConHdl* pParam_p);
 
 //============================================================================//
 //            P R I V A T E   D E F I N I T I O N S                           //
@@ -234,19 +235,18 @@ Exit:
 In case of an access to the local obdict.h of objects which are configuration
 channel objects the local object list needs to be forwarded.
 
-\param[in] pParam_p               Object access parameter
+\param[in] pParam_p       Object access parameter.
 
-\return  tOplkError
-\retval  kErrorOk        On success
+\return    tOplkError
+\retval    kErrorOk       On success.
 
-\ingroup module_main
+\ingroup   module_main
 */
 //------------------------------------------------------------------------------
-tOplkError cc_obdAccessCb(tObdCbParam MEM* pParam_p)
+tOplkError cc_obdAccessCb(tObdAlConHdl* pParam_p)
 {
-    tOplkError oplkret = kErrorOk;
+    tOplkError       oplkret = kErrorOk;
     tConfChanObject  object;
-    UINT16 objSize;
 
     PSI_MEMSET(&object, 0, sizeof(tConfChanObject));
 
@@ -256,52 +256,22 @@ tOplkError cc_obdAccessCb(tObdCbParam MEM* pParam_p)
         goto Exit;
     }
 
-    switch(pParam_p->obdEvent)
+    // Make object size global
+    occInstance_l.objSize_m = pParam_p->totalPendSize;
+
+    object.objIdx_m = pParam_p->index;
+    object.objSubIdx_m = pParam_p->subIndex;
+    object.objSize_m = (UINT16)occInstance_l.objSize_m;
+    PSI_MEMCPY(&object.objPayloadLow_m, pParam_p->pSrcData, occInstance_l.objSize_m);
+
+    if(ccobject_writeObject(&object) == FALSE)
     {
-        case kObdEvInitWrite:
-        {
-            objSize = *(UINT16*)pParam_p->pArg;
-
-            // Check object size (pArg is size of object!)
-            if(objSize > sizeof(UINT64))
-            {
-                oplkret = kErrorObdValueLengthError;
-            }
-            else
-            {
-                // Make object size global
-                occInstance_l.objSize_m = objSize;
-            }
-
-            break;
-        }
-
-        case kObdEvPostWrite:
-        {
-            object.objIdx_m = pParam_p->index;
-            object.objSubIdx_m = pParam_p->subIndex;
-            object.objSize_m = (UINT16)occInstance_l.objSize_m;
-            PSI_MEMCPY(&object.objPayloadLow_m, pParam_p->pArg, occInstance_l.objSize_m);
-
-            if(ccobject_writeObject(&object) == FALSE)
-            {
-                oplkret = kErrorObdAccessViolation;
-            }
-
-            break;
-        }
-        default:
-        {
-            // no action on other events
-            break;
-        }
+        oplkret = kErrorObdAccessViolation;
     }
 
 Exit:
     return oplkret;
-
 }
-
 
 
 //============================================================================//
@@ -395,5 +365,3 @@ Exit:
 }
 
 /// \}
-
-

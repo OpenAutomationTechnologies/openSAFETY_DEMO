@@ -3,6 +3,7 @@
 # CMake file of slim interface on pcp (nios2 target) for PSI
 #
 # Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+# Copyright (c) 2016, Kalycito Infotech Private Ltd
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -53,9 +54,10 @@ SET(ALT_FLASH_OVERRIDE ${ALT_MISC_DIR}/scripts/nios2-flash-override.txt)
 
 SET(ALT_TARGET_SRCS
     ${PROJECT_SOURCE_DIR}/target/altera/target.c
-    ${ARCH_SOURCE_DIR}/altera_nios2/target-nios2.c
-    ${ARCH_SOURCE_DIR}/altera_nios2/openmac-nios2.c
-    ${ARCH_SOURCE_DIR}/altera_nios2/lock-localnoos.c
+    ${ARCH_SOURCE_DIR}/altera-nios2/target-nios2.c
+    ${ARCH_SOURCE_DIR}/altera-nios2/openmac-nios2.c
+    ${ARCH_SOURCE_DIR}/altera-nios2/lock-localnoos.c
+    ${ARCH_SOURCE_DIR}/altera-nios2/target-mutex.c
     ${OPLK_HW_DIR}/boards/terasic-de2-115/common/drivers/openmac/omethlib_phycfg.c
    )
 
@@ -76,7 +78,7 @@ SET(ALT_PSI_INCS
     ${ALT_PCP_BSP_DIR}
     ${ALT_PCP_BSP_DIR}/HAL/inc
     ${ALT_PCP_BSP_DIR}/drivers/inc
-    ${ARCH_SOURCE_DIR}/altera_nios2
+    ${ARCH_SOURCE_DIR}/altera-nios2
     ${PROJECT_SOURCE_DIR}/target/altera/include
    )
 

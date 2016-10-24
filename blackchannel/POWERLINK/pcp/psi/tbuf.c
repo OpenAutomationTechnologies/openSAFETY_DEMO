@@ -48,6 +48,7 @@ It is instantiated for every triple buffer allocated.
 //------------------------------------------------------------------------------
 #include <psi/internal/tbuf.h>
 #include <psi/tbuf.h>
+#include <libpsicommon/ami.h>
 
 //============================================================================//
 //            G L O B A L   D E F I N I T I O N S                             //

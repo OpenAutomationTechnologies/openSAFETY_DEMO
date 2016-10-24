@@ -12,7 +12,7 @@ This file contains a demo CN application event handler.
 /*------------------------------------------------------------------------------
 Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 Copyright (c) 2013, SYSTEC electronic GmbH
-Copyright (c) 2013, Kalycito Infotech Private Ltd.All rights reserved.
+Copyright (c) 2016, Kalycito Infotech Private Ltd
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -88,9 +88,13 @@ static tOplkError processStateChangeEvent(tOplkApiEventType eventType_p,
                                           tOplkApiEventArg* pEventArg_p,
                                           void* pUserArg_p);
 
-static tOplkError processErrorWarningEvent(tOplkApiEventType EventType_p,
+static tOplkError processErrorWarningEvent(tOplkApiEventType eventType_p,
                                            tOplkApiEventArg* pEventArg_p,
                                            void* pUserArg_p);
+
+static tOplkError processUserObdAccessEvent(tOplkApiEventType eventType_p,
+                                            tOplkApiEventArg* pEventArg_p,
+                                            void* pUserArg_p);
 
 //============================================================================//
 //            P U B L I C   F U N C T I O N S                                 //
@@ -119,7 +123,7 @@ void initEvents (tEventCb pfnEventCb_p)
 
 The function implements the applications stack event handler.
 
-\param  EventType_p         Type of event
+\param  eventType_p         Type of event
 \param  pEventArg_p         Pointer to union which describes the event in detail
 \param  pUserArg_p          User specific argument
 
@@ -128,7 +132,7 @@ The function implements the applications stack event handler.
 \ingroup module_demo_cn_embedded
 */
 //------------------------------------------------------------------------------
-tOplkError processEvents(tOplkApiEventType EventType_p,
+tOplkError processEvents(tOplkApiEventType eventType_p,
                          tOplkApiEventArg* pEventArg_p,
                          void* pUserArg_p)
 {
@@ -136,32 +140,19 @@ tOplkError processEvents(tOplkApiEventType EventType_p,
 
     UNUSED_PARAMETER(pUserArg_p);
 
-    switch (EventType_p)
+    switch (eventType_p)
     {
         case kOplkApiEventNmtStateChange:
-            ret = processStateChangeEvent(EventType_p, pEventArg_p, pUserArg_p);
+            ret = processStateChangeEvent(eventType_p, pEventArg_p, pUserArg_p);
             break;
 
         case kOplkApiEventCriticalError:
         case kOplkApiEventWarning:
-            ret = processErrorWarningEvent(EventType_p, pEventArg_p, pUserArg_p);
+            ret = processErrorWarningEvent(eventType_p, pEventArg_p, pUserArg_p);
             break;
 
-        case kOplkApiEventLed:
-            /* POWERLINK S/E LED needs to be changed */
-            switch(pEventArg_p->ledEvent.ledType)
-            {
-                case kLedTypeStatus:
-                    target_setStatusLed(pEventArg_p->ledEvent.fOn);
-                    break;
-
-                case kLedTypeError:
-                    target_setErrorLed(pEventArg_p->ledEvent.fOn);
-                    break;
-
-                default:
-                    break;
-            }
+        case kOplkApiEventUserObdAccess:
+            ret = processUserObdAccessEvent(eventType_p, pEventArg_p, pUserArg_p);
             break;
 
         default:
@@ -170,7 +161,7 @@ tOplkError processEvents(tOplkApiEventType EventType_p,
 
     // call user event call back
     if((ret == kErrorOk) && (pfnEventCb_l != NULL))
-        ret = pfnEventCb_l(EventType_p, pEventArg_p, pUserArg_p);
+        ret = pfnEventCb_l(eventType_p, pEventArg_p, pUserArg_p);
 
     return ret;
 }
@@ -187,7 +178,7 @@ tOplkError processEvents(tOplkApiEventType EventType_p,
 
 The function processes state change events.
 
-\param  EventType_p         Type of event
+\param  eventType_p         Type of event
 \param  pEventArg_p         Pointer to union which describes the event in detail
 \param  pUserArg_p          User specific argument
 
@@ -217,14 +208,14 @@ static tOplkError processStateChangeEvent(tOplkApiEventType eventType_p,
 
 The function processes error and warning events.
 
-\param  EventType_p         Type of event
+\param  eventType_p         Type of event
 \param  pEventArg_p         Pointer to union which describes the event in detail
 \param  pUserArg_p          User specific argument
 
 \return The function returns a tOplkError error code.
 */
 //------------------------------------------------------------------------------
-static tOplkError processErrorWarningEvent(tOplkApiEventType EventType_p,
+static tOplkError processErrorWarningEvent(tOplkApiEventType eventType_p,
                                            tOplkApiEventArg* pEventArg_p,
                                            void* pUserArg_p)
 {
@@ -233,7 +224,7 @@ static tOplkError processErrorWarningEvent(tOplkApiEventType EventType_p,
 
     tEventError*            pInternalError = &pEventArg_p->internalError;
 
-    UNUSED_PARAMETER(EventType_p);
+    UNUSED_PARAMETER(eventType_p);
     UNUSED_PARAMETER(pUserArg_p);
 
     PRINTF("Err/Warn: Source = %s (%02X) EplError = %s (0x%03X)\n",
@@ -276,6 +267,47 @@ static tOplkError processErrorWarningEvent(tOplkApiEventType EventType_p,
             break;
     }
     return kErrorOk;
+}
+
+//------------------------------------------------------------------------------
+/**
+\brief  Process user specific object access Events
+
+The function processes user specific non indexed Object access events.
+
+\param  eventType_p         Type of event
+\param  pEventArg_p         Pointer to union which describes the event in detail
+\param  pUserArg_p          User specific argument
+
+\return The function returns a tOplkError error code.
+*/
+//------------------------------------------------------------------------------
+static tOplkError processUserObdAccessEvent(tOplkApiEventType eventType_p,
+                                            tOplkApiEventArg* pEventArg_p,
+                                            void* pUserArg_p)
+{
+    tObdAlConHdl*            pParam = pEventArg_p->userObdAccess.pUserObdAccHdl;
+    tOplkError               oplkret = kErrorOk;
+
+    UNUSED_PARAMETER(eventType_p);
+    UNUSED_PARAMETER(pUserArg_p);
+
+    switch(pParam->index)
+    {
+        #if(((PSI_MODULE_INTEGRATION) & (PSI_MODULE_SSDO)) != 0)
+        case 0x2000:
+            oplkret = cc_obdAccessCb(pParam);
+            break;
+
+        case 0x2130:
+            oplkret = rssdo_obdAccessCb(pParam);
+            break;
+
+        default:
+            break;
+    #endif
+    }
+    return oplkret;
 }
 
 ///\}

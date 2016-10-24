@@ -68,22 +68,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 DLLEXPORT void ami_setUint16Be(void* pAddr_p, UINT16 uint16Val_p);
 DLLEXPORT void ami_setUint16Le(void* pAddr_p, UINT16 uint16Val_p);
 
-DLLEXPORT UINT16 ami_getUint16Be(void* pAddr_p);
-DLLEXPORT UINT16 ami_getUint16Le(void* pAddr_p);
+DLLEXPORT UINT16 ami_getUint16Be(const void* pAddr_p);
+DLLEXPORT UINT16 ami_getUint16Le(const void* pAddr_p);
 
 /* Conversion functions for datatype DWORD */
 DLLEXPORT void ami_setUint32Be(void* pAddr_p, UINT32 uint32Val_p);
 DLLEXPORT void ami_setUint32Le(void* pAddr_p, UINT32 uint32Val_p);
 
-DLLEXPORT UINT32 ami_getUint32Be(void* pAddr_p);
-DLLEXPORT UINT32 ami_getUint32Le(void* pAddr_p);
+DLLEXPORT UINT32 ami_getUint32Be(const void* pAddr_p);
+DLLEXPORT UINT32 ami_getUint32Le(const void* pAddr_p);
 
 /* Conversion functions for datatype QWORD */
 DLLEXPORT void ami_setUint64Be(void* pAddr_p, UINT64 uint64Val_p);
 DLLEXPORT void ami_setUint64Le(void* pAddr_p, UINT64 uint64Val_p);
 
-DLLEXPORT UINT64 ami_getUint64Be(void* pAddr_p);
-DLLEXPORT UINT64 ami_getUint64Le(void* pAddr_p);
+DLLEXPORT UINT64 ami_getUint64Be(const void* pAddr_p);
+DLLEXPORT UINT64 ami_getUint64Le(const void* pAddr_p);
 
 #ifdef __cplusplus
     }

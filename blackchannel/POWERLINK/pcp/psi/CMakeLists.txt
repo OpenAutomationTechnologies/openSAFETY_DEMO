@@ -3,6 +3,7 @@
 # CMake file of slim interface on pcp for PSI
 #
 # Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+# Copyright (c) 2016, Kalycito Infotech Private Ltd
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -34,6 +35,7 @@ PROJECT( pcppsi C )
 
 ########################################################################
 # Set paths
+SET(DEMO_BOARD_DIR ${CMAKE_SOURCE_DIR}/blackchannel/POWERLINK/fpga/boards/altera/terasic-de2-115)
 SET(OPLK_BASE_DIR ${CMAKE_SOURCE_DIR}/blackchannel/POWERLINK/stacks/openPOWERLINK)
 SET(IP_BASE_DIR ${CMAKE_SOURCE_DIR}/blackchannel/POWERLINK/stacks/ip)
 
@@ -41,7 +43,8 @@ SET(OPLK_STACK_DIR ${OPLK_BASE_DIR}/stack)
 SET(OPLK_APPS_DIR ${OPLK_BASE_DIR}/apps)
 SET(OPLK_HW_DIR ${OPLK_BASE_DIR}/hardware)
 SET(OPLK_OMETHLIB_DIR ${OPLK_HW_DIR}/drivers/openmac)
-
+SET(APP_COMMON_SOURCE_DIR ${OPLK_BASE_DIR}/apps/common/src)
+SET(OBJDICT_DIR ${OPLK_BASE_DIR}/apps/common/objdicts/CiA401_CN)
 ########################################################################
 # Set includes
 INCLUDE(${OPLK_STACK_DIR}/cmake/directories.cmake)
@@ -74,6 +77,7 @@ SET(IP_SRCS
     ${IP_BASE_DIR}/ip_dhcp.c
     ${IP_BASE_DIR}/edrv2veth.c
     ${IP_BASE_DIR}/hton.c
+    ${IP_BASE_DIR}/socketwrapper.c
    )
 
 SET(OPLK_SRCS
@@ -94,6 +98,7 @@ SET(OPLK_SRCS
      ${USER_TIMER_GENERIC_SOURCES}
      ${VETH_USER_NOOS_SOURCES}
      ${COMMON_SOURCES}
+     ${APP_COMMON_SOURCE_DIR}/obdcreate/obdcreate.c
      ${COMMON_CAL_DIRECT_SOURCES}
      ${CIRCBUF_NOOS_SOURCES}
      ${COMMON_NOOS_SOURCES}
@@ -101,6 +106,8 @@ SET(OPLK_SRCS
      ${LIB_KERNEL_SOURCES}
      ${LIB_USER_SOURCES}
      ${LIB_COMMON_SOURCES}
+     ${SDO_SOCKETWRAPPER_SOURCES}
+     ${MEMMAP_NOOSLOCAL_SOURCES}
    )
 
 SET(OMETHLIB_SRCS
@@ -131,20 +138,32 @@ SET(PSI_INCS
     ${psicommonpcp_SOURCE_DIR}/include
     ${DEMO_CONFIG_DIR}/tbuf/include
     ${IP_BASE_DIR}
-   )
+    ${APP_COMMON_DIR}/include/common
+    ${APP_COMMON_SOURCE_DIR}
+    )
 
 SET(OPLK_INCS
     ${STACK_INCLUDE_DIR}
     ${STACK_SOURCE_DIR}
     ${CONTRIB_SOURCE_DIR}
     ${DEMO_CONFIG_DIR}/pcp
-    ${OBJDICT_DIR}/generic
+    #${OBJDICT_DIR}/${OBJDICT}
+    ${CONTRIB_SOURCE_DIR}/socketwrapper
+    ${DEMO_BOARD_DIR}/include
    )
 
 SET(OMETHLIB_INCS
     ${OPLK_OMETHLIB_DIR}/include
     ${OPLK_OMETHLIB_DIR}/src
    )
+
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DCONFIG_DLL_PRES_CHAINING_CN=TRUE -DNMT_MAX_NODE_ID=254 -DCONFIG_INCLUDE_PDO -DCONFIG_INCLUDE_SDO_ASND -DCONFIG_INCLUDE_MASND")
+ADD_DEFINITIONS(-DCONFIG_DLL_PRES_CHAINING_CN)
+ADD_DEFINITIONS(-DNMT_MAX_NODE_ID=254)
+ADD_DEFINITIONS(-DCONFIG_INCLUDE_PDO)
+ADD_DEFINITIONS(-DCONFIG_INCLUDE_SDO_ASND)
+ADD_DEFINITIONS(-DCONFIG_INCLUDE_MASND)
+ADD_DEFINITIONS(-DCONFIG_INCLUDE_SDO_UDP)
 
 IF((CMAKE_SYSTEM_NAME STREQUAL "Generic") AND (CMAKE_SYSTEM_PROCESSOR STREQUAL "nios2"))
     INCLUDE(nios2.cmake)

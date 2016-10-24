@@ -11,6 +11,7 @@ provided from the Virtual Ethernet driver NoOs.
 
 /*------------------------------------------------------------------------------
 Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+Copyright (c) 2016, Kalycito Infotech Private Ltd
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -59,11 +60,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // function prototypes
 //---------------------------------------------------------------------------
 
-tOplkError edrv2veth_init (eth_addr* pEthMac);
-void edrv2veth_exit (void);
-tOplkError edrv2veth_setIpHandler(IP_STACK_H pIpHandler);
-ULONG edrv2veth_transmit( void *hEth, ip_packet_typ *pPacket,
-        IP_BUF_FREE_FCT *pFctFree);
+tOplkError edrv2veth_init(eth_addr* pEthMac);
+void       edrv2veth_exit(void);
+void       edrv2veth_changeAddress(UINT32 ipAddr_p, UINT32 subNetMask_p, UINT16 mtu_p);
+void       edrv2veth_changeGateway(UINT32 defGateway_p);
+void       edrv2veth_changeGateway(UINT32 defGateway_p);
+void       edrv2veth_setNmtState(tNmtState nmtState_p);
+tOplkError edrv2veth_receiveHandler(UINT8* pFrame_p, UINT32 frameSize_p);
+tOplkError edrv2veth_process(void);
 
 
 #endif /* _INC_edrv2veth_H_ */

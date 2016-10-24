@@ -16,6 +16,7 @@ to the application.
 * License Agreement
 *
 * Copyright 2014 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2016, Kalycito Infotech Private Ltd
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -72,7 +73,7 @@ to the application.
 // global function prototypes
 //------------------------------------------------------------------------------
 
-extern tOplkError rssdo_obdAccessCb(tObdCbParam* pParam_p);
+extern tOplkError rssdo_obdAccessCb(tObdAlConHdl* pParam_p);
 
 //============================================================================//
 //            P R I V A T E   D E F I N I T I O N S                           //
@@ -345,7 +346,7 @@ channel objects the payload needs to be forwarded to the triple buffer.
 \ingroup module_ssdo
 */
 //------------------------------------------------------------------------------
-tOplkError rssdo_obdAccessCb(tObdCbParam* pParam_p)
+tOplkError rssdo_obdAccessCb(tObdAlConHdl* pParam_p)
 {
     tPsiStatus ret = kPsiSuccessful;
     tOplkError oplkret = kErrorOk;
@@ -372,47 +373,29 @@ tOplkError rssdo_obdAccessCb(tObdCbParam* pParam_p)
         goto Exit;
     }
 
-    // Check action
-    switch(pParam_p->obdEvent)
+    if(pParam_p->totalPendSize > SSDO_STUB_DATA_DOM_SIZE)
     {
-        case kObdEvWrStringDomain:
-        {
-            if(*(UINT16*)pParam_p->pArg > SSDO_STUB_DATA_DOM_SIZE)
-            {
-                oplkret = kErrorObdValueLengthError;
-            }
-            else
-            {
-                // Save object size for later use
-                pInstance->objSize_m = *(UINT16*)pParam_p->pArg;
-            }
-
-            break;
-        }
-        case kObdEvPostWrite:
-        {
-            // Post frame to receive FIFO
-            ret = fifo_insertElement(pInstance->pRxFifoInst_m,
-                    (tFifoElement) pParam_p->pArg,
-                    pInstance->objSize_m);
-            if(ret != kPsiSuccessful)
-            {
-                oplkret = kErrorObdAccessViolation;
-            }
-            else
-            {
-                // Start timeout timer for this frame!
-                timeout_startTimer(pInstance->pTimeoutInst_m);
-            }
-            break;
-        }
-        default:
-        {
-            // do nothing here!
-            break;
-        }
+        return kErrorObdValueLengthError;
+    }
+    else
+    {
+        // Save object size for later use
+        pInstance->objSize_m = pParam_p->totalPendSize;
     }
 
+    // Post frame to receive FIFO
+    ret = fifo_insertElement(pInstance->pRxFifoInst_m,
+                             (tFifoElement) pParam_p->pSrcData,
+                             pInstance->objSize_m);
+    if(ret != kPsiSuccessful)
+    {
+        oplkret = kErrorObdAccessViolation;
+    }
+    else
+    {
+        // Start timeout timer for this frame!
+        timeout_startTimer(pInstance->pTimeoutInst_m);
+    }
 
 Exit:
     return oplkret;

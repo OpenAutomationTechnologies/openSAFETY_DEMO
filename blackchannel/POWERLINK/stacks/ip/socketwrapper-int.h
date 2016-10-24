@@ -1,17 +1,17 @@
 /**
 ********************************************************************************
-\file   event.h
+\file   socketwrapper-int.h
 
-\brief  Definitions for CN events
+\brief  Internal definitions for socketwrapper
 
-The file contains the definitions for the CN digital I/O events.
+The file contains internal definitions for the socketwrapper.
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
-Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
-Copyright (c) 2013, SYSTEC electronic GmbH
-Copyright (c) 2013, Kalycito Infotech Private Ltd.All rights reserved.
-All rights reserved.
+* License Agreement
+* Copyright (c) 2016, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+* Copyright (c) 2016, Kalycito Infotech Pvt. Ltd
+* All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -36,12 +36,14 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ------------------------------------------------------------------------------*/
 
-#ifndef _INC_demo_event_H_
-#define _INC_demo_event_H_
+#ifndef _INC_socketwrapper_int_H_
+#define _INC_socketwrapper_int_H_
 
 //------------------------------------------------------------------------------
 // includes
 //------------------------------------------------------------------------------
+#include <oplk/oplk.h>
+#include <ip.h>
 
 //------------------------------------------------------------------------------
 // const defines
@@ -50,22 +52,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //------------------------------------------------------------------------------
 // typedef
 //------------------------------------------------------------------------------
-typedef tOplkError (*tEventCb)(tOplkApiEventType EventType_p, tOplkApiEventArg* pEventArg_p, void* pUserArg_p);
 
 //------------------------------------------------------------------------------
 // function prototypes
 //------------------------------------------------------------------------------
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-void       initEvents (tEventCb pfnEventCb_p);
-tOplkError processEvents(tOplkApiEventType EventType_p,
-                         tOplkApiEventArg* pEventArg_p, void* pUserArg_p);
+tOplkError      socketwrapper_setIpStackHandle(IP_STACK_H pHandle_p);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _INC_demo_event_H_ */
+#endif /* _INC_socketwrapper_int_H_ */

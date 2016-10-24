@@ -10,6 +10,7 @@ Global header file for the slim interface project
 
 /*------------------------------------------------------------------------------
 Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+Copyright (c) 2016, Kalycito Infotech Private Ltd
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -45,7 +46,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifdef PSI_BUILD_PCP
   #include <pcptarget/target.h>
-  #include <oplk/ami.h>
+  #include <libpsicommon/ami.h>
 #else
   #include <apptarget/target.h>
   #include <libpsicommon/ami.h>
@@ -75,6 +76,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef UNUSED_PARAMETER
   #define UNUSED_PARAMETER(par)   (void)par
 #endif
+
+#define max(a, b)           (((a) > (b)) ? (a) : (b))
 
 /*----------------------------------------------------------------------------*/
 /* Boolean values                                                             */

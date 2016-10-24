@@ -547,7 +547,7 @@ static tPsiStatus sendToDestTarget(tTssdoInstance pInstance_p,
             ret = tssdo_consTxTransferFinished(pInstance_p);
             break;
         }
-        case kErrorSdoUdpArpInProgress:
+      /*  case kErrorSdoUdpArpInProgress:
         {
             // ARP table is still not updated -> Retry to transmit the frame later!
             timeout_startTimer(pInstance_p->pArpTimeoutInst_m);
@@ -555,7 +555,7 @@ static tPsiStatus sendToDestTarget(tTssdoInstance pInstance_p,
             pInstance_p->consTxState_m = kConsTxStateWaitForNextArpRetry;
 
             break;
-        }
+        }*/
         case  kErrorSdoComHandleBusy:
         {
             // Handle is busy -> try to retransmit later!

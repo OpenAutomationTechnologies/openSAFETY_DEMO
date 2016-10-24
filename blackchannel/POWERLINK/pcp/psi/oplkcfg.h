@@ -5,13 +5,14 @@
 \brief  Configuration options for openPOWERLINK CN library
 
 This file contains the configuration options for the openPOWERLINK CN libary
-on Xilinx Microblaze.
+on Altera FPGA.
 
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
 Copyright (c) 2012, SYSTEC electronik GmbH
 Copyright (c) 2014, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+Copyright (c) 2016, Kalycito Infotech Private Ltd
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -56,13 +57,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 // These macros define all modules which are included
+#ifndef CONFIG_INCLUDE_PDO
 #define CONFIG_INCLUDE_PDO
+#endif
+
 #define CONFIG_INCLUDE_SDOS
 #define CONFIG_INCLUDE_SDOC
+
+#ifndef CONFIG_INCLUDE_SDO_ASND
 #define CONFIG_INCLUDE_SDO_ASND
-#define CONFIG_INCLUDE_LEDU
+#endif
+
+#define CONFIG_INCLUDE_LEDK
+
+#ifndef CONFIG_INCLUDE_MASND
 #define CONFIG_INCLUDE_MASND
+#endif
+
 #define CONFIG_INCLUDE_VETH
+#define CONFIG_INCLUDE_IP
+#define CONFIG_INCLUDE_SOC_TIME_FORWARD
 #define CONFIG_INCLUDE_SDO_UDP
 
 #define CONFIG_DLLCAL_QUEUE                         DIRECT_QUEUE
@@ -85,10 +99,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define CONFIG_EDRV_AUTO_RESPONSE                   TRUE
 
 // Number of deferred Rx buffers
-#define CONFIG_EDRV_ASND_DEFFERRED_RX_BUFFERS       6
+#define CONFIG_EDRV_ASND_DEFERRED_RX_BUFFERS        6
 
-// Number of deferred Rx buffers for generic ethernet frames
-#define CONFIG_EDRV_VETH_DEFFERRED_RX_BUFFERS       6
+// Number of deferred Rx buffers
+#define CONFIG_EDRV_VETH_DEFERRED_RX_BUFFERS        6
 
 // openMAC supports auto-response delay
 #define CONFIG_EDRV_AUTO_RESPONSE_DELAY             TRUE
@@ -115,7 +129,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define CONFIG_DLL_SOC_SYNC_SHIFT_US                150
 
 // CN supports PRes Chaining
+#ifndef CONFIG_DLL_PRES_CHAINING_CN
 #define CONFIG_DLL_PRES_CHAINING_CN                 TRUE
+#endif
 
 // Disable/Enable late release
 #define CONFIG_DLL_DEFERRED_RXFRAME_RELEASE_SYNC    FALSE
@@ -124,17 +140,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Asynchronous transmit buffer for NMT frames in bytes
 #define CONFIG_DLLCAL_BUFFER_SIZE_TX_NMT            4096
 
-// Asynchronous transmit buffer for generic Asnd frames in bytes
-#define DLLCAL_BUFFER_SIZE_TX_GEN_ASND              8192
-
-// Asynchronous transmit buffer for generic Ethernet frames in bytes
-#define DLLCAL_BUFFER_SIZE_TX_GEN_ETH               8192
-
 // Asynchronous transmit buffer for sync response frames in bytes
 #define CONFIG_DLLCAL_BUFFER_SIZE_TX_SYNC           4096
 
+// Asynchronous transmit buffer for virtual Ethernet frames in bytes
+#define CONFIG_DLLCAL_BUFFER_SIZE_TX_VETH           4096
+
 // Size of kernel to user queue
 #define CONFIG_EVENT_SIZE_CIRCBUF_KERNEL_TO_USER    8192
+
+// Size of kernel internal queue
+#define CONFIG_EVENT_SIZE_CIRCBUF_KERNEL_INTERNAL   1024
 
 // =========================================================================
 // OBD specific defines

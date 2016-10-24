@@ -14,6 +14,7 @@ triple buffers.
 * License Agreement
 *
 * Copyright 2014 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2016, Kalycito Infotech Private Ltd
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -54,6 +55,7 @@ triple buffers.
 #include <psi/tbuf.h>
 
 #include <oplk/oplk.h>
+#include <debug.h>
 
 //============================================================================//
 //            G L O B A L   D E F I N I T I O N S                             //

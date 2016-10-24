@@ -15,6 +15,7 @@ the synchronous and asynchronous tasks.
 * License Agreement
 *
 * Copyright 2014 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2016, Kalycito Infotech Private Ltd
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -63,6 +64,7 @@ the synchronous and asynchronous tasks.
 #include <psi/logbook.h>
 #include <psi/fifo.h>
 #include <libpsicommon/ccobject.h>
+#include <debug.h>
 
 #include <config/ccobjectlist.h>
 #include <config/triplebuffer.h>
