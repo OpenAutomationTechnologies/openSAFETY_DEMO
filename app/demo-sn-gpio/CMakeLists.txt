@@ -58,6 +58,8 @@ ENDIF()
 # Create project
 PROJECT(demo-${CFG_DEMO_TYPE}-${CURRENT_DEMO_CONTEXT} C)
 
+SET (DEMO_SAFETY_APP_TARGET_NAME "${PROJECT_NAME}.elf" CACHE INTERNAL "")
+
 ########################################################################
 # Create user options
 ########################################################################

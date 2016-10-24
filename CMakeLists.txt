@@ -93,11 +93,6 @@ IF (PYSODBUILDER_ENABLE)
         "${pysodbuilder_BINARY_DIR}/pysodbsettings.ini" CACHE FILEPATH
         "settingsfile to use for pysodbuilder" FORCE)
     ENDIF()
-
-    PySODBuilder ( "${PYSODBUILDER_INPUT_DIR}" "${PYSODBUILDER_OUTPUT_DIR}"
-                "${PYSODBUILDER_OSDD_FILE}" "${PYSODBUILDER_SETTINGS_FILE}"
-                "${PYSODBUILDER_MODULE_ID}" )
-
 ENDIF()
 
 
