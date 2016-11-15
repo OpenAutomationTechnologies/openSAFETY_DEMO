@@ -147,7 +147,7 @@ The function binds to a certain IP address and port.
 */
 //------------------------------------------------------------------------------
 tOplkError socketwrapper_bind(tSocketWrapper pSocketWrapper_p,
-                              tSocketWrapperAddress* pSocketAddress_p)
+                              const tSocketWrapperAddress* pSocketAddress_p)
 {
     tOplkError              ret = kErrorOk;
     tSocketWrapInstance*    pInstance = (tSocketWrapInstance*)pSocketWrapper_p;
@@ -211,8 +211,8 @@ The function sends the given data to the remote address.
 */
 //------------------------------------------------------------------------------
 tOplkError socketwrapper_send(tSocketWrapper pSocketWrapper_p,
-                              tSocketWrapperAddress* pRemote_p,
-                              UINT8* pData_p, UINT dataSize_p)
+                              const tSocketWrapperAddress* pRemote_p,
+                              const UINT8* pData_p, UINT dataSize_p)
 {
     tSocketWrapInstance*    pInstance = (tSocketWrapInstance*)pSocketWrapper_p;
     INT                     error;
@@ -358,7 +358,7 @@ of the remote nodes.
 */
 //------------------------------------------------------------------------------
 
-/*tOplkError socketwrapper_arpQuery(tSocketWrapper pSocketWrapper_p,
+tOplkError socketwrapper_arpQuery(tSocketWrapper pSocketWrapper_p,
                                        UINT32 remoteIpAddress_p)
 {
     eth_addr       macAddr;
@@ -380,6 +380,6 @@ of the remote nodes.
     }
        return ret;
 
-}*/
+}
 
 /// \}

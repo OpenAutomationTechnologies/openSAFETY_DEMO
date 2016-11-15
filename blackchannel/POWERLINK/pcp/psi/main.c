@@ -615,7 +615,7 @@ static tOplkError psi_syncCb(void)
       goto Exit;
     }
 
-    oplkret = oplk_copyRxPdoToApp();
+    oplkret = oplk_exchangeAppPdoOut();
     if(oplkret != kErrorOk)
         goto Exit;
 
@@ -648,7 +648,7 @@ static tOplkError psi_syncCb(void)
         }
     }
 
-    oplkret = oplk_copyTxPdoFromApp();
+    oplkret = oplk_exchangeAppPdoIn();
     if(oplkret != kErrorOk)
         goto Exit;
 
