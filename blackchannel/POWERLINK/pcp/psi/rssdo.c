@@ -16,6 +16,7 @@ to the application.
 * License Agreement
 *
 * Copyright 2014 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2016, Kalycito Infotech Private Ltd
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -374,7 +375,7 @@ tOplkError rssdo_obdAccessCb(tObdAlConHdl* pParam_p)
 
     if(pParam_p->totalPendSize > SSDO_STUB_DATA_DOM_SIZE)
     {
-      return kErrorObdValueLengthError;
+        return kErrorObdValueLengthError;
     }
     else
     {
@@ -384,8 +385,8 @@ tOplkError rssdo_obdAccessCb(tObdAlConHdl* pParam_p)
 
     // Post frame to receive FIFO
     ret = fifo_insertElement(pInstance->pRxFifoInst_m,
-                            (tFifoElement) pParam_p->pSrcData,
-                            pInstance->objSize_m);
+                             (tFifoElement) pParam_p->pSrcData,
+                             pInstance->objSize_m);
     if(ret != kPsiSuccessful)
     {
         oplkret = kErrorObdAccessViolation;

@@ -10,8 +10,11 @@ level.
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
-Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
-All rights reserved.
+* License Agreement
+*
+* Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+* Copyright (c) 2016, Kalycito Infotech Private Ltd
+* All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -36,8 +39,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ------------------------------------------------------------------------------*/
 
-#ifndef _INC_common_debug_H_
-#define _INC_common_debug_H_
+#ifndef _INC_app_common_debug_H_
+#define _INC_app_common_debug_H_
 
 /*----------------------------------------------------------------------------*/
 /* includes                                                                   */
@@ -83,6 +86,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /*----------------------------------------------------------------------------*/
 /* The default debug-level is: ERROR and ALWAYS. */
 /* You can define an other debug-level in project settings. */
+
 #ifndef DEF_DEBUG_LVL
     #define DEF_DEBUG_LVL                 (DEBUG_LVL_ALWAYS | DEBUG_LVL_ERROR)
 #endif
@@ -316,5 +320,4 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* function prototypes                                                        */
 /*----------------------------------------------------------------------------*/
 
-#endif /* _INC_common_debug_H_ */
-
+#endif /* _INC_app_common_debug_H_ */

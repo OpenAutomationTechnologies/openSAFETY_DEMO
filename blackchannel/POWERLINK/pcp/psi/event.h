@@ -60,9 +60,9 @@ typedef tOplkError (*tEventCb)(tOplkApiEventType EventType_p, tOplkApiEventArg* 
 extern "C" {
 #endif
 
-void initEvents (tEventCb pfnEventCb_p);
+void       initEvents (tEventCb pfnEventCb_p);
 tOplkError processEvents(tOplkApiEventType EventType_p,
-        tOplkApiEventArg* pEventArg_p, void* pUserArg_p);
+                         tOplkApiEventArg* pEventArg_p, void* pUserArg_p);
 
 #ifdef __cplusplus
 }

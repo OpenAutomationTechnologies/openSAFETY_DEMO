@@ -3,6 +3,7 @@
 # CMake file of slim interface on pcp for PSI
 #
 # Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+# Copyright (c) 2016, Kalycito Infotech Private Ltd
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -43,7 +44,7 @@ SET(OPLK_HW_DIR ${OPLK_BASE_DIR}/hardware)
 SET(OPLK_BOARD_DIR ${OPLK_HW_DIR}/boards/${BOARD_NAME})
 SET(OPLK_BOARD_EXAMPLE_DIR ${OPLK_BOARD_DIR}/${EXAMPLE_NAME})
 SET(OPLK_OMETHLIB_DIR ${OPLK_HW_DIR}/drivers/openmac)
-
+SET(APP_COMMON_SOURCE_DIR ${OPLK_BASE_DIR}/apps/common/src)
 ########################################################################
 # Set includes
 INCLUDE(${OPLK_STACK_DIR}/cmake/directories.cmake)
@@ -68,6 +69,7 @@ SET(PSI_SRCS
     ${PROJECT_SOURCE_DIR}/tssdo.c
     ${PROJECT_SOURCE_DIR}/fifo.c
     ${PROJECT_SOURCE_DIR}/event.c
+    ${APP_COMMON_SOURCE_DIR}/obdcreate/obdcreate.c
    )
 
 SET(IP_SRCS
@@ -137,14 +139,15 @@ SET(PSI_INCS
     ${DEMO_CONFIG_DIR}/tbuf/include
     ${IP_BASE_DIR}
     ${APP_COMMON_DIR}/include/common
-   )
+    ${APP_COMMON_SOURCE_DIR}
+    )
 
 SET(OPLK_INCS
     ${STACK_INCLUDE_DIR}
     ${STACK_SOURCE_DIR}
     ${CONTRIB_SOURCE_DIR}
     ${DEMO_CONFIG_DIR}/pcp
-    ${OBJDICT_DIR}/generic
+    #${OBJDICT_DIR}/${OBJDICT}
     ${CONTRIB_SOURCE_DIR}/socketwrapper
     ${OPLK_BOARD_EXAMPLE_DIR}/include
    )
@@ -153,6 +156,14 @@ SET(OMETHLIB_INCS
     ${OPLK_OMETHLIB_DIR}/include
     ${OPLK_OMETHLIB_DIR}/src
    )
+
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DCONFIG_DLL_PRES_CHAINING_CN=TRUE -DNMT_MAX_NODE_ID=254 -DCONFIG_INCLUDE_PDO -DCONFIG_INCLUDE_SDO_ASND -DCONFIG_INCLUDE_MASND")
+ADD_DEFINITIONS(-DCONFIG_DLL_PRES_CHAINING_CN)
+ADD_DEFINITIONS(-DNMT_MAX_NODE_ID=254)
+ADD_DEFINITIONS(-DCONFIG_INCLUDE_PDO)
+ADD_DEFINITIONS(-DCONFIG_INCLUDE_SDO_ASND)
+ADD_DEFINITIONS(-DCONFIG_INCLUDE_MASND)
+ADD_DEFINITIONS(-DCONFIG_INCLUDE_SDO_UDP)
 
 IF((CMAKE_SYSTEM_NAME STREQUAL "Generic") AND (CMAKE_SYSTEM_PROCESSOR STREQUAL "nios2"))
     INCLUDE(nios2.cmake)

@@ -5,13 +5,14 @@
 \brief  Configuration options for openPOWERLINK CN library
 
 This file contains the configuration options for the openPOWERLINK CN libary
-on Xilinx Microblaze.
+on Altera FPGA.
 
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
 Copyright (c) 2012, SYSTEC electronik GmbH
 Copyright (c) 2014, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+Copyright (c) 2016, Kalycito Infotech Private Ltd
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -56,12 +57,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 // These macros define all modules which are included
+#ifndef CONFIG_INCLUDE_PDO
 #define CONFIG_INCLUDE_PDO
+#endif
+
 #define CONFIG_INCLUDE_SDOS
 #define CONFIG_INCLUDE_SDOC
+
+#ifndef CONFIG_INCLUDE_SDO_ASND
 #define CONFIG_INCLUDE_SDO_ASND
+#endif
+
 #define CONFIG_INCLUDE_LEDK
+
+#ifndef CONFIG_INCLUDE_MASND
 #define CONFIG_INCLUDE_MASND
+#endif
+
 #define CONFIG_INCLUDE_VETH
 #define CONFIG_INCLUDE_IP
 #define CONFIG_INCLUDE_SOC_TIME_FORWARD
@@ -90,7 +102,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define CONFIG_EDRV_ASND_DEFERRED_RX_BUFFERS        6
 
 // Number of deferred Rx buffers
-#define CONFIG_EDRV_VETH_DEFERRED_RX_BUFFERS        5
+#define CONFIG_EDRV_VETH_DEFERRED_RX_BUFFERS        6
 
 // openMAC supports auto-response delay
 #define CONFIG_EDRV_AUTO_RESPONSE_DELAY             TRUE
@@ -117,7 +129,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define CONFIG_DLL_SOC_SYNC_SHIFT_US                150
 
 // CN supports PRes Chaining
+#ifndef CONFIG_DLL_PRES_CHAINING_CN
 #define CONFIG_DLL_PRES_CHAINING_CN                 TRUE
+#endif
 
 // Disable/Enable late release
 #define CONFIG_DLL_DEFERRED_RXFRAME_RELEASE_SYNC    FALSE

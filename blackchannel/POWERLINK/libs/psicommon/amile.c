@@ -16,6 +16,7 @@ always copies bytewise)
 
 /*------------------------------------------------------------------------------
 Copyright (c) 2014, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+Copyright (c) 2016, Kalycito Infotech Private Ltd
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -131,7 +132,7 @@ Reads a 16 bit value from a buffer in big endian
 \retval Value       The data in platform endian
 */
 /*----------------------------------------------------------------------------*/
-UINT16 ami_getUint16Be(void* pAddr_p)
+UINT16 ami_getUint16Be(const void* pAddr_p)
 {
     UINT16 val;
 
@@ -153,7 +154,7 @@ Reads a 16 bit value from a buffer in little endian
 \retval Value       The data in platform endian
 */
 /*----------------------------------------------------------------------------*/
-UINT16 ami_getUint16Le(void* pAddr_p)
+UINT16 ami_getUint16Le(const void* pAddr_p)
 {
     UINT16 val;
 
@@ -211,7 +212,7 @@ Reads a 32 bit value from a buffer in big endian
 \retval Value       The data in platform endian
 */
 /*----------------------------------------------------------------------------*/
-UINT32 ami_getUint32Be(void* pAddr_p)
+UINT32 ami_getUint32Be(const void* pAddr_p)
 {
     UINT32 val;
 
@@ -235,7 +236,7 @@ Reads a 32 bit value from a buffer in little endian
 \retval Value       The data in platform endian
 */
 /*----------------------------------------------------------------------------*/
-UINT32 ami_getUint32Le(void* pAddr_p)
+UINT32 ami_getUint32Le(const void* pAddr_p)
 {
     UINT32 val;
 
@@ -303,7 +304,7 @@ Reads a 64 bit value from a buffer in big endian
 \retval Value       The data in platform endian
 */
 /*----------------------------------------------------------------------------*/
-UINT64 ami_getUint64Be(void* pAddr_p)
+UINT64 ami_getUint64Be(const void* pAddr_p)
 {
     UINT64 val;
 
@@ -331,7 +332,7 @@ Reads a 64 bit value from a buffer in little endian
 \retval Value       The data in platform endian
 */
 /*----------------------------------------------------------------------------*/
-UINT64 ami_getUint64Le(void* pAddr_p)
+UINT64 ami_getUint64Le(const void* pAddr_p)
 {
     UINT64 val;
 

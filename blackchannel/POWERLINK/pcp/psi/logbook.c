@@ -15,6 +15,7 @@ and forwards the data to the target in the LOGStub.
 * License Agreement
 *
 * Copyright 2014 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2016, Kalycito Infotech Private Ltd
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -659,7 +660,9 @@ static tPsiStatus sendToDestTarget(tLogInstance pInstance_p,
             ret = log_consTxTransferFinished(pInstance_p);
             break;
         }
-        case kErrorSdoUdpArpInProgress:
+
+        //Should be included for ipArpquery ipmlementation
+        /*case kErrorSdoUdpArpInProgress:
         {
             // ARP table is still not updated -> Retry to transmit the frame later!
             timeout_startTimer(pInstance_p->pArpTimeoutInst_m);
@@ -667,7 +670,7 @@ static tPsiStatus sendToDestTarget(tLogInstance pInstance_p,
             pInstance_p->consTxState_m = kConsTxStateWaitForNextArpRetry;
 
             break;
-        }
+        }*/
         case  kErrorSdoComHandleBusy:
         {
             // Handle is busy -> try to retransmit later!

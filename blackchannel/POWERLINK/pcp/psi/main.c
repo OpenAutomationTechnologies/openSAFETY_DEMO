@@ -15,6 +15,7 @@ buffers which can be accessed by the application processor.
 * License Agreement
 *
 * Copyright 2014 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2016, Kalycito Infotech Private Ltd
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -47,7 +48,7 @@ buffers which can be accessed by the application processor.
 //------------------------------------------------------------------------------
 // includes
 //------------------------------------------------------------------------------
-
+#include <obdcreate/obdcreate.h>
 #include <psi/psi.h>
 #include <psi/status.h>
 #include <psi/tpdo.h>
@@ -56,7 +57,7 @@ buffers which can be accessed by the application processor.
 #include <edrv2veth.h>
 #include <ip.h>
 #include <debug.h>
-
+#include <oplk/debugstr.h>
 /* POWERLINK settings demo specific values */
 #include <powerlink.h>
 
@@ -65,11 +66,10 @@ buffers which can be accessed by the application processor.
 
 #include <event.h>
 
-
 //------------------------------------------------------------------------------
 // defines
 //------------------------------------------------------------------------------
-#define NODEID          0x02                   ///< Initial NodeId. Should be NOT 0xF0 (=MN) in case of CN
+#define NODEID          0x01                   ///< Initial NodeId. Should be NOT 0xF0 (=MN) in case of CN
 #define CYCLE_LEN       1000                   ///< length of the cycle [us]
 
 #define MAC_ADDR_LAST_BYTE          5          ///< Position of the last MAC address byte
@@ -228,7 +228,12 @@ int main (void)
                debugstr_getRetValStr(ret), ret);
     }
 
-    oplk_enableUserObdAccess(TRUE);
+    ret = oplk_enableUserObdAccess(TRUE);
+    if(ret != kPsiSuccessful)
+     {
+           goto ExitShutdown;
+     }
+
     // Process POWERLINK background task
     ret = psi_processPlk(&mainInstance_l);
     if(ret != kPsiSuccessful)
@@ -253,7 +258,6 @@ Exit:
 /// \name Private Functions
 /// \{
 
-
 //------------------------------------------------------------------------------
 /**
 \brief  Initialize the openPOWERLINK stack
@@ -269,7 +273,7 @@ The function initializes the openPOWERLINK stack.
 static tPsiStatus psi_initPlk(tMainInstance* pInstance_p)
 {
     tPsiStatus             ret = kPsiSuccessful;
-    tOplkError               oplkret = kErrorOk;
+    tOplkError             oplkret = kErrorOk;
     static tOplkApiInitParam initParam;
 
     PRINTF("Initializing openPOWERLINK stack...\n");
@@ -295,7 +299,7 @@ static tPsiStatus psi_initPlk(tMainInstance* pInstance_p)
     initParam.multiplCylceCnt             = 0;                             // required for error detection
     initParam.asyncMtu                    = 300;                           // required to set up max frame size
     initParam.prescaler                   = 2;                             // required for sync
-    initParam.lossOfFrameTolerance        = 5000000;
+    initParam.lossOfFrameTolerance        = 100000;
     initParam.asyncSlotTimeout            = 3000000;
     initParam.waitSocPreq                 = 0;
     initParam.syncNodeId                  = C_ADR_SYNC_ON_SOC;
@@ -311,17 +315,27 @@ static tPsiStatus psi_initPlk(tMainInstance* pInstance_p)
     initParam.defaultGateway              = pInstance_p->defGateway;
 
     strncpy((char *)initParam.sHostname, (char *)pInstance_p->sHostName,
-            sizeof(initParam.sHostname));
+             sizeof(initParam.sHostname));
 
     // set callback functions
     initParam.pfnCbEvent                  = processEvents;
     initParam.pfnCbSync                   = psi_syncCb;
 
+
+    // Initialize object dictionary
+        oplkret = obdcreate_initObd(&initParam.obdInitParam);
+         if (oplkret != kErrorOk)
+         {
+            PRINTF("obdcreate_initObd() failed with \"%s\" (0x%04x)\n", debugstr_getRetValStr(oplkret), oplkret);
+            ret = kPsiMainPlkStackInitError;
+         }
+
     // initialize POWERLINK stack
     oplkret = oplk_init(&initParam);
+
     if(oplkret != kErrorOk)
     {
-        PRINTF("oplk_init() failed (Error:0x%x!\n", ret);
+        PRINTF("oplk_init() failed (Error:0x%x)!\n", NMT_MAX_NODE_ID);
         ret = kPsiMainPlkStackInitError;
     }
 
@@ -380,6 +394,7 @@ static tPsiStatus psi_processPlk(tMainInstance* pInstance_p)
             break;
         }
         // Handle Non-Powerlink Frame Forwarding to IP stack
+
         if ((ret = edrv2veth_process()) != kErrorOk)
         {
             pInstance_p->fShutdown = TRUE;
@@ -463,8 +478,8 @@ The function implements the applications stack event handler.
 */
 //------------------------------------------------------------------------------
 static tOplkError psi_userEventCb(tOplkApiEventType eventType_p,
-                                    tOplkApiEventArg* pEventArg_p,
-                                    void* pUserArg_p)
+                                  tOplkApiEventArg* pEventArg_p,
+                                  void* pUserArg_p)
 {
     tOplkError  oplkret = kErrorOk;
     tPsiStatus  ret     = kPsiSuccessful;
@@ -548,18 +563,21 @@ static tOplkError psi_userEventCb(tOplkApiEventType eventType_p,
             }
             break;
         }
+
         case kOplkApiEventReceivedNonPlk:
         {
             tOplkApiEventReceivedNonPlk*    pFrameInfo = &pEventArg_p->receivedEth;
             ret = edrv2veth_receiveHandler((UINT8*)pFrameInfo->pFrame,
-                                          pFrameInfo->frameSize);
+                                            pFrameInfo->frameSize);
             break;
         }
+
         case kOplkApiEventDefaultGwChange:
         {
             edrv2veth_changeGateway(pEventArg_p->defaultGwChange.defaultGateway);
             break;
         }
+
         default:
             break;
     }
@@ -575,24 +593,27 @@ psi_syncCb() implements the event callback function called by event module
 within kernel part (high priority). This function sets the outputs, reads the
 inputs and runs the control loop.
 
-\param  socTimeStamp_p          Timestamp of the current POWERLINK cycle
-
-\return    tOplkError
-\retval    kErrorOk            no error
-\retval    otherwise                 post error event to API layer
+\return    tOplkError          This function returns a tOplkError error code.
+\retval    kErrorOk            No error.
+\retval    otherwise           Post error event to API layer.
 
 \ingroup module_main
 */
 //------------------------------------------------------------------------------
 static tOplkError psi_syncCb(void)
 {
-    tOplkError         oplkret = kErrorOk;
-    tPsiStatus         ret     = kPsiSuccessful;
-    tTimeInfo          time;
-    tNetTime *         pNetTime = NULL;
-    tOplkApiSocTimeInfo socTimeStamp_p;
+    tOplkError          oplkret = kErrorOk;
+    tPsiStatus          ret     = kPsiSuccessful;
+    tTimeInfo           time;
+    tNetTime*           pNetTime = NULL;
+    tOplkApiSocTimeInfo socTimeStamp;
 
-    oplk_getSocTime(&socTimeStamp_p);
+    ret = oplk_getSocTime(&socTimeStamp);
+    if(ret != kPsiSuccessful)
+    {
+      oplkret = kErrorInvalidOperation;
+      goto Exit;
+    }
 
     oplkret = oplk_copyRxPdoToApp();
     if(oplkret != kErrorOk)
@@ -602,11 +623,11 @@ static tOplkError psi_syncCb(void)
 
     // CN is configured (cycle time is set)
     if (mainInstance_l.cycleTime != 0 &&
-            mainInstance_l.plkState >= kNmtCsReadyToOperate)
+        mainInstance_l.plkState >= kNmtCsReadyToOperate)
     {
-        time.relativeTimeLow_m = (UINT32)socTimeStamp_p.relTime;
-        time.relativeTimeHigh_m = (UINT32)(socTimeStamp_p.relTime>>32);
-        time.fTimeValid_m = socTimeStamp_p.fValidRelTime;
+        time.relativeTimeLow_m = (UINT32)socTimeStamp.relTime;
+        time.relativeTimeHigh_m = (UINT32)(socTimeStamp.relTime>>32);
+        time.fTimeValid_m = socTimeStamp.fValidRelTime;
         time.fCnIsOperational_m = (mainInstance_l.plkState == kNmtCsOperational) ? TRUE : FALSE;
 
         ret = status_process(&time);
@@ -616,7 +637,7 @@ static tOplkError psi_syncCb(void)
             goto Exit;
         }
 
-        pNetTime = &socTimeStamp_p.netTime;
+        pNetTime = &socTimeStamp.netTime;
 
         // Handle synchronous task of slim interface
         ret = psi_handleSync(pNetTime);

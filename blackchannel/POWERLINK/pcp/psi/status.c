@@ -14,6 +14,7 @@ to the status triple buffer. It also updates the SSDO channel status information
 * License Agreement
 *
 * Copyright 2014 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2016, Kalycito Infotech Private Ltd
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -314,10 +315,8 @@ Exit:
 //------------------------------------------------------------------------------
 void status_enableSyncInt(void)
 {
-    UINT flag = 1;
-
-    /* Enable the interrupt in the EPL status sync module*/
-    synctimer_controlExtSyncIrq(flag);
+     /* Enable the interrupt in the EPL status sync module*/
+    synctimer_controlExtSyncIrq(TRUE);
 }
 
 //------------------------------------------------------------------------------
@@ -329,10 +328,8 @@ void status_enableSyncInt(void)
 //------------------------------------------------------------------------------
 void status_disableSyncInt(void)
 {
-    UINT flag = 0;
-
     /* Disable the interrupt in the EPL status sync module*/
-    synctimer_controlExtSyncIrq(flag);
+    synctimer_controlExtSyncIrq(FALSE);
 }
 
 //------------------------------------------------------------------------------

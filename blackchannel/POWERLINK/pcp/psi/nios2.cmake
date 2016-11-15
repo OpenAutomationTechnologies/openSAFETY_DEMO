@@ -3,6 +3,7 @@
 # CMake file of slim interface on pcp (nios2 target) for PSI
 #
 # Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+# Copyright (c) 2016, Kalycito Infotech Private Ltd
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
