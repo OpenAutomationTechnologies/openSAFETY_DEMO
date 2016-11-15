@@ -5,7 +5,7 @@
 \brief  Wrapper module to connect uIP stack to Virtual Ethernet driver
 
 This module converts the driver interface of the IP stack to the interface
-provided from the Virtual Ethernet driver NoOs.
+provided from the Virtual Ethernet driver NoOs of openPOWERLINK stack.
 
 \ingroup module_ip
 *******************************************************************************/
@@ -14,6 +14,7 @@ provided from the Virtual Ethernet driver NoOs.
 * License Agreement
 *
 * Copyright 2013 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2016, Kalycito Infotech Pvt. Ltd
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -94,25 +95,25 @@ provided from the Virtual Ethernet driver NoOs.
 /**
 \brief  Receive buffer descriptor
 
-This structure defines the receive buffer descriptor
+This structure defines the receive buffer descriptor.
 */
 typedef struct
 {
     BOOL            fIpStackOwner;      ///< TRUE if the IP stack owns the buffer
-    unsigned long   length;             ///< Payload length
-                                        ///< Use here same type like in \ref ip_packet_typ!
+                                        //<TODO: Use here same type like in \ref ip_packet_typ!
+    ULONG           length;             ///< Payload length
     UINT8           aBuffer[IP_MTU];    ///< Receive buffer
 } tEdrv2VethRxDesc;
 
 /**
- * \brief Instance structure of the wrapper module
+ * \brief Instance structure of the socket wrapper module
  */
 typedef struct
 {
-    IP_STACK_H              pIpStack;                   ///< Pointer to the IP stack handle
-    tEdrv2VethRxDesc        aRxBuffer[IP_RX_BUF_CNT];   ///< Edrv2Veth Receive Buffer
-    ipState_enum            ipState;                    ///< Current state of the IP Stack
-    tNmtState               nmtState;                   ///< Current state of the POWERLINK CN
+    IP_STACK_H              pIpStack;                   ///< Pointer to the IP stack handle.
+    tEdrv2VethRxDesc        aRxBuffer[IP_RX_BUF_CNT];   ///< Edrv2Veth Receive Buffer descriptor.
+    ipState_enum            ipState;                    ///< Current state of the IP Stack.
+    tNmtState               nmtState;                   ///< Current state of the POWERLINK CN.
 } tEdrv2VethInstance;
 
 //------------------------------------------------------------------------------
@@ -124,7 +125,7 @@ static tEdrv2VethInstance  edrv2vethInstance_l;
 //------------------------------------------------------------------------------
 // local function prototypes
 //------------------------------------------------------------------------------
-static void freePacket(ip_packet_typ *pPacket_p);
+static void  freePacket(ip_packet_typ* pPacket_p);
 static ULONG ipEthSendCb(void* hEth_p, ip_packet_typ* pPacket_p,
                          IP_BUF_FREE_FCT* pfnFctFree_p);
 
@@ -136,10 +137,10 @@ static ULONG ipEthSendCb(void* hEth_p, ip_packet_typ* pPacket_p,
 /**
 \brief Initialize wrapper module
 
-\param  pEthMac[out]   Pointer to the address where the MAC should be stored
+\param  pEthMac_p[out]   Pointer to the address where the MAC should be stored.
 
 \return tOplkError
-\retval kErrorOk      On success
+\retval kErrorOk         Success
 
 \ingroup module_ip
 */
@@ -148,20 +149,20 @@ tOplkError edrv2veth_init (eth_addr* pEthMac_p)
 {
     tOplkError      ret = kErrorOk;
     UINT8           aMacAddr[6];
-    struct in_addr  ipaddr;
+    struct in_addr  ipAddr;
 
-    memset(&edrv2vethInstance_l, 0 , sizeof(tEdrv2VethInstance));
+    memset(&edrv2vethInstance_l, 0, sizeof(tEdrv2VethInstance));
 
-    //copy default MAC address
+    // Copy default MAC address
     ret = oplk_getEthMacAddr(aMacAddr);
     if (ret != kErrorOk)
         return ret;
 
     memcpy(pEthMac_p, aMacAddr, sizeof(eth_addr));
 
-    ipaddr.S_un.S_addr = 0; // Set invalid address, correct address is set later!
+    ipAddr.S_un.S_addr = 0; // Set invalid address, correct address is set later!
 
-    edrv2vethInstance_l.pIpStack = ipInit(pEthMac_p, &ipaddr, ipEthSendCb, NULL);
+    edrv2vethInstance_l.pIpStack = ipInit(pEthMac_p, &ipAddr, ipEthSendCb, NULL);
     if (edrv2vethInstance_l.pIpStack == NULL)
     {
         PRINTF("%s(Err/Warn): Error when initializing IP stack\n", __func__);
@@ -177,7 +178,6 @@ tOplkError edrv2veth_init (eth_addr* pEthMac_p)
         PRINTF("%s(Err/Warn): Error when setting IP stack handle to socketwrapper\n",
                __func__);
     }
-
     return ret;
 }
 
@@ -190,8 +190,10 @@ tOplkError edrv2veth_init (eth_addr* pEthMac_p)
 //------------------------------------------------------------------------------
 void edrv2veth_exit (void)
 {
-    ipDestroy(edrv2vethInstance_l.pIpStack);
-    edrv2vethInstance_l.pIpStack = NULL;
+    if(edrv2vethInstance_l.pIpStack != NULL)
+        ipDestroy(edrv2vethInstance_l.pIpStack);
+
+	edrv2vethInstance_l.pIpStack = NULL;
 }
 
 //------------------------------------------------------------------------------
@@ -203,7 +205,6 @@ void edrv2veth_exit (void)
 /// \{
 
 //------------------------------------------------------------------------------
-/**
 \brief Change IP address, Subnet mask and MTU of the IP stack
 
 \param  ipAddr_p       The IP address of the node to set
@@ -215,17 +216,17 @@ void edrv2veth_exit (void)
 //------------------------------------------------------------------------------
 void edrv2veth_changeAddress(UINT32 ipAddr_p, UINT32 subNetMask_p, UINT16 mtu_p)
 {
-    struct in_addr IpAddr;
+    struct in_addr ipAddr;
 
     UNUSED_PARAMETER(mtu_p);
 
-    IpAddr.S_un.S_addr = htonl(ipAddr_p);
+    ipAddr.S_un.S_addr = htonl(ipAddr_p);
 
-    ipChangeAddress(edrv2vethInstance_l.pIpStack, &IpAddr);
+    ipChangeAddress(edrv2vethInstance_l.pIpStack, &ipAddr);
 
-    IpAddr.S_un.S_addr = htonl(subNetMask_p);
+    ipAddr.S_un.S_addr = htonl(subNetMask_p);
 
-    ipSetNetmask(edrv2vethInstance_l.pIpStack, &IpAddr);
+    ipSetNetmask(edrv2vethInstance_l.pIpStack, &ipAddr);
 }
 
 //------------------------------------------------------------------------------
@@ -239,16 +240,16 @@ void edrv2veth_changeAddress(UINT32 ipAddr_p, UINT32 subNetMask_p, UINT16 mtu_p)
 //------------------------------------------------------------------------------
 void edrv2veth_changeGateway( UINT32 defGateway_p )
 {
-    struct in_addr IpGateway;
+    struct in_addr ipGateway;
 
-    IpGateway.S_un.S_addr = htonl(defGateway_p);
+    ipGateway.S_un.S_addr = htonl(defGateway_p);
 
-    ipSetGateway(edrv2vethInstance_l.pIpStack, &IpGateway);
+    ipSetGateway(edrv2vethInstance_l.pIpStack, &ipGateway);
 }
 
 //------------------------------------------------------------------------------
 /**
-\brief Set the POWERLINK node NMT state
+\brief Set the openPOWERLINK node NMT state
 
 \param  nmtState_p      The node's current NMT state.
 
@@ -264,11 +265,11 @@ void edrv2veth_setNmtState(tNmtState nmtState_p)
 /**
 \brief Receive handler of the wrapper module
 
-Handles an incoming frame from the Virtual Eternet driver and forwards it
+Handles an incoming frame from the Virtual Ethernet driver and forwards it
 to the IP stack.
 
-\param  pFrame_p       Pointer to the incoming payload
-\param  frameSize_p    Size of the incoming payload
+\param  pFrame_p       Pointer to the incoming payload.
+\param  frameSize_p    Size of the incoming payload.
 
 \return tOplkError
 \retval kErrorOk          On success
@@ -286,15 +287,14 @@ tOplkError edrv2veth_receiveHandler(UINT8* pFrame_p, UINT32 frameSize_p)
     for (i=0; i<IP_RX_BUF_CNT; i++)
     {
         if (edrv2vethInstance_l.aRxBuffer[i].fIpStackOwner)
-            continue;
-        else
-            break;
+        break;
     }
 
     if (i == IP_RX_BUF_CNT)
     {
-        // No free buffer found => ignore frame
-        return kErrorOk;
+    // No free buffer found => ignore frame
+    PRINTF("%s (Err/Warn): No free buffer found, Frames ignored\n");
+    return kErrorOk;
     }
 
     // i points to a free buffer!
@@ -306,7 +306,7 @@ tOplkError edrv2veth_receiveHandler(UINT8* pFrame_p, UINT32 frameSize_p)
     // Forward incoming data to IP stack
     rcvStatus = ipPacketReceive(edrv2vethInstance_l.pIpStack,
                                 pPacket, freePacket);
-    if(rcvStatus != 0)
+    if (rcvStatus != 0)
     {
         // Call free function now
         freePacket(pPacket);
@@ -416,6 +416,7 @@ static ULONG ipEthSendCb(void* hEth_p, ip_packet_typ* pPacket_p, IP_BUF_FREE_FCT
 
         plkLength = 0;
     }
+
     return plkLength;
 }
 

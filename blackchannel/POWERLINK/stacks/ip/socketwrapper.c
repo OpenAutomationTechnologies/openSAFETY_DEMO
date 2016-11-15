@@ -12,7 +12,8 @@ This module connects the IP stack with the SDO/UDP module.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright 2015 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright 2013 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2016, Kalycito Infotech Pvt. Ltd.
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -60,11 +61,9 @@ This module connects the IP stack with the SDO/UDP module.
 // const defines
 //------------------------------------------------------------------------------
 
-
 //------------------------------------------------------------------------------
 // module global vars
 //------------------------------------------------------------------------------
-
 
 //------------------------------------------------------------------------------
 // global function prototypes
@@ -85,10 +84,10 @@ This module connects the IP stack with the SDO/UDP module.
 
 typedef struct
 {
-    BOOL                    fInitialized;    
-    IP_STACK_H              pIpStackHandle;    ///< Pointer to IP stack handle
-    tSocketWrapperAddress   socketAddress;     ///< Address of Socket Wrapper
-    tSocketWrapperReceiveCb socketReceiveCb;   ///< Socket receive Call back
+    BOOL                    fInitialized;      ///< True if socketwrapper instance shall be created.
+    IP_STACK_H              pIpStackHandle;    ///< Pointer to IP stack handle.
+    tSocketWrapperAddress   socketAddress;     ///< Address of Socket Wrapper.
+    tSocketWrapperReceiveCb socketReceiveCb;   ///< Receive callback function for the socket wrapper.
 } tSocketWrapInstance;
 
 //------------------------------------------------------------------------------
@@ -99,7 +98,7 @@ static tSocketWrapInstance  instance_l;
 //------------------------------------------------------------------------------
 // local function prototypes
 //------------------------------------------------------------------------------
-static void receiveFromSocket(void* pArg_p, ip_udp_info* pInfo_p);
+static void       receiveFromSocket(void* pArg_p, ip_udp_info* pInfo_p);
 static tOplkError updateIpStack(tSocketWrapInstance* pInstance_p);
 
 //============================================================================//
@@ -114,8 +113,6 @@ The function creates a socket wrapper instance.
 
 \param  pfnReceiveCb_p      Socket receive callback
 
-\param  fInitialized        Specifies if socketwrapper instance shall be created (True) or left (False)
-
 \return The function returns the created socket wrapper instance.
 \retval NULL    Error, no socket wrapper instance was created!
 
@@ -124,8 +121,8 @@ The function creates a socket wrapper instance.
 //------------------------------------------------------------------------------
 tSocketWrapper socketwrapper_create(tSocketWrapperReceiveCb pfnReceiveCb_p)
 {
-    if (pfnReceiveCb_p == NULL)
-        return NULL;
+     if (pfnReceiveCb_p == NULL)
+         return NULL;
 
     memset(&instance_l, 0, sizeof(instance_l));
 
@@ -141,8 +138,8 @@ tSocketWrapper socketwrapper_create(tSocketWrapperReceiveCb pfnReceiveCb_p)
 
 The function binds to a certain IP address and port.
 
-\param  pSocketWrapper_p    Socket wrapper instance
-\param  pSocketAddress_p    Socket address structure
+\param  pSocketWrapper_p    Socket wrapper instance.
+\param  pSocketAddress_p    Socket address structure.
 
 \return The function returns a tOplkError error code.
 
@@ -154,6 +151,8 @@ tOplkError socketwrapper_bind(tSocketWrapper pSocketWrapper_p,
 {
     tOplkError              ret = kErrorOk;
     tSocketWrapInstance*    pInstance = (tSocketWrapInstance*)pSocketWrapper_p;
+
+    UNUSED_PARAMETER(pSocketWrapper_p);
 
     if (pInstance == NULL)
         return kErrorSdoUdpInvalidHdl;
@@ -179,8 +178,8 @@ tOplkError socketwrapper_bind(tSocketWrapper pSocketWrapper_p,
 
 The function closes the given socket wrapper instance.
 
-\param  pSocketWrapper_p    Socket wrapper instance
-\param  pSocketAddress_p    Socket address structure
+\param  pSocketWrapper_p    Socket wrapper instance.
+\param  pSocketAddress_p    Socket address structure.
 
 \ingroup module_socketwrapper
 */
@@ -199,12 +198,12 @@ void socketwrapper_close(tSocketWrapper pSocketWrapper_p)
 /**
 \brief  Send to socket wrapper instance
 
-The function sends the given data to the remove address.
+The function sends the given data to the remote address.
 
-\param  pSocketWrapper_p    Socket wrapper instance
-\param  pRemote_p           Pointer to socket address structure of remote
-\param  pData_p             Pointer to payload data
-\param  dataSize_p          Size of payload data
+\param  pSocketWrapper_p    Socket wrapper instance.
+\param  pRemote_p           Pointer to remote socketwrapper address.
+\param  pData_p             Pointer to payload data.
+\param  dataSize_p          Size of payload data.
 
 \return The function returns a tOplkError error code.
 
@@ -296,10 +295,9 @@ tOplkError socketwrapper_setIpStackHandle(IP_STACK_H pHandle_p)
 
 The function is called by the IP stack socket if a frame is received.
 
-\param  pArg_p              Argument pointer holding the socket wrapper instance
-\param  pInfo_p             Pointer to UDP frame info
+\param  pArg_p              Argument pointer holding the socket wrapper instance.
+\param  pInfo_p             Pointer to UDP frame info.
 
-\return The function returns a tOplkError error code.
 */
 //------------------------------------------------------------------------------
 static void receiveFromSocket(void* pArg_p, ip_udp_info* pInfo_p)
@@ -345,7 +343,6 @@ static tOplkError updateIpStack(tSocketWrapInstance* pInstance_p)
     return kErrorOk;
 }
 
-
 //------------------------------------------------------------------------------
 /**
 \brief  The function handles the Arp Query
@@ -353,7 +350,7 @@ static tOplkError updateIpStack(tSocketWrapInstance* pInstance_p)
 The function is called when a new SDO connection is initialized to handle the Arprequests
 of the remote nodes.
 
-\param  pSocketWrapper_p   Socket wrapper instance      
+\param  pSocketWrapper_p   Socket wrapper instance
 
 \param  remoteIpAddress_p  Ip Address
 
@@ -361,13 +358,14 @@ of the remote nodes.
 */
 //------------------------------------------------------------------------------
 
-tOplkError socketwrapper_arpQuery(tSocketWrapper pSocketWrapper_p,
+/*tOplkError socketwrapper_arpQuery(tSocketWrapper pSocketWrapper_p,
                                        UINT32 remoteIpAddress_p)
 {
     eth_addr       macAddr;
     eth_addr       macAddrZero;
     tOplkError     ret = kErrorOk;
 
+    UNUSED_PARAMETER(pSocketWrapper_p);
     memset(&macAddrZero, 0, sizeof(eth_addr));
     memset(&macAddr, 0, sizeof(eth_addr));
 
@@ -382,6 +380,6 @@ tOplkError socketwrapper_arpQuery(tSocketWrapper pSocketWrapper_p,
     }
        return ret;
 
-}
+}*/
 
 /// \}
