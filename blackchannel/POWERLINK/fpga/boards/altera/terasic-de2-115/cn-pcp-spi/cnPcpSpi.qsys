@@ -276,8 +276,8 @@
    dir="end" />
  <interface
    name="openmac_0_mactimerout"
-   internal="openmac_0.macTimerOut"
-   type="conduit"
+   internal="openmac_0.timerPulse"
+   type="interrupt"
    dir="end" />
  <interface
    name="pcp_0_epcs_flash"
@@ -508,7 +508,7 @@
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV E" />
   <parameter name="AUTO_DEVICE" value="EP4CE115F29C7" />
  </module>
- <module kind="openmac" version="1.0.0" enabled="1" name="openmac_0">
+ <module kind="openmac" version="1.0.2" enabled="1" name="openmac_0">
   <parameter name="sys_mainClk" value="50000000" />
   <parameter name="sys_mainClkx2" value="100000000" />
   <parameter name="sys_dmaAddrWidth" value="21" />
@@ -521,7 +521,7 @@
   <parameter name="gui_rxBufLoc" value="2" />
   <parameter name="gui_rxBufSize" value="1" />
   <parameter name="gui_rxBurstSize" value="4" />
-  <parameter name="gui_tmrCount" value="2" />
+  <parameter name="gui_tmrPulse" value="true" />
   <parameter name="gui_tmrPulseEn" value="true" />
   <parameter name="gui_tmrPulseWdt" value="10" />
   <parameter name="gui_actEn" value="false" />
@@ -618,7 +618,7 @@
    start="pcp_0.slow_bridge"
    end="sysid.control_slave">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x2d40" />
+  <parameter name="baseAddress" value="0x2d50" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -627,7 +627,7 @@
    start="pcp_0.slow_bridge"
    end="node_switch_pio.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x2d30" />
+  <parameter name="baseAddress" value="0x2d40" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection kind="reset" version="13.0" start="clk50.clk_reset" end="sysid.reset" />
