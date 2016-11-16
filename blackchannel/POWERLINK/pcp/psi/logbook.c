@@ -52,6 +52,7 @@ and forwards the data to the target in the LOGStub.
 #include <psi/logbook.h>
 
 #include <psi/status.h>
+#include <libpsicommon/ami.h>
 
 #include <limits.h>
 

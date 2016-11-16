@@ -92,6 +92,10 @@ static tOplkError processErrorWarningEvent(tOplkApiEventType EventType_p,
                                            tOplkApiEventArg* pEventArg_p,
                                            void* pUserArg_p);
 
+static tOplkError processUserObdAccessEvent(tOplkApiEventType EventType_p,
+                                           tOplkApiEventArg* pEventArg_p,
+                                           void* pUserArg_p);
+
 //============================================================================//
 //            P U B L I C   F U N C T I O N S                                 //
 //============================================================================//
@@ -147,21 +151,8 @@ tOplkError processEvents(tOplkApiEventType EventType_p,
             ret = processErrorWarningEvent(EventType_p, pEventArg_p, pUserArg_p);
             break;
 
-        case kOplkApiEventLed:
-            /* POWERLINK S/E LED needs to be changed */
-            switch(pEventArg_p->ledEvent.ledType)
-            {
-                case kLedTypeStatus:
-                    target_setStatusLed(pEventArg_p->ledEvent.fOn);
-                    break;
-
-                case kLedTypeError:
-                    target_setErrorLed(pEventArg_p->ledEvent.fOn);
-                    break;
-
-                default:
-                    break;
-            }
+        case kOplkApiEventUserObdAccess:
+            ret = processUserObdAccessEvent(EventType_p, pEventArg_p, pUserArg_p);
             break;
 
         default:
@@ -276,6 +267,42 @@ static tOplkError processErrorWarningEvent(tOplkApiEventType EventType_p,
             break;
     }
     return kErrorOk;
+}
+
+//------------------------------------------------------------------------------
+/**
+\brief  Process user specific object access
+
+The function processes state change events.
+
+\param  EventType_p         Type of event
+\param  pEventArg_p         Pointer to union which describes the event in detail
+\param  pUserArg_p          User specific argument
+
+\return The function returns a tOplkError error code.
+*/
+//------------------------------------------------------------------------------
+static tOplkError processUserObdAccessEvent(tOplkApiEventType EventType_p,
+                                           tOplkApiEventArg* pEventArg_p,
+                                           void* pUserArg_p)
+{
+    tObdAlConHdl*            pParam = pEventArg_p->userObdAccess.pUserObdAccHdl;
+    tOplkError oplkret = kErrorOk;
+
+    switch(pParam->index)
+    {
+        case 0x2000 :
+            oplkret = cc_obdAccessCb(pParam);
+            break;
+
+        case 0x2130 :
+            oplkret = rssdo_obdAccessCb(pParam);
+            break;
+
+        default:
+            break;
+    }
+    return oplkret;
 }
 
 ///\}

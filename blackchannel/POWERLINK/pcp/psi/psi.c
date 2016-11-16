@@ -63,6 +63,7 @@ the synchronous and asynchronous tasks.
 #include <psi/logbook.h>
 #include <psi/fifo.h>
 #include <libpsicommon/ccobject.h>
+#include <debug.h>
 
 #include <config/ccobjectlist.h>
 #include <config/triplebuffer.h>

@@ -314,8 +314,10 @@ Exit:
 //------------------------------------------------------------------------------
 void status_enableSyncInt(void)
 {
+    UINT flag = 1;
+
     /* Enable the interrupt in the EPL status sync module*/
-    synctimer_enableExtSyncIrq(SYNC_INT_CYCLE_NUM, SYNC_INT_PULSE_WIDTH_NS);
+    synctimer_controlExtSyncIrq(flag);
 }
 
 //------------------------------------------------------------------------------
@@ -327,8 +329,10 @@ void status_enableSyncInt(void)
 //------------------------------------------------------------------------------
 void status_disableSyncInt(void)
 {
+    UINT flag = 0;
+
     /* Disable the interrupt in the EPL status sync module*/
-    synctimer_disableExtSyncIrq();
+    synctimer_controlExtSyncIrq(flag);
 }
 
 //------------------------------------------------------------------------------

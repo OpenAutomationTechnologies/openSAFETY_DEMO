@@ -54,6 +54,7 @@ triple buffers.
 #include <psi/tbuf.h>
 
 #include <oplk/oplk.h>
+#include <debug.h>
 
 //============================================================================//
 //            G L O B A L   D E F I N I T I O N S                             //

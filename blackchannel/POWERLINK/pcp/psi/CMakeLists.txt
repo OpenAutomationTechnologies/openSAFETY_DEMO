@@ -74,6 +74,7 @@ SET(IP_SRCS
     ${IP_BASE_DIR}/ip_dhcp.c
     ${IP_BASE_DIR}/edrv2veth.c
     ${IP_BASE_DIR}/hton.c
+    ${IP_BASE_DIR}/socketwrapper.c
    )
 
 SET(OPLK_SRCS
@@ -101,6 +102,8 @@ SET(OPLK_SRCS
      ${LIB_KERNEL_SOURCES}
      ${LIB_USER_SOURCES}
      ${LIB_COMMON_SOURCES}
+     ${SDO_SOCKETWRAPPER_SOURCES}
+     ${MEMMAP_NOOSLOCAL_SOURCES}
    )
 
 SET(OMETHLIB_SRCS
@@ -131,6 +134,7 @@ SET(PSI_INCS
     ${psicommonpcp_SOURCE_DIR}/include
     ${DEMO_CONFIG_DIR}/tbuf/include
     ${IP_BASE_DIR}
+    ${APP_COMMON_DIR}/include/common
    )
 
 SET(OPLK_INCS
@@ -139,6 +143,7 @@ SET(OPLK_INCS
     ${CONTRIB_SOURCE_DIR}
     ${DEMO_CONFIG_DIR}/pcp
     ${OBJDICT_DIR}/generic
+    ${CONTRIB_SOURCE_DIR}/socketwrapper
    )
 
 SET(OMETHLIB_INCS
