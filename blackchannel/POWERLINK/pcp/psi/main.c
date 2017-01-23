@@ -168,7 +168,7 @@ int main (void)
     const UINT8 aMacAddr[] = MAC_ADDR;
 
     // reset local instance of main
-    PSI_MEMSET(&mainInstance_l, 0 , sizeof(tMainInstance));
+    PSI_MEMSET(&mainInstance_l, 0, sizeof(tMainInstance));
 
     //Set state of stack to invalid value
     mainInstance_l.plkState = 0xFFFF;
@@ -179,14 +179,14 @@ int main (void)
 
     // Read node id from switches
     nodeId = target_getNodeid();
-    if(nodeId == 0)
+    if (nodeId == 0)
     {
         nodeId = NODEID;
     }
 
     PRINTF("Initialize slim interface...\n");
     ret = psi_init(nodeId, psi_enterCriticalSection);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto Exit;
     }
@@ -209,7 +209,7 @@ int main (void)
 
     // Initialize the POWERLINK stack
     ret = psi_initPlk(&mainInstance_l);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto Exit;
     }
@@ -217,7 +217,7 @@ int main (void)
     PRINTF("Configure slim interface...\n");
     // Configure the slim interface modules
     ret = psi_configureModules();
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto ExitShutdown;
     }
@@ -229,14 +229,14 @@ int main (void)
     }
 
     ret = oplk_enableUserObdAccess(TRUE);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
      {
            goto ExitShutdown;
      }
 
     // Process POWERLINK background task
     ret = psi_processPlk(&mainInstance_l);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto ExitShutdown;
     }
@@ -324,7 +324,7 @@ static tPsiStatus psi_initPlk(tMainInstance* pInstance_p)
 
     // Initialize object dictionary
         oplkret = obdcreate_initObd(&initParam.obdInitParam);
-         if (oplkret != kErrorOk)
+        if (oplkret != kErrorOk)
          {
             PRINTF("obdcreate_initObd() failed with \"%s\" (0x%04x)\n", debugstr_getRetValStr(oplkret), oplkret);
             ret = kPsiMainPlkStackInitError;
@@ -333,7 +333,7 @@ static tPsiStatus psi_initPlk(tMainInstance* pInstance_p)
     // initialize POWERLINK stack
     oplkret = oplk_init(&initParam);
 
-    if(oplkret != kErrorOk)
+    if (oplkret != kErrorOk)
     {
         PRINTF("oplk_init() failed (Error:0x%x)!\n", NMT_MAX_NODE_ID);
         ret = kPsiMainPlkStackInitError;
@@ -378,17 +378,17 @@ static tPsiStatus psi_processPlk(tMainInstance* pInstance_p)
 
     // start processing
     oplkret = oplk_execNmtCommand(kNmtEventSwReset);
-    if(oplkret != kErrorOk)
+    if (oplkret != kErrorOk)
     {
         ret = kPsiMainPlkStackStartError;
         goto Exit;
     }
 
-    while(1)
+    while (1)
     {
         // do background tasks
         oplkret = oplk_process();
-        if(oplkret != kErrorOk)
+        if (oplkret != kErrorOk)
         {
             ret = kPsiMainPlkStackProcessError;
             break;
@@ -402,11 +402,11 @@ static tPsiStatus psi_processPlk(tMainInstance* pInstance_p)
 
         // Handle background task of slim interface
         ret = psi_handleAsync();
-        if(ret != kPsiSuccessful)
+        if (ret != kPsiSuccessful)
             break;
 
         // trigger switch off
-        if(pInstance_p->fShutdown != FALSE)
+        if (pInstance_p->fShutdown != FALSE)
         {
             psi_switchOffPlk();
 
@@ -415,7 +415,7 @@ static tPsiStatus psi_processPlk(tMainInstance* pInstance_p)
         }
 
         // exit loop if NMT is in off state
-        if(pInstance_p->plkState == kNmtGsOff)
+        if (pInstance_p->plkState == kNmtGsOff)
             break;
     }
 
@@ -440,7 +440,7 @@ static void psi_switchOffPlk(void)
     tOplkError ret;
 
     ret = oplk_execNmtCommand(kNmtEventSwitchOff);
-    if(ret != kErrorOk)
+    if (ret != kErrorOk)
     {
         DEBUG_TRACE(DEBUG_LVL_ERROR, "ERROR: Unable to carry out kNmtEventSwitchOff!\n");
     }
@@ -486,7 +486,7 @@ static tOplkError psi_userEventCb(tOplkApiEventType eventType_p,
 
     UNUSED_PARAMETER(pUserArg_p);
 
-    switch(eventType_p)
+    switch (eventType_p)
     {
         case kOplkApiEventNmtStateChange:
         {
@@ -494,7 +494,7 @@ static tOplkError psi_userEventCb(tOplkApiEventType eventType_p,
             // Make POWERLINK stack state global
             mainInstance_l.plkState = pEventArg_p->nmtStateChange.newNmtState;
 
-            switch(pEventArg_p->nmtStateChange.newNmtState)
+            switch (pEventArg_p->nmtStateChange.newNmtState)
             {
                 case kNmtGsOff:
                 {
@@ -527,7 +527,7 @@ static tOplkError psi_userEventCb(tOplkApiEventType eventType_p,
 
                     // Reset the relative time state machine
                     ret = status_resetRelTime();
-                    if(ret != kPsiSuccessful)
+                    if (ret != kPsiSuccessful)
                     {
                         oplkret = kErrorNoResource;
                     }
@@ -557,7 +557,7 @@ static tOplkError psi_userEventCb(tOplkApiEventType eventType_p,
         {
             // Sdo access finished -> tell psi interface
             ret = psi_sdoAccFinished(&pEventArg_p->sdoInfo);
-            if(ret != kPsiSuccessful)
+            if (ret != kPsiSuccessful)
             {
                 oplkret = kErrorApiInvalidParam;
             }
@@ -609,14 +609,14 @@ static tOplkError psi_syncCb(void)
     tOplkApiSocTimeInfo socTimeStamp;
 
     ret = oplk_getSocTime(&socTimeStamp);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
-      oplkret = kErrorInvalidOperation;
-      goto Exit;
+        oplkret = kErrorInvalidOperation;
+        goto Exit;
     }
 
     oplkret = oplk_exchangeAppPdoOut();
-    if(oplkret != kErrorOk)
+    if (oplkret != kErrorOk)
         goto Exit;
 
     psi_pdoProcFinished(tPdoDirRpdo);
@@ -631,7 +631,7 @@ static tOplkError psi_syncCb(void)
         time.fCnIsOperational_m = (mainInstance_l.plkState == kNmtCsOperational) ? TRUE : FALSE;
 
         ret = status_process(&time);
-        if(ret != kPsiSuccessful)
+        if (ret != kPsiSuccessful)
         {
             oplkret = kErrorInvalidOperation;
             goto Exit;
@@ -641,7 +641,7 @@ static tOplkError psi_syncCb(void)
 
         // Handle synchronous task of slim interface
         ret = psi_handleSync(pNetTime);
-        if(ret != kPsiSuccessful)
+        if (ret != kPsiSuccessful)
         {
             oplkret = kErrorInvalidOperation;
             goto Exit;
@@ -649,7 +649,7 @@ static tOplkError psi_syncCb(void)
     }
 
     oplkret = oplk_exchangeAppPdoIn();
-    if(oplkret != kErrorOk)
+    if (oplkret != kErrorOk)
         goto Exit;
 
     psi_pdoProcFinished(tPdoDirTpdo);
@@ -659,4 +659,3 @@ Exit:
 }
 
 /// \}
-

@@ -140,12 +140,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Asynchronous transmit buffer for NMT frames in bytes
 #define CONFIG_DLLCAL_BUFFER_SIZE_TX_NMT            4096
 
-// Asynchronous transmit buffer for sync response frames in bytes
-#define CONFIG_DLLCAL_BUFFER_SIZE_TX_SYNC           4096
-
-// Asynchronous transmit buffer for virtual Ethernet frames in bytes
-#define CONFIG_DLLCAL_BUFFER_SIZE_TX_VETH           4096
-
 // Size of kernel to user queue
 #define CONFIG_EVENT_SIZE_CIRCBUF_KERNEL_TO_USER    8192
 

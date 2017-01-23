@@ -78,7 +78,6 @@ SET(ALT_PSI_INCS
     ${ALT_PCP_BSP_DIR}
     ${ALT_PCP_BSP_DIR}/HAL/inc
     ${ALT_PCP_BSP_DIR}/drivers/inc
-    ${ARCH_SOURCE_DIR}/altera-nios2
     ${PROJECT_SOURCE_DIR}/target/altera/include
    )
 
