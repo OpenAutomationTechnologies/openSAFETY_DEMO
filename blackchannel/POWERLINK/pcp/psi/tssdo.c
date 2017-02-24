@@ -135,7 +135,7 @@ void tssdo_init(UINT8 nodeId_p, UINT16 idxSsdoStub_p, UINT16 idxSsdoStubData_p)
     idxSsdoStub_l = idxSsdoStub_p;
     idxSsdoStubData_l = idxSsdoStubData_p;
 
-    PSI_MEMSET(&tssdoInstance_l, 0 , sizeof(struct eTssdoInstance) * kNumSsdoInstCount);
+    PSI_MEMSET(&tssdoInstance_l, 0, sizeof(struct eTssdoInstance) * kNumSsdoInstCount);
 }
 
 //------------------------------------------------------------------------------
@@ -159,12 +159,12 @@ tTssdoInstance tssdo_create(tTssdoInitStruct* pInitParam_p)
     tTbufInitStruct    tbufInitParam;
 
 #if _DEBUG
-    if(pInitParam_p->tbufTxSize_m != sizeof(tTbufSsdoTxStructure))
+    if (pInitParam_p->tbufTxSize_m != sizeof(tTbufSsdoTxStructure))
     {
         goto Exit;
     }
 
-    if(pInitParam_p->chanId_m > (kNumSsdoInstCount - 1))
+    if (pInitParam_p->chanId_m > (kNumSsdoInstCount - 1))
     {
         goto Exit;
     }
@@ -177,7 +177,7 @@ tTssdoInstance tssdo_create(tTssdoInitStruct* pInitParam_p)
     tbufInitParam.size_m = pInitParam_p->tbufTxSize_m;
 
     tssdoInstance_l[pInitParam_p->chanId_m].pTbufConsTxInst_m = tbuf_create(&tbufInitParam);
-    if(tssdoInstance_l[pInitParam_p->chanId_m].pTbufConsTxInst_m == NULL)
+    if (tssdoInstance_l[pInitParam_p->chanId_m].pTbufConsTxInst_m == NULL)
     {
         goto Exit;
     }
@@ -185,7 +185,7 @@ tTssdoInstance tssdo_create(tTssdoInitStruct* pInitParam_p)
     // Create timeout module for ARP retry count
     tssdoInstance_l[pInitParam_p->chanId_m].pArpTimeoutInst_m = timeout_create(
             SSDO_ARP_TIMEOUT_CYCLE_COUNT);
-    if(tssdoInstance_l[pInitParam_p->chanId_m].pArpTimeoutInst_m == NULL)
+    if (tssdoInstance_l[pInitParam_p->chanId_m].pArpTimeoutInst_m == NULL)
     {
         goto Exit;
     }
@@ -217,7 +217,7 @@ Exit:
 //------------------------------------------------------------------------------
 void tssdo_destroy(tTssdoInstance pInstance_p)
 {
-    if(pInstance_p != NULL)
+    if (pInstance_p != NULL)
     {
         tbuf_destroy(pInstance_p->pTbufConsTxInst_m);
 
@@ -245,7 +245,7 @@ tPsiStatus tssdo_process(tTssdoInstance pInstance_p)
 {
     tPsiStatus ret = kPsiSuccessful;
 
-    if(pInstance_p == NULL)
+    if (pInstance_p == NULL)
     {
         ret = kPsiSsdoProcessingFailed;
         goto Exit;
@@ -253,7 +253,7 @@ tPsiStatus tssdo_process(tTssdoInstance pInstance_p)
 
     // Process incoming frames
     ret = processTransmitSm(pInstance_p);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto Exit;
     }
@@ -359,7 +359,7 @@ tPsiStatus tssdo_handleIncoming(tTssdoInstance pInstance_p)
     tPsiStatus ret = kPsiSuccessful;
     tSeqNrValue  currSeqNr = kSeqNrValueInvalid;
 
-    if(pInstance_p == NULL)
+    if (pInstance_p == NULL)
     {
         ret = kPsiSsdoInvalidParameter;
         goto Exit;
@@ -368,7 +368,7 @@ tPsiStatus tssdo_handleIncoming(tTssdoInstance pInstance_p)
     // Increment cycle counter for ARP retry timer
     timeout_incrementCounter(pInstance_p->pArpTimeoutInst_m);
 
-    if(pInstance_p->consTxState_m != kConsTxStateWaitForFrame)
+    if (pInstance_p->consTxState_m != kConsTxStateWaitForFrame)
     {
         // Object access is currently in progress -> do nothing here!
         goto Exit;
@@ -376,7 +376,7 @@ tPsiStatus tssdo_handleIncoming(tTssdoInstance pInstance_p)
 
     // Acknowledge consuming buffer
     ret = tbuf_setAck(pInstance_p->pTbufConsTxInst_m);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto Exit;
     }
@@ -384,18 +384,18 @@ tPsiStatus tssdo_handleIncoming(tTssdoInstance pInstance_p)
     // Get current sequence number
     ret = tbuf_readByte(pInstance_p->pTbufConsTxInst_m,
             TBUF_SSDOTX_SEQNR_OFF, (UINT8 *)&currSeqNr);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto Exit;
     }
 
     // Check sequence number sanity
-    if(currSeqNr != kSeqNrValueFirst && currSeqNr != kSeqNrValueSecond)
+    if (currSeqNr != kSeqNrValueFirst && currSeqNr != kSeqNrValueSecond)
     {
         goto Exit;
     }
 
-    if(currSeqNr != pInstance_p->currConsSeq_m)
+    if (currSeqNr != pInstance_p->currConsSeq_m)
     {
         // Switch to state process frame
         pInstance_p->consTxState_m = kConsTxStateProcessFrame;
@@ -439,7 +439,7 @@ static tPsiStatus processTransmitSm(tTssdoInstance pInstance_p)
     UINT16       paylSize;
 
     // Process ssdo channel
-    switch(pInstance_p->consTxState_m)
+    switch (pInstance_p->consTxState_m)
     {
         case kConsTxStateWaitForFrame:
         {
@@ -451,21 +451,21 @@ static tPsiStatus processTransmitSm(tTssdoInstance pInstance_p)
             // Incoming element -> Forward to other node!
             ret = grabFromBuffer(pInstance_p, &pInstance_p->pConsTxPayl_m,
                     &paylSize);
-            if(ret != kPsiSuccessful)
+            if (ret != kPsiSuccessful)
             {
                 goto Exit;
             }
 
             // Get target node for incoming message!
             ret = getTargetNode(pInstance_p, &targNode, &targIdx, &targSubIdx);
-            if(ret != kPsiSuccessful)
+            if (ret != kPsiSuccessful)
             {
                 goto Exit;
             }
 
             // Verify target node
             ret = verifyTargetInfo(targNode, targIdx, targSubIdx);
-            if(ret != kPsiSuccessful)
+            if (ret != kPsiSuccessful)
             {
                 // TODO Signal error back to application
                 ret = kPsiSuccessful;
@@ -476,7 +476,7 @@ static tPsiStatus processTransmitSm(tTssdoInstance pInstance_p)
             ret = sendToDestTarget(pInstance_p,
                     &targNode, &targIdx, &targSubIdx,
                     pInstance_p->pConsTxPayl_m, &paylSize);
-            if(ret != kPsiSuccessful)
+            if (ret != kPsiSuccessful)
             {
                 goto Exit;
             }
@@ -492,7 +492,7 @@ static tPsiStatus processTransmitSm(tTssdoInstance pInstance_p)
         {
             // Check if the timer is expired
             timerState = timeout_checkExpire(pInstance_p->pArpTimeoutInst_m);
-            if(timerState == kTimerStateExpired)
+            if (timerState == kTimerStateExpired)
             {
                 pInstance_p->consTxState_m = kConsTxStateProcessFrame;
                 timeout_stopTimer(pInstance_p->pArpTimeoutInst_m);
@@ -540,7 +540,7 @@ static tPsiStatus getTargetNode(tTssdoInstance pInstance_p,
     // Read SSDO-Stub object to get target node, idx and subindex
     oplkret = oplk_readLocalObject(idxSsdoStub_l, pInstance_p->instId_m + 1,
             &accTargNode, &accTargSize);
-    if(oplkret != kErrorOk)
+    if (oplkret != kErrorOk)
     {
         ret = kPsiSsdoDestinationUnknown;
         goto Exit;
@@ -591,7 +591,7 @@ static tPsiStatus sendToDestTarget(tTssdoInstance pInstance_p,
             kSdoTypeUdp,                               // Type of SDO carrier (Always use UDP!)
             (void *)pInstance_p);                      // User argument is the instance pointer
 
-    switch(oplkret)
+    switch (oplkret)
     {
         case kErrorApiTaskDeferred:
         {
@@ -604,7 +604,7 @@ static tPsiStatus sendToDestTarget(tTssdoInstance pInstance_p,
             ret = tssdo_consTxTransferFinished(pInstance_p);
             break;
         }
-      /*  case kErrorSdoUdpArpInProgress:
+        case kErrorSdoUdpArpInProgress:
         {
             // ARP table is still not updated -> Retry to transmit the frame later!
             timeout_startTimer(pInstance_p->pArpTimeoutInst_m);
@@ -612,7 +612,7 @@ static tPsiStatus sendToDestTarget(tTssdoInstance pInstance_p,
             pInstance_p->consTxState_m = kConsTxStateWaitForNextArpRetry;
 
             break;
-        }*/
+        }
         case  kErrorSdoComHandleBusy:
         {
             // Handle is busy -> try to retransmit later!
@@ -651,7 +651,7 @@ static tPsiStatus grabFromBuffer(tTssdoInstance pInstance_p,
 
     ret = tbuf_readWord(pInstance_p->pTbufConsTxInst_m,
             TBUF_SSDOTX_PAYLSIZE_OFF, &paylSize);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto Exit;
     }
@@ -659,7 +659,7 @@ static tPsiStatus grabFromBuffer(tTssdoInstance pInstance_p,
     // Get data pointer to local buffer
     ret = tbuf_getDataPtr(pInstance_p->pTbufConsTxInst_m,
             TBUF_SSDOTX_TSSDO_TRANSMIT_DATA_OFF, ppMsgBuffer_p);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto Exit;
     }
@@ -690,13 +690,13 @@ static tPsiStatus verifyTargetInfo(UINT8 targNode_p, UINT16 targIdx_p,
 {
     tPsiStatus ret = kPsiSuccessful;
 
-    if(targNode_p == 0 || targNode_p == nodeId_l)
+    if (targNode_p == 0 || targNode_p == nodeId_l)
     {
         ret = kPsiSsdoInvalidTargetInfo;
         goto Exit;
     }
 
-    if(targIdx_p == 0 || targSubIdx_p == 0)
+    if (targIdx_p == 0 || targSubIdx_p == 0)
     {
         ret = kPsiSsdoInvalidTargetInfo;
         goto Exit;
@@ -707,5 +707,3 @@ Exit:
 }
 
 /// \}
-
-

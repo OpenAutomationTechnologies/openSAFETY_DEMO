@@ -84,7 +84,7 @@ This module connects the IP stack with the SDO/UDP module.
 
 typedef struct
 {
-    BOOL                    fInitialized;      ///< True if socketwrapper instance shall be created.
+    BOOL                    fInitialized;      ///< Flag to indicate whether socketwrapper instance is created.
     IP_STACK_H              pIpStackHandle;    ///< Pointer to IP stack handle.
     tSocketWrapperAddress   socketAddress;     ///< Address of Socket Wrapper.
     tSocketWrapperReceiveCb socketReceiveCb;   ///< Receive callback function for the socket wrapper.
@@ -179,7 +179,6 @@ tOplkError socketwrapper_bind(tSocketWrapper pSocketWrapper_p,
 The function closes the given socket wrapper instance.
 
 \param  pSocketWrapper_p    Socket wrapper instance.
-\param  pSocketAddress_p    Socket address structure.
 
 \ingroup module_socketwrapper
 */
@@ -371,7 +370,7 @@ tOplkError socketwrapper_arpQuery(tSocketWrapper pSocketWrapper_p,
 
     // if target node MAC is unknown return with error
     ipArpQuery(remoteIpAddress_p, &macAddr);
-    if(!memcmp(&macAddr , &macAddrZero , sizeof(eth_addr)))
+    if (!memcmp(&macAddr, &macAddrZero, sizeof(eth_addr)))
     {
          printf(" Inside socketwrapper_arpQuery\n");
         // send ARP request when MAC is unknown!
@@ -379,7 +378,6 @@ tOplkError socketwrapper_arpQuery(tSocketWrapper pSocketWrapper_p,
         ret = kErrorSdoUdpArpInProgress;
     }
        return ret;
-
 }
 
 /// \}

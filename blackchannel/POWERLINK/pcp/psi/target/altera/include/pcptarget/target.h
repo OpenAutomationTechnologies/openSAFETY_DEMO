@@ -98,10 +98,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // function prototypes
 //------------------------------------------------------------------------------
 UINT8 target_getNodeid(void);
-void target_setStatusLed(BOOL fOn_p);
-void target_setErrorLed(BOOL fOn_p);
 void target_criticalSection(BYTE fEnable_p);
 
 #endif /* _INC_pcptarget_H_ */
-
-

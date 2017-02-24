@@ -69,8 +69,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //------------------------------------------------------------------------------
 // const defines
 //------------------------------------------------------------------------------
-#define TARGET_STATUS_LED_BIT     1
-#define TARGET_ERROR_LED_BIT      2
 
 //------------------------------------------------------------------------------
 // local types
@@ -113,45 +111,6 @@ UINT8 target_getNodeid(void)
 
 //------------------------------------------------------------------------------
 /**
-\brief  Sets the status LED
-
-The function sets the POWERLINK status LED.
-
-\param  fOn_p               Determines the LED state
-
-\ingroup module_psi_target
-*/
-//------------------------------------------------------------------------------
-void target_setStatusLed(BOOL fOn_p)
-{
-    if(fOn_p != FALSE)
-        IOWR_ALTERA_AVALON_PIO_SET_BITS(STATUS_LED_PIO_BASE, TARGET_STATUS_LED_BIT);
-    else
-        IOWR_ALTERA_AVALON_PIO_CLEAR_BITS(STATUS_LED_PIO_BASE, TARGET_STATUS_LED_BIT);
-}
-
-//------------------------------------------------------------------------------
-/**
-\brief  Sets the error LED
-
-The function sets the POWERLINK error LED.
-
-\param  fOn_p               Determines the LED state
-
-\ingroup module_psi_target
-*/
-//------------------------------------------------------------------------------
-void target_setErrorLed(BOOL fOn_p)
-{
-    if(fOn_p != FALSE)
-        IOWR_ALTERA_AVALON_PIO_SET_BITS(STATUS_LED_PIO_BASE, TARGET_ERROR_LED_BIT);
-    else
-        IOWR_ALTERA_AVALON_PIO_CLEAR_BITS(STATUS_LED_PIO_BASE, TARGET_ERROR_LED_BIT);
-}
-
-
-//------------------------------------------------------------------------------
-/**
 \brief    Enter or leave the critical section
 
 This function enabels/disables global interrupts and implementes the critical
@@ -190,4 +149,5 @@ static int              iLockCount = 0;
 //============================================================================//
 /// \name Private Functions
 /// \{
+
 ///\}
