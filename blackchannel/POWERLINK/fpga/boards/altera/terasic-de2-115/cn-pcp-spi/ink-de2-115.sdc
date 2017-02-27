@@ -45,5 +45,7 @@ set_false_path -from [get_ports NODE_SWITCH[*]] -to [get_registers *]
 # ------------------------------------------------------------------------------
 # Other IOs
 # -> Cut path
-set_false_path -from [get_registers *]      -to [get_ports LEDG[*]]
-set_false_path -from [get_registers *]      -to [get_ports BENCHMARK_PCP[*]]
+set_false_path -from *                           -to [get_ports LEDG[*]]
+set_false_path -from *                           -to [get_ports LEDR[*]]
+set_false_path -from *                           -to [get_ports BENCHMARK_PCP[*]]
+set_false_path -from [get_ports PHY_LINK_n[*]]   -to *

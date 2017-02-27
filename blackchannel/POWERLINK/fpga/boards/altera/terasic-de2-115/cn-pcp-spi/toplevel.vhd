@@ -52,6 +52,7 @@ entity toplevel is
         EXT_CLK             :  in std_logic;
         -- PHY Interfaces
         PHY_GXCLK           : out   std_logic_vector(1 downto 0);
+        PHY_LINK_n          : in    std_logic_vector(1 downto 0);
         PHY_RXCLK           : in    std_logic_vector(1 downto 0);
         PHY_RXER            : in    std_logic_vector(1 downto 0);
         PHY_RXDV            : in    std_logic_vector(1 downto 0);
@@ -86,6 +87,7 @@ entity toplevel is
         NODE_SWITCH         : in std_logic_vector(7 downto 0);
         -- LED
         LEDG                : out std_logic_vector(7 downto 0);
+        LEDR                : out std_logic_vector(15 downto 0);
         -- BENCHMARK_OUT
         BENCHMARK_PCP       : out std_logic_vector(7 downto 0)
     );
@@ -110,6 +112,7 @@ architecture rtl of toplevel is
             openmac_0_smi_nPhyRst                   : out   std_logic_vector(1 downto 0);
             openmac_0_smi_clk                       : out   std_logic_vector(1 downto 0);
             openmac_0_smi_dio                       : inout std_logic_vector(1 downto 0)  := (others => 'X');
+            openmac_0_pktactivity_export            : out   std_logic;
             -- SRAM
             tri_state_0_tcm_address_out             : out   std_logic_vector(20 downto 0);
             tri_state_0_tcm_byteenable_n_out        : out   std_logic_vector(1 downto 0);
@@ -120,7 +123,7 @@ architecture rtl of toplevel is
             -- NODE SWITCHES
             node_switch_pio_export                  : in    std_logic_vector(7 downto 0)  := (others => 'X');
             -- POWERLINK LEDs
-            status_led_pio_export                   : out   std_logic_vector(1 downto 0);
+            powerlink_led_export                    : out   std_logic_vector(1 downto 0);
             -- FLASH
             pcp_0_epcs_flash_dclk                   : out   std_logic;
             pcp_0_epcs_flash_sce                    : out   std_logic;
@@ -157,13 +160,29 @@ architecture rtl of toplevel is
     signal sramAddr         : std_logic_vector(SRAM_ADDR'high downto 0);
     signal plk_status_error : std_logic_vector(1 downto 0);
     signal timer_out        : std_logic;
+    signal openmac_activity : std_logic;
 begin
     SRAM_ADDR   <= sramAddr(SRAM_ADDR'range);
 
     PHY_GXCLK   <= (others => '0');
     PHY_TXER    <= (others => '0');
 
-    LEDG        <= "000000" & plk_status_error;
+    ---------------------------------------------------------------------------
+    -- Green LED assignments
+    LEDG        <= plk_status_error(0) &  -- POWERLINK Status LED
+                   "000" &  -- Reserved
+                   (openmac_activity and not PHY_LINK_n(0)) & -- Gated activity
+                   not PHY_LINK_n(0) & -- Link
+                   (openmac_activity and not PHY_LINK_n(1)) & -- Gated activity
+                   not PHY_LINK_n(1); -- Link
+    ---------------------------------------------------------------------------
+
+    ---------------------------------------------------------------------------
+    -- Red LED assignments
+    LEDR        <= x"000" & -- Reserved
+                   "000" & -- Reserved
+                   plk_status_error(1); -- POWERLINK Error LED
+    ---------------------------------------------------------------------------
 
     SYNC_IRQ    <= timer_out;
 
@@ -184,6 +203,7 @@ begin
             openmac_0_smi_nPhyRst                           => PHY_RESET_n,
             openmac_0_smi_clk                               => PHY_MDC,
             openmac_0_smi_dio                               => PHY_MDIO,
+            openmac_0_pktactivity_export                    => openmac_activity,
             -- SRAM
             tri_state_0_tcm_address_out                     => sramAddr,
             tri_state_0_tcm_read_n_out                      => SRAM_OE_n,
@@ -194,7 +214,7 @@ begin
             -- NODE SWITCHES
             node_switch_pio_export                          => NODE_SWITCH,
             -- POWERLINK LEDs
-            status_led_pio_export                           => plk_status_error,
+            powerlink_led_export                            => plk_status_error,
             -- FLASH
             pcp_0_epcs_flash_dclk                           => EPCS_DCLK,
             pcp_0_epcs_flash_sce                            => EPCS_SCE,
@@ -208,7 +228,7 @@ begin
             -- BENCHMARK PCP
             pcp_0_benchmark_pio_export                      => BENCHMARK_PCP,
             -- SYNC IRQ
-            openmac_0_mactimerout_irq                    => timer_out
+            openmac_0_mactimerout_irq                       => timer_out
         );
 
     -- Pll Instance
