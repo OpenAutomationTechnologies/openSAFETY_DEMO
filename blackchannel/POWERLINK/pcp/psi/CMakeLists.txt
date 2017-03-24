@@ -119,7 +119,7 @@ SET(OMETHLIB_SRCS
 # Set CFLAGS depending on build type
 IF(${CMAKE_BUILD_TYPE} MATCHES "Debug" OR ${CMAKE_BUILD_TYPE} MATCHES "RelWithDebInfo")
     SET(DBG_MODE _DEBUG)
-    SET(CFG_PCP_DEBUG_LVL 0xEC000000L CACHE STRING "Set the level of the debug output")
+    SET(CFG_PCP_DEBUG_LVL 0xC0000000L CACHE STRING "Set the level of the debug output")
 ELSE()
     #All other builds are release builds
     SET(DBG_MODE NDEBUG)
