@@ -60,13 +60,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // function prototypes
 //------------------------------------------------------------------------------
 #if(((PSI_MODULE_INTEGRATION) & (PSI_MODULE_CC)) != 0)
-  extern tOplkError cc_obdAccessCb(tObdCbParam* pParam_p);
+extern tOplkError cc_obdAccessCb(tObdAlConHdl* pParam_p);
 #endif
 
 #if(((PSI_MODULE_INTEGRATION) & (PSI_MODULE_SSDO)) != 0)
-  extern tOplkError rssdo_obdAccessCb(tObdCbParam* pParam_p);
+extern tOplkError rssdo_obdAccessCb(tObdAlConHdl* pParam_p);
 #endif
 
 #endif /* _INC_psi_obdict_H_ */
-
-

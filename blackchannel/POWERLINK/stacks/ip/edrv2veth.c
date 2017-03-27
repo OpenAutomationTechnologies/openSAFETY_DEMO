@@ -100,7 +100,6 @@ This structure defines the receive buffer descriptor.
 typedef struct
 {
     BOOL            fIpStackOwner;      ///< TRUE if the IP stack owns the buffer
-                                        //<TODO: Use here same type like in \ref ip_packet_typ!
     ULONG           length;             ///< Payload length
     UINT8           aBuffer[IP_MTU];    ///< Receive buffer
 } tEdrv2VethRxDesc;
@@ -190,10 +189,10 @@ tOplkError edrv2veth_init (eth_addr* pEthMac_p)
 //------------------------------------------------------------------------------
 void edrv2veth_exit (void)
 {
-    if(edrv2vethInstance_l.pIpStack != NULL)
+    if (edrv2vethInstance_l.pIpStack != NULL)
         ipDestroy(edrv2vethInstance_l.pIpStack);
 
-	edrv2vethInstance_l.pIpStack = NULL;
+    edrv2vethInstance_l.pIpStack = NULL;
 }
 
 //------------------------------------------------------------------------------
@@ -286,15 +285,16 @@ tOplkError edrv2veth_receiveHandler(UINT8* pFrame_p, UINT32 frameSize_p)
 
     for (i=0; i<IP_RX_BUF_CNT; i++)
     {
-        if (edrv2vethInstance_l.aRxBuffer[i].fIpStackOwner)
-        break;
+        if (!edrv2vethInstance_l.aRxBuffer[i].fIpStackOwner)
+            break;
     }
 
     if (i == IP_RX_BUF_CNT)
     {
-    // No free buffer found => ignore frame
-    PRINTF("%s (Err/Warn): No free buffer found, Frames ignored\n");
-    return kErrorOk;
+        // No free buffer found => ignore frame
+        PRINTF("%s (Err/Warn): No free buffer found, Frames ignored\n",
+        __func__);
+        return kErrorOk;
     }
 
     // i points to a free buffer!
@@ -362,7 +362,7 @@ tOplkError edrv2veth_process(void)
 /**
 \brief Free the packet buffer after transmission
 
-\param  pPacket       Pointer to the packet buffer for freeing
+\param  pPacket_p       Pointer to the packet buffer for freeing
 
 */
 //------------------------------------------------------------------------------
