@@ -58,7 +58,7 @@ Different transfer protocols and media such as CAN can also be used with openSAF
 openSAFETY only uses the non-secure transfer layer for exchanging the secured
 openSAFETY Frames, whose contents are not interpreted by the transfer layer. Of
 course, POWERLINK is the preferred transfer layer because of the close relationship
-between the communication mechanisms in POWERLINK and openSAFETY, which enable an
+between the communication mechanisms in POWERLINK and openSAFETY, which enables an
 ideal level of performance.
 
 An openSAFETY network can consist of up to 1023 openSAFETY nodes (so called Safety

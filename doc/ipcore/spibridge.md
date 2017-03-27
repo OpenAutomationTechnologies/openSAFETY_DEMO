@@ -11,7 +11,7 @@ the second one implements the SPI protocol.
 The core subcomponent synchronizes the input signals to the local clock, reads/writes
 data to the SPI shift register and forwards the data to the protocol component.
 The protocol component implements a full duplex streamed access to and from
-the external buffers where not additional commands need to be transferred.
+the external buffers where no additional commands need to be transferred.
 
 On streaming access a basic communication cycle starts at the low address of its
 first consuming buffer and forwards the data as a stream to the core component.

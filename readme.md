@@ -48,7 +48,7 @@ application, i.e. the openSAFETY stack and the safety application. It is
 implemented in two ways, as single channelled and as dual channelled system,
 using STMicroelectronics Nucleo boards: **NUCLEO-F401RE** or **NUCLEO-F103RB**.
 
-The single channelled implementation compromises just one application processor,
+The single channelled implementation comprises just one application processor,
 the dual channelled implementation additionally uses a second redundant
 application processor, which shares the SPI serial device with the other
 processor. The two processors  receive the same data, exchange data among them

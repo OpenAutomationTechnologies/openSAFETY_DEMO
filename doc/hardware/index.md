@@ -4,7 +4,7 @@ Hardware Design {#page_idxhardware}
 [TOC]
 
 This chapter discusses the general hardware requirements for POWERLINK Slaves
-using thePOWERLINK slim interface package to outline the usage of hardware
+using the POWERLINK slim interface package to outline the usage of hardware
 resources and provide a reference point for hardware development respectively.
 Basically the system is organized to host an
 FPGA for the PCP and one or two micro-controllers for the application processor.
