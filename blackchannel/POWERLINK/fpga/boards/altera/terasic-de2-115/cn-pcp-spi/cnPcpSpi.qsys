@@ -128,7 +128,7 @@
          type = "String";
       }
    }
-   element status_led_pio.s1
+   element pcp_0_powerlink_led.s1
    {
       datum baseAddress
       {
@@ -149,7 +149,7 @@
          type = "boolean";
       }
    }
-   element status_led_pio
+   element pcp_0_powerlink_led
    {
       datum _sortIndex
       {
@@ -219,7 +219,7 @@
  <parameter name="projectName" value="ink-de2-115.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1437995450693" />
+ <parameter name="timeStamp" value="1487571853593" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk50" internal="clk50.clk_in" type="clock" dir="end" />
@@ -230,8 +230,8 @@
    type="conduit"
    dir="end" />
  <interface
-   name="status_led_pio"
-   internal="status_led_pio.external_connection"
+   name="powerlink_led"
+   internal="pcp_0_powerlink_led.external_connection"
    type="conduit"
    dir="end" />
  <interface name="clk25" internal="clk25.clk_in" type="clock" dir="end" />
@@ -284,6 +284,11 @@
    internal="pcp_0.epcs_flash"
    type="conduit"
    dir="end" />
+ <interface
+   name="openmac_0_pktactivity"
+   internal="openmac_0.pktActivity"
+   type="conduit"
+   dir="end" />
  <module kind="clock_source" version="13.0" enabled="1" name="clk50">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
@@ -318,7 +323,7 @@
    kind="altera_avalon_pio"
    version="13.0.1.99.2"
    enabled="1"
-   name="status_led_pio">
+   name="pcp_0_powerlink_led">
   <parameter name="bitClearingEdgeCapReg" value="false" />
   <parameter name="bitModifyingOutReg" value="true" />
   <parameter name="captureEdge" value="false" />
@@ -524,7 +529,7 @@
   <parameter name="gui_tmrPulse" value="true" />
   <parameter name="gui_tmrPulseEn" value="true" />
   <parameter name="gui_tmrPulseWdt" value="10" />
-  <parameter name="gui_actEn" value="false" />
+  <parameter name="gui_actEn" value="true" />
   <parameter name="gui_sdcEn" value="true" />
   <parameter name="AUTO_DMACLK_CLOCK_RATE" value="100000000" />
   <parameter name="AUTO_PKTCLK_CLOCK_RATE" value="100000000" />
@@ -538,7 +543,7 @@
    kind="clock"
    version="13.0"
    start="clk50.clk"
-   end="status_led_pio.clk" />
+   end="pcp_0_powerlink_led.clk" />
  <connection
    kind="reset"
    version="13.0"
@@ -553,12 +558,12 @@
    kind="reset"
    version="13.0"
    start="clk50.clk_reset"
-   end="status_led_pio.reset" />
+   end="pcp_0_powerlink_led.reset" />
  <connection
    kind="reset"
    version="13.0"
    start="clk100.clk_reset"
-   end="status_led_pio.reset" />
+   end="pcp_0_powerlink_led.reset" />
  <connection
    kind="reset"
    version="13.0"
@@ -568,7 +573,7 @@
    kind="reset"
    version="13.0"
    start="clk25.clk_reset"
-   end="status_led_pio.reset" />
+   end="pcp_0_powerlink_led.reset" />
  <connection kind="clock" version="13.0" start="clk50.clk" end="pcp_0.clk50" />
  <connection kind="clock" version="13.0" start="clk100.clk" end="pcp_0.clk100" />
  <connection
@@ -687,7 +692,7 @@
    kind="avalon"
    version="13.0"
    start="pcp_0.slow_bridge"
-   end="status_led_pio.s1">
+   end="pcp_0_powerlink_led.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x2d00" />
   <parameter name="defaultConnection" value="false" />
