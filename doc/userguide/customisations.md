@@ -30,7 +30,7 @@ Please refer to the openSAFETY Device Description File Format Definition for
 detailed information on on the OSDD file format.
 
 An OSDD file can be used for system integration as well as for firmware
-development and ensures therefore consistency throughout the development
+development and therefore ensures consistency throughout the development
 process.
 This consistency can be achieved by using the OSDD file for generating
 customised source files. As part of the openSAFETY distribution, the

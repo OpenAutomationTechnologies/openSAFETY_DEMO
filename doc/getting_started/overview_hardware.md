@@ -53,4 +53,4 @@ information and purchasing.
 - 2x USB cable type A to mini-B (male / male) for conecting the Nucleo boards to the computer
 - 4x Ethernet cables for connecting the hardware via POWERLINK, configuring the PLC, (and doing Wireshark traces)
 - Wires for connecting the FPGA / microcontroller boards
-- Cabling for supplying the B&R hardware
+- Cabling for supplying power to the B&R hardware

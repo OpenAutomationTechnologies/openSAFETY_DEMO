@@ -21,7 +21,7 @@ jitter. This additional features are listed as following:
 # Synchronous interrupt    {#sect_openmac_syncint}
 The synchronous interrupt signal is asserted at SoC arrival. The interrupt itself
 is edge triggered and is reset after a high pulse of 2us. (The length of the pulse
-can be adjust by using the SYNC_INT_PULSE_WIDTH_NS define in pcp/appif/status.c)
+can be adjusted by using the SYNC_INT_PULSE_WIDTH_NS define in pcp/appif/status.c)
 The user application processes the synchronous data on this interrupt and can
 correct the drift of it's local clock by reading the global POWERLINK time from
 the SoC frame.

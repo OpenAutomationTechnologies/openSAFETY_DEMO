@@ -43,7 +43,7 @@ interconnect to access the PCP.
 In addition to this serial device, a synchronous interrupt line
 is connected to the application processor. This line is used to periodically
 trigger the SPI master on the application processor which then starts a
-new cyclically data transfer.
+new cyclic data transfer.
 
 ## User Application, Safe Node - Demo {#sect_gs_sysdesc_app_sndemo}
 On the application processors, a safe node demo (**demo-sn-gpio**) is
@@ -52,7 +52,7 @@ PSI interface to access the POWERLINK processor.
 
 In dual channel configuration, the two application processors exchange data
 via a UART interface. This is needed for e.g. handshakes during boot-up,
-synchronisation, exchanging openSAFETY stack flow counter values or
+synchronisation, exchange of openSAFETY stack flow counter values or
 openSAFETY frames.
 See \ref group_app_sn for information on the data flow and the utilisation of
 **SPI** and **UART**.
@@ -106,5 +106,5 @@ of the interface:
   * Access to the data of unique objects can be achieved by using the
   \ref module_psi_cc.
 - There is no Virtual Ethernet interface on the application.
-  (It is therefore not possible to send or receive any generic ehternet frame
+  (It is therefore not possible to send or receive any generic Ethernet frame
    at the application)
