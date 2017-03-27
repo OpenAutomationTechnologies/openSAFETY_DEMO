@@ -47,6 +47,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <pcptarget/target.h>
 
 #include "event.h"
+#include <psi/obdict.h>
 
 //============================================================================//
 //            G L O B A L   D E F I N I T I O N S                             //
@@ -160,7 +161,7 @@ tOplkError processEvents(tOplkApiEventType eventType_p,
     }
 
     // call user event call back
-    if((ret == kErrorOk) && (pfnEventCb_l != NULL))
+    if ((ret == kErrorOk) && (pfnEventCb_l != NULL))
         ret = pfnEventCb_l(eventType_p, pEventArg_p, pUserArg_p);
 
     return ret;
@@ -292,20 +293,20 @@ static tOplkError processUserObdAccessEvent(tOplkApiEventType eventType_p,
     UNUSED_PARAMETER(eventType_p);
     UNUSED_PARAMETER(pUserArg_p);
 
-    switch(pParam->index)
+    switch (pParam->index)
     {
-        #if(((PSI_MODULE_INTEGRATION) & (PSI_MODULE_SSDO)) != 0)
+        #if(((PSI_MODULE_INTEGRATION) & (PSI_MODULE_CC)) != 0)
         case 0x2000:
             oplkret = cc_obdAccessCb(pParam);
             break;
-
+        #endif
+        #if(((PSI_MODULE_INTEGRATION) & (PSI_MODULE_SSDO)) != 0)
         case 0x2130:
             oplkret = rssdo_obdAccessCb(pParam);
             break;
-
+        #endif
         default:
             break;
-    #endif
     }
     return oplkret;
 }

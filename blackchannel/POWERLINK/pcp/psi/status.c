@@ -153,16 +153,16 @@ tPsiStatus status_init(tStatusInitStruct* pInitParam_p)
     tPsiStatus ret = kPsiSuccessful;
     tTbufInitStruct  tbufInitParam;
 
-    PSI_MEMSET(&statusInstance_l, 0 , sizeof(tStatusInstance));
+    PSI_MEMSET(&statusInstance_l, 0, sizeof(tStatusInstance));
 
 #if _DEBUG
-    if(pInitParam_p->outTbufSize_m != sizeof(tTbufStatusOutStructure))
+    if (pInitParam_p->outTbufSize_m != sizeof(tTbufStatusOutStructure))
     {
         ret = kPsiStatusBufferSizeMismatch;
         goto Exit;
     }
 
-    if(pInitParam_p->inTbufSize_m != sizeof(tTbufStatusInStructure))
+    if (pInitParam_p->inTbufSize_m != sizeof(tTbufStatusInStructure))
     {
         ret = kPsiStatusBufferSizeMismatch;
         goto Exit;
@@ -179,7 +179,7 @@ tPsiStatus status_init(tStatusInitStruct* pInitParam_p)
     tbufInitParam.size_m = pInitParam_p->outTbufSize_m;
 
     statusInstance_l.pTbufOutInstance_m = tbuf_create(&tbufInitParam);
-    if(statusInstance_l.pTbufOutInstance_m == NULL)
+    if (statusInstance_l.pTbufOutInstance_m == NULL)
     {
         ret = kPsiStatusInitError;
         goto Exit;
@@ -192,7 +192,7 @@ tPsiStatus status_init(tStatusInitStruct* pInitParam_p)
     tbufInitParam.size_m = pInitParam_p->inTbufSize_m;
 
     statusInstance_l.pTbufInInstance_m = tbuf_create(&tbufInitParam);
-    if(statusInstance_l.pTbufInInstance_m == NULL)
+    if (statusInstance_l.pTbufInInstance_m == NULL)
     {
         ret = kPsiStatusInitError;
         goto Exit;
@@ -290,14 +290,14 @@ tPsiStatus status_process(tTimeInfo* pTime_p)
 
     // Process outgoing status registers
     ret = status_processOut(pTime_p);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto Exit;
     }
 
     // Process incoming status registers
     ret = status_processIn();
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto Exit;
     }
@@ -315,7 +315,7 @@ Exit:
 //------------------------------------------------------------------------------
 void status_enableSyncInt(void)
 {
-     /* Enable the interrupt in the EPL status sync module*/
+    /* Enable the interrupt in the EPL status sync module*/
     synctimer_controlExtSyncIrq(TRUE);
 }
 
@@ -343,7 +343,7 @@ void status_disableSyncInt(void)
 //------------------------------------------------------------------------------
 void status_setIccStatus(tSeqNrValue seqNr_p)
 {
-    if(seqNr_p == kSeqNrValueFirst)
+    if (seqNr_p == kSeqNrValueFirst)
     {
         statusInstance_l.iccStatus_m &= ~(1<<STATUS_ICC_BUSY_FLAG_POS);
     }
@@ -366,7 +366,7 @@ void status_setIccStatus(tSeqNrValue seqNr_p)
 //------------------------------------------------------------------------------
 void status_setSsdoConsChanFlag(UINT8 chanNum_p, tSeqNrValue seqNr_p)
 {
-    if(seqNr_p == kSeqNrValueFirst)
+    if (seqNr_p == kSeqNrValueFirst)
     {
         statusInstance_l.ssdoConsStatus_m &= ~(1<<chanNum_p);
     }
@@ -395,7 +395,7 @@ void status_setSsdoConsChanFlag(UINT8 chanNum_p, tSeqNrValue seqNr_p)
 void status_getSsdoProdChanFlag(UINT8 chanNum_p, tSeqNrValue* pSeqNr_p)
 {
     // Reformat to sequence number type
-    if(CHECK_BIT(statusInstance_l.ssdoProdStatus_m ,chanNum_p))
+    if (CHECK_BIT(statusInstance_l.ssdoProdStatus_m, chanNum_p))
     {
         *pSeqNr_p = kSeqNrValueSecond;
     }
@@ -417,7 +417,7 @@ void status_getSsdoProdChanFlag(UINT8 chanNum_p, tSeqNrValue* pSeqNr_p)
 //------------------------------------------------------------------------------
 void status_setLogConsChanFlag(UINT8 chanNum_p, tSeqNrValue seqNr_p)
 {
-    if(seqNr_p == kSeqNrValueFirst)
+    if (seqNr_p == kSeqNrValueFirst)
     {
         statusInstance_l.logConsStatus_m &= ~(1<<chanNum_p);
     }
@@ -452,7 +452,7 @@ static tPsiStatus status_processOut(tTimeInfo* pTime_p)
     tPsiStatus ret = kPsiSuccessful;
 
     ret = status_calcRelTime(pTime_p);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto Exit;
     }
@@ -460,7 +460,7 @@ static tPsiStatus status_processOut(tTimeInfo* pTime_p)
     // Write icc status field to buffer
     ret = tbuf_writeByte(statusInstance_l.pTbufOutInstance_m, TBUF_ICC_STATUS_OFF,
             statusInstance_l.iccStatus_m);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto Exit;
     }
@@ -468,7 +468,7 @@ static tPsiStatus status_processOut(tTimeInfo* pTime_p)
     // Write SSDO channels status field to buffer
     ret = tbuf_writeWord(statusInstance_l.pTbufOutInstance_m, TBUF_SSDO_CONS_STATUS_OFF,
             statusInstance_l.ssdoConsStatus_m);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto Exit;
     }
@@ -476,7 +476,7 @@ static tPsiStatus status_processOut(tTimeInfo* pTime_p)
     // Write logger channels status field to buffer
     ret = tbuf_writeByte(statusInstance_l.pTbufOutInstance_m, TBUF_LOG_CONS_STATUS_OFF,
             statusInstance_l.logConsStatus_m);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto Exit;
     }
@@ -509,7 +509,7 @@ static tPsiStatus status_processIn(void)
     // Read SSDO channels status field from buffer
     ret = tbuf_readWord(statusInstance_l.pTbufInInstance_m, TBUF_SSDO_PROD_STATUS_OFF,
             &statusInstance_l.ssdoProdStatus_m);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto Exit;
     }
@@ -536,7 +536,7 @@ static void status_incRelTime(UINT32* pRelTimeLow_p, UINT32* pRelTimeHigh_p,
     *pRelTimeLow_p += *pCycleTime_p;
 
     // Check for an overflow
-    if(*pRelTimeLow_p < *pCycleTime_p)
+    if (*pRelTimeLow_p < *pCycleTime_p)
     {
         (*pRelTimeHigh_p)++;
     }
@@ -558,7 +558,7 @@ static tPsiStatus status_setRelTime(UINT32 relTimeLow_p, UINT32 relTimeHigh_p)
 
     ret = tbuf_writeDword(statusInstance_l.pTbufOutInstance_m, TBUF_RELTIME_LOW_OFF,
             relTimeLow_p);
-    if(ret != kPsiSuccessful)
+    if (ret != kPsiSuccessful)
     {
         goto Exit;
     }
@@ -589,13 +589,13 @@ static tPsiStatus status_calcRelTime(tTimeInfo* pTime_p)
 {
     tPsiStatus  ret = kPsiSuccessful;
 
-    switch(statusInstance_l.relTimeState_m)
+    switch (statusInstance_l.relTimeState_m)
     {
         case kStatusRelTimeStateWaitFirstValidTime:
         {
-            if(pTime_p->fCnIsOperational_m != FALSE)
+            if (pTime_p->fCnIsOperational_m != FALSE)
             {
-                if(pTime_p->fTimeValid_m != FALSE)
+                if (pTime_p->fTimeValid_m != FALSE)
                 {
                     // read the value once and activate relative status
                     statusInstance_l.relTimeLow_m = pTime_p->relativeTimeLow_m;
@@ -605,33 +605,37 @@ static tPsiStatus status_calcRelTime(tTimeInfo* pTime_p)
                             &statusInstance_l.cycleTime_m);
 
                     ret = status_setRelTime(statusInstance_l.relTimeLow_m, statusInstance_l.relTimeHigh_m);
-                    if(ret != kPsiSuccessful)
-                    {
-                        goto Exit;
-                    }
-
-                    statusInstance_l.relTimeState_m = kStatusRelTimeStateActiv;
-                } else {
-                    /* CN is operational but RelativeTime is still not Valid!
-                     * (We now start counting without an offset) */
-                    status_incRelTime(&statusInstance_l.relTimeLow_m, &statusInstance_l.relTimeHigh_m,
-                            &statusInstance_l.cycleTime_m);
-
-                    status_setRelTime(statusInstance_l.relTimeLow_m, statusInstance_l.relTimeHigh_m);
-                    if(ret != kPsiSuccessful)
+                    if (ret != kPsiSuccessful)
                     {
                         goto Exit;
                     }
 
                     statusInstance_l.relTimeState_m = kStatusRelTimeStateActiv;
                 }
-            } else {
+                else
+                {
+                    /* CN is operational but RelativeTime is still not Valid!
+                     * (We now start counting without an offset) */
+                    status_incRelTime(&statusInstance_l.relTimeLow_m, &statusInstance_l.relTimeHigh_m,
+                            &statusInstance_l.cycleTime_m);
+
+                    status_setRelTime(statusInstance_l.relTimeLow_m, statusInstance_l.relTimeHigh_m);
+                    if (ret != kPsiSuccessful)
+                    {
+                        goto Exit;
+                    }
+
+                    statusInstance_l.relTimeState_m = kStatusRelTimeStateActiv;
+                }
+            }
+            else
+            {
                 /* increment local RelativeTime and wait for an arriving status
                  * value from the SoC */
                 status_incRelTime(&statusInstance_l.relTimeLow_m, &statusInstance_l.relTimeHigh_m,
                         &statusInstance_l.cycleTime_m);
             }
-           break;
+            break;
         }
         case kStatusRelTimeStateActiv:
         {
@@ -639,12 +643,12 @@ static tPsiStatus status_calcRelTime(tTimeInfo* pTime_p)
                     &statusInstance_l.cycleTime_m);
 
             status_setRelTime(statusInstance_l.relTimeLow_m, statusInstance_l.relTimeHigh_m);
-            if(ret != kPsiSuccessful)
+            if (ret != kPsiSuccessful)
             {
                 goto Exit;
             }
 
-           break;
+            break;
         }
         case kStatusRelTimeStateInvalid:
         {
@@ -664,5 +668,3 @@ Exit:
 }
 
 /// \}
-
-

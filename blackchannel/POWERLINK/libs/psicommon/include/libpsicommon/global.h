@@ -46,11 +46,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifdef PSI_BUILD_PCP
   #include <pcptarget/target.h>
-  #include <libpsicommon/ami.h>
 #else
   #include <apptarget/target.h>
-  #include <libpsicommon/ami.h>
 #endif
+
+#include <libpsicommon/ami.h>
 
 /*----------------------------------------------------------------------------*/
 /* const defines                                                              */
@@ -71,7 +71,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define UNALIGNED32(ptr)    ((UINT32)(ptr) & 3U)    /**< checks if the pointer is UINT32-aligned */
 
 /* Check if a bit is set */
-#define CHECK_BIT(var,pos) ((var) & (1<<(pos)))
+#define CHECK_BIT(var, pos) ((var) & (1<<(pos)))
 
 #ifndef UNUSED_PARAMETER
   #define UNUSED_PARAMETER(par)   (void)par
@@ -99,7 +99,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /**
  * \brief Asynchronous frame handling sequence number type
  */
-typedef enum {
+typedef enum
+{
     kSeqNrValueInvalid    = 0x00,   /**< Invalid sequence number (Other values are also invalid) */
     kSeqNrValueFirst      = 0x56,   /**< Sequence number first packet arriving */
     kSeqNrValueSecond     = 0xAA    /**< Sequence number second packet arriving */
@@ -108,7 +109,8 @@ typedef enum {
 /**
  * \brief Descriptor element of descriptor list
  */
-typedef struct {
+typedef struct
+{
     UINT32      buffOffset_m;       /**< Offset of the triple buffer */
     UINT16      buffSize_m;         /**< Size of the buffer */
     INT8        isProducer_m;       /**< Descriptor is a producing buffer (app side) */
@@ -117,7 +119,8 @@ typedef struct {
 /**
  * \brief List of object sizes
  */
-typedef enum eObjTypeSize {
+typedef enum eObjTypeSize
+{
     kTypeUint8Size   = 0x01,
     kTypeInt8Size    = 0x01,
     kTypeUint16Size  = 0x02,
@@ -131,7 +134,8 @@ typedef enum eObjTypeSize {
 /**
  * \brief One object from the cc object list
  */
-typedef struct {
+typedef struct
+{
     UINT16 objIdx;
     UINT8  objSubIdx;
     UINT8  objSize;
@@ -140,7 +144,8 @@ typedef struct {
 /**
  * \brief Configuration channel object of local object list
  */
-typedef struct {
+typedef struct
+{
     UINT16 objIdx_m;
     UINT8 objSubIdx_m;
     UINT8 objSize_m;
@@ -151,7 +156,8 @@ typedef struct {
 /**
  * \brief List of all available slim interface modules
  */
-typedef enum {
+typedef enum
+{
     kPsiModuleInvalid   = 0x00,
     kPsiModuleStatus    = 0x01,
     kPsiModuleCc        = 0x02,
@@ -168,7 +174,8 @@ typedef enum {
 /**
  * \brief Global slim interface status type
  */
-typedef enum {
+typedef enum
+{
     kPsiSuccessful                  = 0x00,
     kPsiInitError                   = 0x01,
     kPsiGeneralError                = 0x02,
