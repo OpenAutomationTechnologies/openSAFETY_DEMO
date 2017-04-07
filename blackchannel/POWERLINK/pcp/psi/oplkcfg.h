@@ -164,6 +164,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // if TRUE the high resolution timer module will be used
 #define CONFIG_TIMER_USE_HIGHRES                    FALSE
 
+#define CONFIG_EXT_SYNC_PULSE_NS                    2000
+
 //==============================================================================
 // SDO module specific defines
 //==============================================================================
