@@ -254,7 +254,7 @@ static UINT16 w_0_def_1C00_02 SAFE_INIT_SEKTOR = 1;
 static UINT8 b_0_def_1C00_03 SAFE_INIT_SEKTOR = 0x00;
 
 /* 0x2001 Parameters */
-static tUsedChannels usedChannels = {0, { 0 }};
+static tUsedChannelsInfo usedChannels = {0, { 0 }};
 static SOD_t_ACT_LEN_PTR_DATA SOD_UsedChannels SAFE_INIT_SEKTOR = { sizeof(tUsedChannels), &usedChannels.channel[0] };
 
 /* 0x4000 Settings */

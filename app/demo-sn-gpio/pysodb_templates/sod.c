@@ -179,21 +179,19 @@ static tSodObjectData s_0_act_general SAFE_NO_INIT_SEKTOR;
 
 /*[[[cog cg.default_values_definitions() ]]]*/
 /*[[[end]]]*/
+
 /* Begin of the parameter checksum definition */
 /* length of the parameter checksum domain */
 #define k_LEN_PARAM_CHKSUM_DOM sizeof(tParamChksum)
 
 /* End of the parameter checksum definition */
 
-
-
 /*[[[cog cg.paramstream_settings_definition() ]]]*/
 /*[[[end]]]*/
 /*[[[cog cg.sodpos_settings_definition() ]]]*/
 /*[[[end]]]*/
 
-static tUsedChannels usedChannels = {0, { 0 }};
-
+static tUsedChannelsInfo usedChannels = {0, { 0 }};
 
 /*[[[cog cg.act_data_definitions() ]]]*/
 /*[[[end]]]*/

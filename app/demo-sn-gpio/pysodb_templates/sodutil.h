@@ -65,11 +65,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* typedef                                                                    */
 /*----------------------------------------------------------------------------*/
 
+/**
+* \brief Type for storing information about used channels
+*/
+typedef BOOLEAN tUsedChannels[USEDCHANNELSIZE];
+
+/**
+* \brief Structure for managing the used channels information
+*/
 typedef struct
 {
     UINT16 entries;
-    BOOLEAN channel[USEDCHANNELSIZE];
-} tUsedChannels;
+    tUsedChannels channel;
+} tUsedChannelsInfo;
 
 
 /*[[[cog cg.settings_structs() ]]]*/
