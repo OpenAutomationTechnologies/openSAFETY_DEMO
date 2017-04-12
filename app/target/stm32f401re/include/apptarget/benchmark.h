@@ -10,7 +10,7 @@ measurements on the application processor.
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
-Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -56,7 +56,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 #ifdef BENCHMARK_ENABLED
-    #include <stm32f4xx_hal_gpio.h>
+    #include <stm32f4xx_hal.h>
 
     #define BENCHMARK_SET(x)    HAL_GPIO_WritePin(PINx_BENCHMARK_PORT, (UINT16)(1<<(10 + (x))), GPIO_PIN_SET)
     #define BENCHMARK_RESET(x)  HAL_GPIO_WritePin(PINx_BENCHMARK_PORT, (UINT16)(1<<(10 + (x))), GPIO_PIN_RESET)

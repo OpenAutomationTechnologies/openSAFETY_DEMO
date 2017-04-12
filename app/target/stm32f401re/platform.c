@@ -16,7 +16,7 @@ implementation.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright 2014 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -54,9 +54,6 @@ implementation.
 #include <apptarget/benchmark.h>
 
 #include <stm32f4xx_hal.h>
-#include <stm32f4xx_hal_gpio.h>
-#include <stm32f4xx_hal_dma.h>
-#include <stm32f4xx_hal_uart.h>
 
 #include <stdio.h>
 

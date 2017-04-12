@@ -2,7 +2,7 @@
 #
 # CMake file of slim interface on demo-cn-gpio for PSI (Target is stm32f103rb)
 #
-# Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+# Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,7 @@ ENABLE_LANGUAGE(ASM-ATT)
 
 ################################################################################
 # Set C flags for this board configuration
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_STDPERIPH_DRIVER -DSTM32F103xB")
+ADD_DEFINITIONS(-DUSE_HAL_DRIVER -DSTM32F103xB)
 
 ################################################################################
 # Add board support package for target stm32f10x

@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    system_stm32f1xx.c
   * @author  MCD Application Team
-  * @version V1.2.0
-  * @date    31-July-2015
+  * @version V4.1.0
+  * @date    29-April-2016
   * @brief   CMSIS Cortex-M3 Device Peripheral Access Layer System Source File.
   *
   * 1.  This file provides two functions and one global variable to be called from
@@ -35,7 +35,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2015 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT(c) 2016 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -62,11 +62,35 @@
   ******************************************************************************
   */
 
+/** @addtogroup CMSIS
+  * @{
+  */
 
+/** @addtogroup stm32f1xx_system
+  * @{
+  */
+
+/** @addtogroup STM32F1xx_System_Private_Includes
+  * @{
+  */
 
 #include "stm32f1xx.h"
 
+/**
+  * @}
+  */
 
+/** @addtogroup STM32F1xx_System_Private_TypesDefinitions
+  * @{
+  */
+
+/**
+  * @}
+  */
+
+/** @addtogroup STM32F1xx_System_Private_Defines
+  * @{
+  */
 
 #if !defined  (HSE_VALUE)
   #define HSE_VALUE    ((uint32_t)8000000) /*!< Default value of the External oscillator in Hz.
@@ -90,7 +114,21 @@
                                   This value must be a multiple of 0x200. */
 
 
+/**
+  * @}
+  */
 
+/** @addtogroup STM32F1xx_System_Private_Macros
+  * @{
+  */
+
+/**
+  * @}
+  */
+
+/** @addtogroup STM32F1xx_System_Private_Variables
+  * @{
+  */
 
 /*******************************************************************************
 *  Clock Definitions
@@ -101,8 +139,16 @@
   uint32_t SystemCoreClock         = 72000000;        /*!< System Clock Frequency (Core Clock) */
 #endif
 
-__IO const uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
+const uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
+const uint8_t APBPrescTable[8] =  {0, 0, 0, 0, 1, 2, 3, 4};
 
+/**
+  * @}
+  */
+
+/** @addtogroup STM32F1xx_System_Private_FunctionPrototypes
+  * @{
+  */
 
 #if defined(STM32F100xE) || defined(STM32F101xE) || defined(STM32F101xG) || defined(STM32F103xE) || defined(STM32F103xG)
 #ifdef DATA_IN_ExtSRAM
@@ -110,6 +156,13 @@ __IO const uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7
 #endif /* DATA_IN_ExtSRAM */
 #endif /* STM32F100xE || STM32F101xE || STM32F101xG || STM32F103xE || STM32F103xG */
 
+/**
+  * @}
+  */
+
+/** @addtogroup STM32F1xx_System_Private_Functions
+  * @{
+  */
 
 /**
   * @brief  Setup the microcontroller system
@@ -336,14 +389,23 @@ void SystemCoreClockUpdate (void)
   */
 void SystemInit_ExtMemCtl(void)
 {
-/*!< FSMC Bank1 NOR/SRAM3 is used for the STM3210E-EVAL, if another Bank is
-  required, then adjust the Register Addresses */
+  __IO uint32_t tmpreg;
+  /*!< FSMC Bank1 NOR/SRAM3 is used for the STM3210E-EVAL, if another Bank is
+    required, then adjust the Register Addresses */
 
   /* Enable FSMC clock */
   RCC->AHBENR = 0x00000114;
 
+  /* Delay after an RCC peripheral clock enabling */
+  tmpreg = READ_BIT(RCC->AHBENR, RCC_AHBENR_FSMCEN);
+
   /* Enable GPIOD, GPIOE, GPIOF and GPIOG clocks */
   RCC->APB2ENR = 0x000001E0;
+
+  /* Delay after an RCC peripheral clock enabling */
+  tmpreg = READ_BIT(RCC->APB2ENR, RCC_APB2ENR_IOPDEN);
+
+  (void)(tmpreg);
 
 /* ---------------  SRAM Data lines, NOE and NWE configuration ---------------*/
 /*----------------  SRAM Address lines configuration -------------------------*/
@@ -361,16 +423,26 @@ void SystemInit_ExtMemCtl(void)
   GPIOF->CRH = 0xBBBB4444;
 
   GPIOG->CRL = 0x44BBBBBB;
-  GPIOG->CRH = 0x44444B44;
+  GPIOG->CRH = 0x444B4B44;
 
 /*----------------  FSMC Configuration ---------------------------------------*/
 /*----------------  Enable FSMC Bank1_SRAM Bank ------------------------------*/
 
-  FSMC_Bank1->BTCR[4] = 0x00001011;
-  FSMC_Bank1->BTCR[5] = 0x00000200;
+  FSMC_Bank1->BTCR[4] = 0x00001091;
+  FSMC_Bank1->BTCR[5] = 0x00110212;
 }
 #endif /* DATA_IN_ExtSRAM */
 #endif /* STM32F100xE || STM32F101xE || STM32F101xG || STM32F103xE || STM32F103xG */
 
+/**
+  * @}
+  */
 
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

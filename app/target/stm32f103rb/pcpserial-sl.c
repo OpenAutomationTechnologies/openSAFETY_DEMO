@@ -16,7 +16,7 @@ with the POWERLINK processor. (Target is the stm32f103rb board)
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright 2014 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -52,13 +52,7 @@ with the POWERLINK processor. (Target is the stm32f103rb board)
 #include <common/pcpserial.h>
 #include <common/debug.h>
 
-#include <stm32f1xx_hal_cortex.h>
-#include <stm32f1xx_hal_def.h>
-#include <stm32f1xx_hal_rcc.h>
-#include <stm32f1xx_hal_dma.h>
-#include <stm32f1xx_hal_spi.h>
-#include <stm32f1xx_hal_gpio.h>
-
+#include <stm32f1xx_hal.h>
 
 /*============================================================================*/
 /*            G L O B A L   D E F I N I T I O N S                             */
