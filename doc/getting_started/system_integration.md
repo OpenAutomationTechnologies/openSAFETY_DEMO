@@ -43,7 +43,7 @@ Make sure the tools are installed:
 
 For importing the openSAFETY_DEMO device, perform the following steps:
 
-### Automation Studio 4.2.5.342 and SafeDESIGNER 4.2.0.17 onwards {#sect_gs_as_osdd_import_new_as_sd}
+### Automation Studio 4.2.7 and SafeDESIGNER 4.2 onwards {#sect_gs_as_osdd_import_new_as_sd}
 
 1. Open Automation Studio and select `Tools -> Import Fieldbus Device...`
 2. Change to the folder **devicedescription** and select the
@@ -73,6 +73,15 @@ For importing the openSAFETY_DEMO device, perform the following steps:
 
 ![Automation Studio, System Designer](as_system_designer.png)
 @image latex as_system_designer.png "Automation Studio, System Designer" width=0.75\textwidth
+
+## Replace hardware, if necessary {#sect_gs_as_replace_hw}
+
+1. Check, if the used hardware in the project matches with the physical hardware
+   setup.
+2. If using a different PLC or SafeLOGIC, right-click on the related
+   hardware and select `Replace Hardware Module...`.
+3. Search in the Hardware Catalog on the right for the correct hardware and drag
+   it onto the hardware to replace.
 
 ## Connecting to the PLC {#sect_gs_as_connect}
 
@@ -119,7 +128,7 @@ B&R PLC.
 - For downloading the configuration and software to the B&R PLC via network,
   perform the following steps:
 
-  When the connection with the PLC is established, Compile the Automation
+  When the connection with the PLC is established, compile the Automation
   Studio Project and click `Transfer to Target` to download it to the PLC.
 
   ![Automation Studio, Build toolbar, Transfer](as_build_toolbar.png)
@@ -130,8 +139,10 @@ B&R PLC.
 
   If there is a Compact Flash card reader available, ensure the PLC is powered
   off and remove the Compact Flash card. Insert the card into the card reader
-  and click from the menu `Tools -> Create Compact Flash`.
-  Select the proper drive and click `Create Compact Flash`.
+  and click from the menu `Tools -> Create Compact Flash` or
+  `Tools -> Offline Install`.
+  Select the proper drive and click `Create Compact Flash` or `Download to
+  application storage`.
   After the creation has finished, put the card back into the PLC.
   Power on the system again.
 

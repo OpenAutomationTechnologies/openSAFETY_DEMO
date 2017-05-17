@@ -26,7 +26,7 @@ The software requirements are depending on the desired usage of the openSAFETY_D
    development environment for applications, including Windows ports of GCC,
    GNU Binutils, Bourne Shell command line interpreter and some Unix tools.
 
-   http://sourceforge.net/projects/mingw/
+   https://sourceforge.net/projects/mingw/
 
   - CMake http://www.cmake.org/
   - Doxygen http://www.stack.nl/~dimitri/doxygen/download.html
@@ -38,8 +38,7 @@ The software requirements are depending on the desired usage of the openSAFETY_D
   For flashing the development hardware with the pre-built binaries only,
   the following software is needed:
   - Windows only: ST-Link/V2-1 USB driver for your NUCLEO board
-    - NUCLEO-F401RE: http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1847/PF260000
-    - NUCLEO-F103RB: http://www.st.com/web/en/catalog/tools/FM116/SC959/SS1532/LN1847/PF259875
+    http://www.st.com/content/st_com/en/products/embedded-software/development-tool-software/stsw-link009.html
 
   - Altera Quartus Programmer v13.0sp1, for programming the FPGA board
     https://www.altera.com/downloads/download-center.html
@@ -60,13 +59,38 @@ the following software is additionally needed to (1):
 
 - Windows operating systems only: MinGW (+ MSYS), see also \ref sect_gs_req_sw0
 
-### openSAFETY Demo related Software
+### openSAFETY Demo related software
+
 - openSAFETY distribution 1.5
 
   contains the openSAFETY stack and additional tools needed for the
   openSAFETY_DEMO
 
-  http://sourceforge.net/projects/opensafety
+- openPOWERLINK stack 2.5.0 or higher
+
+  contains the openPOWERLINK stack for POWERLINK communication.
+  Using a stable release is recommended. The git repository version
+  of the openSAFETY_DEMO is using openPOWERLINK version 2.5.2.
+
+Download as archives
+
+If the openSAFETY Demo was downloaded as archive, get the packages here:
+
+- openSAFETY distribution 1.5 http://sourceforge.net/projects/opensafety
+
+- openPOWERLINK stack 2.5.0 or higher
+  http://openpowerlink.sourceforge.net/web/openPOWERLINK/Download.html
+
+
+Using git
+
+When the openSAFETY Demo repository was cloned without submodules,
+the openPOWERLINK stack and openSAFETY distribution
+can be obtained by changing into the openSAFETY_Demo directory and executing the
+following commands:
+
+        > git submodule init
+        > git submodule update
 
 
 ### Nucleo related Tools
@@ -99,13 +123,13 @@ the following software is additionally needed to (1):
 
 - HAL Library for the used NUCLEO boards:
 
-  * NUCLEO-F103RB: STM32CubeF1 V1.2.0: http://www.st.com/web/en/catalog/tools/FM147/CL1794/SC961/SS1743/LN1897/PF260820
+  * NUCLEO-F103RB: STM32CubeF1 V1.2.0: http://www.st.com/en/embedded-software/stm32cubef1.html
   > **IMPORTANT**: There is a bug in version 1.2.0 of the STM32CubeF1
   > software. See \ref sect_gs_nucleo_buildsw_options_f103 for a workaround.
 
-  * NUCLEO-F401RE: STM32CubeF4 V1.10.0: http://www.st.com/web/en/catalog/tools/PF259243
+  * NUCLEO-F401RE: STM32CubeF4 V1.10.0: http://www.st.com/en/embedded-software/stm32cubef4.html
 
-  * Both versions of Nucleo: STM32CubeMX: http://www.st.com/web/catalog/tools/FM147/CL1794/SC961/SS1743/PF259242
+  * Both versions of Nucleo: STM32CubeMX: http://www.st.com/en/development-tools/stm32cubemx.html
   > This enables the download of different versions of STM32Cube for
   > different microcontrollers. This way the HAL libraries can be downloaded in
   > an other version than the most recent one provided by the links above.
@@ -116,14 +140,14 @@ the following software is additionally needed to (1):
   updating the debug adapter firmware,
   this program is only available for Windows operating systems.
 
-  http://www.st.com/web/en/catalog/tools/PF258168
+  http://www.st.com/en/embedded-software/stsw-link004.html
 
 - optional: ST-LINK/V2 firmware upgrade
 
   for upgrading the debug adapter firmware of the Nucleo boards, this
   software is available for Windows, Linux and MacOS operating systems.
 
-  http://www.st.com/web/en/catalog/tools/PF258194
+  http://www.st.com/content/st_com/en/products/embedded-software/development-tool-software/stsw-link007.html
 
 ### Altera Tools
 - Altera Quartus v13.0sp1 with device support for Cyclone IV E devices
@@ -168,7 +192,7 @@ and putting the whole system into operation the following software is needed.
 Please contact your local B&R representation regarding further product
 information and purchasing.
 
-- Automation Studio 4.2.5 or higher
+- Automation Studio 4.2.7 or higher
 
   integrated development environment used, among others, for planning,
   implementing and configuring B&R control systems
@@ -199,7 +223,7 @@ information and purchasing.
 
   https://ttssh2.osdn.jp/index.html.en
 
-- Eclipse IDE for C/C++ Developers 4.4.1a
+- Eclipse IDE for C/C++ Developers
 
   IDE for C/C++ development, used for developing software for the application
   processors

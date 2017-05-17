@@ -39,8 +39,8 @@ network 192.168.100.0 where the host part equals the POWERLINK node ID.
 
 For more information about the protocol see the following pages:
 - http://www.ethernet-powerlink.org
-- http://sourceforge.net/projects/openpowerlink
-- http://sourceforge.net/projects/openconf
+- https://sourceforge.net/projects/openpowerlink
+- https://sourceforge.net/projects/openconf
 
 # openSAFETY   {#sect_prot_opensafety}
 openSAFETY is defined as a bus-independent, autonomous frame, which can in
@@ -50,7 +50,7 @@ possible within the same network.
 
 openSAFETY uses a variety of safety mechanisms. In addition to guarding data
 content via CRC Codes, timing of the data that is being transferred is also
-monitored independent of the actual (non-secure) transport protocol that is being
+monitored independent of the actual (non-safe) transport protocol that is being
 used. This allows openSAFETY to provide secure transfer of data across non-secure
 networks.
 
@@ -69,4 +69,4 @@ between openSAFETY domains.
 
 For more information about the protocol see the following pages:
 - http://www.open-safety.org/
-- http://sourceforge.net/projects/opensafety
+- https://sourceforge.net/projects/opensafety

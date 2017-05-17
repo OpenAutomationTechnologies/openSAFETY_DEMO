@@ -48,8 +48,9 @@ tbuf                          | Configuration headers for the triple buffers
 
 
 ## Pre-built binaries {#sect_directories_bin}
-The __bin__ directory contains pre-built binaries for flashing onto the development
-boards.
+If the openSAFETY_DEMO was downloaded as archive,
+the __bin__ directory contains pre-built binaries for flashing onto the
+development boards.
 
 Directory                     | Description
 ----------------------------- | -----------------------------------------------

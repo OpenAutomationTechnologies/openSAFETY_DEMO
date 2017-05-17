@@ -88,6 +88,16 @@ are described here:
 
 # openSAFETY Demo related Software {#sect_gs_install_software_demorelated}
 
+If openSAFETY distribution and openPOWERLINK stack were downloaded as archives,
+follow the instructions below.
+
+## openPOWERLINK stack {#sect_gs_install_software_openPOWERLINK_stack}
+
+  Extract the content of the downloaded archive to the
+  `blackchannel/POWERLINK/stacks/openPOWERLINK` subdirectory located
+  in the openSAFETY_DEMO folder.
+
+
 ## openSAFETY stack / distribution {#sect_gs_install_software_openSAFETY_stack}
 
   Extract the content of the downloaded archive to the
@@ -315,7 +325,7 @@ the microcontroller.
 
 ## Windows only: STM32 ST-LINK Utility {#sect_gs_install_software_stlinkutility}
 
-Get the STM32 ST-LINK Utility from http://www.st.com/web/en/catalog/tools/PF258168
+Get the STM32 ST-LINK Utility from http://www.st.com/en/embedded-software/stsw-link004.html
 and install the software.
 
 

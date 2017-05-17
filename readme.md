@@ -142,3 +142,28 @@ the following commands:
       > cmake -G"Unix Makefiles" ../
       > make doc
 
+# Support   {#sect_main_support}
+
+Support on openSAFETY Demo is available via the online discussion forums on the
+SourceForge project page:
+
+ - [Discussion] (https://sourceforge.net/p/opensafetydemo/discussion/)
+
+# Download   {#sect_main_download}
+
+The openSAFETY_DEMO can be obtained from its SourceForge project site,
+GitHub and via git:
+
+ - SourceForge
+   https://sourceforge.net/projects/opensafetydemo/
+
+ - GitHub
+   https://github.com/OpenAutomationTechnologies/openSAFETY_DEMO
+
+ - git
+
+   For cloning the openSAFETY_DEMO repository and all necessary submodules
+   execute the following statements:
+
+        > git clone --recursive https://github.com/OpenAutomationTechnologies/openSAFETY_DEMO.git openSAFETY_DEMO
+        > git checkout -b V1.5.0

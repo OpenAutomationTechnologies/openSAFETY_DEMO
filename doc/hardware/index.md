@@ -17,5 +17,5 @@ those requirements:
 
  - 1x Terasic DE2-115 FPGA Board as the PCP part http://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=139&No=502
  - 2x STMicroelectronics Nucleo boards as the application processors (NUCLEO-F401RE or NUCLEO-F103RB) for the dual channelled configuration of the Safe Node
-  - NUCLEO-F401RE http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1847/PF260000
-  - NUCLEO-F103RB http://www.st.com/web/en/catalog/tools/FM116/SC959/SS1532/LN1847/PF259875
+  - NUCLEO-F401RE http://www.st.com/en/evaluation-tools/nucleo-f401re.html
+  - NUCLEO-F103RB http://www.st.com/en/evaluation-tools/nucleo-f103rb.html

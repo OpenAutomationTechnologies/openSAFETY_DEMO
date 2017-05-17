@@ -39,10 +39,10 @@ Thus, a link will only be established if one of the following conditions is met.
 
 ### Status / Error LEDs {#sect_gs_fpgaboard_leds}
 
-LEDG0 and LEDG1 indicate the status of the board / the application runnning
+LEDR0 and LEDG7 indicate the status of the board / the application runnning
 on the board:
 
-LEDG0            | State
+LEDG7            | State
 :----------------|:--------
 LED off          | Off, Initialising, Not Active
 LED flickering   | Basic Ethernet Mode (no POWERLINK frame received)
@@ -52,7 +52,7 @@ LED on           | operational, POWERLINK communication is working
 LED blinking     | Stopped
 
 
-LEDG1            | State
+LEDR0            | State
 :----------------|:--------
 LED off          | No error
 LED on           | error, POWERLINK connection lost

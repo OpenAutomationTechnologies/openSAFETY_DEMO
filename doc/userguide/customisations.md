@@ -439,57 +439,57 @@ binding file before the generation of the sources.
 It is also possible to run the pysodbuilder tool from commandline with
 the following possible command line switches:
 
-  - -h, \--help            show this help message and exit
+  - -h, `--`help            show this help message and exit
 
-  - -d FILE, \--osdd-file FILE
+  - -d FILE, `--`osdd-file FILE
                         osdd file to obtain values from
 
-  - -m MODULE_ID, \--module-id MODULE_ID
+  - -m MODULE_ID, `--`module-id MODULE_ID
                         generate files for given module id. this option is
                         necessary, when using osdd files which contain several
                         modules
 
-  - -s FILE, \--settings-file FILE
+  - -s FILE, `--`settings-file FILE
                         uses the given settingsfile.
 
   - -i [FILE | DIRECTORY [FILE | DIRECTORY ...]], \--input [FILE | DIRECTORY [FILE | DIRECTORY ...]]
                         input files or directories containing the files used
                         for code generation, basically .h and .c files.
 
-  - -o DIRECTORY, \--output DIRECTORY
+  - -o DIRECTORY, `--`output DIRECTORY
                         output directory
 
-  - \--overwrite-input-files
+  - `--`overwrite-input-files
                         overwrite input files with generated files.
 
-  - -n ENCODING, \--encoding ENCODING
+  - -n ENCODING, `--`encoding ENCODING
                         specyfiy file encoding
 
-  - -l, \--list-modules    list modules contained in specified osdd file
+  - -l, `--`list-modules    list modules contained in specified osdd file
 
-  - \--generate-binding-file FILE FILE
+  - `--`generate-binding-file FILE FILE
                         use schema file (.xsd) to generate a bindings file
                         (.py).
 
-  - \--no-overrule-osdd    settings obtained from osdd file do not get overruled,
+  - `--`no-overrule-osdd    settings obtained from osdd file do not get overruled,
                         if the corresponding values in the settings file are
                         bigger.
 
-  - \--remove-cog-comments
+  - `--`remove-cog-comments
                         remove comments used for code generation out of the
                         generated files. this option requires -o DIRECTORY.
                         Also, the output directory must not be part of the
                         input directories to prevent unwanted overwriting of
                         files.
 
-  - \--dry-run             prints the input files with the generated code, but
+  - `--`dry-run             prints the input files with the generated code, but
                         doesn't save the result
 
-  - -v, \--verbose         increase verbosity of the program
+  - -v, `--`verbose         increase verbosity of the program
 
-  - \--log FILE            write log to file
+  - `--`log FILE            write log to file
 
-  - \--version             print version of the program
+  - `--`version             print version of the program
 
 # Customising the used I/O pins of the application processor boards {#sect_customise_gpio}
 
