@@ -2,7 +2,7 @@
 #
 # CMake main file for the POWERLINK slim interface
 #
-# Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+# Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -42,6 +42,8 @@ INCLUDE(FindSourceFiles)
 INCLUDE(CheckIncludeFile)
 INCLUDE(CheckFunctionExists)
 INCLUDE(FindPythonInterp)
+INCLUDE(FindDoxygen)
+INCLUDE(Util)
 
 INCLUDE(CMakeOptions.txt)
 

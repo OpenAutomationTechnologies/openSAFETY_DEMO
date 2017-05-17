@@ -2,7 +2,7 @@
 #
 # CMake file of slim interface on demo-sn-gpio for PSI
 #
-# Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+# Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -233,13 +233,13 @@ ENDIF()
 
 
 IF("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D${DBG_MODE} -DDEF_DEBUG_LVL=${CFG_APP_DEBUG_LVL}")
+    ADD_DEFINITIONS(-D${DBG_MODE} -DDEF_DEBUG_LVL=${CFG_APP_DEBUG_LVL})
 
     # Remove unknown pragma warning (This disables a warning on CTC_SKIP)
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unknown-pragmas")
 
     # Set C macro to forward SYSTEM_PATH to code
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DSYSTEM_PATH=${SYSTEM_PATH}")
+    ADD_DEFINITIONS(-DSYSTEM_PATH=${SYSTEM_PATH})
 ELSE()
     MESSAGE(FATAL_ERROR "Only GNU compilers allowed in this project!")
 ENDIF()

@@ -2,7 +2,7 @@
 #
 # CMake file of slim interface library (nios2 target) for PSI
 #
-# Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+# Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -48,11 +48,16 @@ SET( ALT_LIB_INCS ${LIB_INCS} )
 ########################################################################
 # Library Makefile
 ########################################################################
+get_directory_property(DEF_LIST COMPILE_DEFINITIONS)
+SET ( DEFINITIONS "" )
+GenerateCompileDefinitionFlagsFromList ("${DEF_LIST}" DEFINITIONS)
+SET (FLAGS "${CMAKE_C_FLAGS} ${DEFINITIONS}")
+
 SET( ALT_LIB_GEN_ARGS
                      "--bsp-dir ${ALT_APP_BSP_DIR}"
                      "--lib-dir ${ALT_BUILD_DIR}"
                      "--lib-name ${PROJECT_NAME}"
-                     "--set LIB_CFLAGS_DEFINED_SYMBOLS=${CMAKE_C_FLAGS}"
+                     "--set LIB_CFLAGS_DEFINED_SYMBOLS=${FLAGS}"
                      "--set LIB_CFLAGS_OPTIMIZATION=${OPT_LEVEL}"
                      "--set LIB_INCLUDE_DIRS=${ALT_LIB_INCS}"
                      "--src-files ${ALT_LIB_SRCS}"

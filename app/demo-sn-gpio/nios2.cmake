@@ -2,7 +2,7 @@
 #
 # CMake file of slim interface on demo-sn-gpio (nios2 target) for PSI
 #
-# Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+# Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -122,8 +122,12 @@ MESSAGE ( STATUS  "Generate board support package: ${GEN_BSP_STDOUT}" )
 ########################################################################
 # Application Makefile
 ########################################################################
+#get definitions added with ADD_DEFINITIONS
+get_directory_property(defs COMPILE_DEFINITIONS)
+SET ( DEFINITIONS "" )
+GenerateCompileDefinitionFlagsFromList ("${defs}" DEFINITIONS)
 
-SET( APP_CFLAGS "${CMAKE_C_FLAGS} -DBENCHMARK_MODULES=0xEE800043L" )
+SET( APP_CFLAGS "${CMAKE_C_FLAGS} ${DEFINITIONS} -DBENCHMARK_MODULES=0xEE800043L" )
 
 SET( ALT_LIB_GEN_ARGS
                       "--bsp-dir ${ALT_APP_BSP_DIR}"

@@ -2,7 +2,7 @@
 #
 # CMake file of slim interface on pcp (nios2 target) for PSI
 #
-# Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+# Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 # Copyright (c) 2016, Kalycito Infotech Private Ltd
 # All rights reserved.
 #
@@ -139,8 +139,13 @@ SET( TCI_MEM_SIZE ${GET_TCM_STDOUT} )
 
 MESSAGE( STATUS "Size TCIMEM: ${TCI_MEM_SIZE}" )
 
+#get definitions added with ADD_DEFINITIONS
+get_directory_property(DEF_LIST COMPILE_DEFINITIONS)
+SET ( DEFINITIONS "" )
+GenerateCompileDefinitionFlagsFromList ("${DEF_LIST}" DEFINITIONS)
+
 # Generate application Makefile
-SET( APP_CFLAGS "${CMAKE_C_FLAGS} -DALT_TCIMEM_SIZE=${TCI_MEM_SIZE}" )
+SET( APP_CFLAGS "${CMAKE_C_FLAGS} ${DEFINITIONS} -DALT_TCIMEM_SIZE=${TCI_MEM_SIZE}" )
 
 SET( ALT_APP_GEN_ARGS
                       "--bsp-dir ${ALT_PCP_BSP_DIR}"

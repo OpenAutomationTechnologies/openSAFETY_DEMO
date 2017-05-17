@@ -1,6 +1,6 @@
 ################################################################################
 #
-# Cortex-Mx configuration options for POWERLINK Slim Interface
+# CMake file with helper macros and functions
 #
 # Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 # All rights reserved.
@@ -28,41 +28,10 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ################################################################################
 
-################################################################################
-# Handle target specific includes
-SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/cortex-mx" ${CMAKE_MODULE_PATH})
-
-INCLUDE(AppPostAction)
-INCLUDE(FindStLink)
-
-################################################################################
-# Create user options
-IF(CFG_DEMO_TYPE STREQUAL "sn-gpio")
-    IF(NOT CFG_DUAL_CHANNEL)
-        SET(CFG_DUAL_CHANNEL ${SN_PROC_SINGLE_CHAN} CACHE STRING
-            "Enable dual channel openSAFETY demo"
-            FORCE
-        )
-        SET_PROPERTY(CACHE CFG_DUAL_CHANNEL PROPERTY STRINGS "${SN_PROC_SINGLE_CHAN};${SN_PROC_DUAL_CHAN};${SN_PROC_UP_MASTER};${SN_PROC_UP_SLAVE}")
-    ENDIF(NOT CFG_DUAL_CHANNEL)
-ELSE()
-    UNSET(CFG_DUAL_CHANNEL CACHE)
-ENDIF()
-
-OPTION(CFG_BENCHMARK_ENABLED "Enable application benchmark module" ON)
-
-OPTION(CFG_PROG_FLASH_ENABLE "Enable the program to flash target" OFF)
-
-################################################################################
-# This target only supports application style projects
-SET(CFG_INCLUDE_SUBPROJECTS "application")
-
-################################################################################
-# Set compiler flags
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mthumb -ffunction-sections -fdata-sections ")
-
-################################################################################
-# Enable benchmarking
-IF(CFG_BENCHMARK_ENABLED)
-    ADD_DEFINITIONS(-DBENCHMARK_ENABLED -DBENCHMARK_MODULES=0xEE800043L)
-ENDIF()
+# This macro generates compiler flags for definitions from a passed list
+# (DEFINITION_LIST) and writes it to the variable given by RESULT.
+MACRO (GenerateCompileDefinitionFlagsFromList DEFINITION_LIST RESULT)
+    FOREACH (def ${DEFINITION_LIST})
+        SET (${RESULT} "${${RESULT}} -D${def}")
+    ENDFOREACH()
+ENDMACRO (GenerateCompileDefinitionFlagsFromList)

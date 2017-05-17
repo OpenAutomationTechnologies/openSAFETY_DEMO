@@ -2,7 +2,7 @@
 #
 # CMake file of slim interface library for PSI
 #
-# Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+# Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -75,7 +75,7 @@ ELSE()
 ENDIF()
 
 IF("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D${DBG_MODE} -DDEF_DEBUG_LVL=${CFG_PSI_DEBUG_LVL}")
+    ADD_DEFINITIONS(-D${DBG_MODE} -DDEF_DEBUG_LVL=${CFG_PSI_DEBUG_LVL})
 ENDIF()
 
 ###############################################################################
