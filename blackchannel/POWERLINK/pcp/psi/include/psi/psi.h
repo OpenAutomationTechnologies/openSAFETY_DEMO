@@ -9,7 +9,7 @@ This file contains definitions for the slim interface main module.
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
-Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -76,7 +76,7 @@ tPsiStatus psi_handleAsync(void);
 tPsiStatus psi_handleSync(tNetTime * pNetTime_p);
 
 void psi_pdoProcFinished(tPsiPdoDir pdoDir_p);
-tPsiStatus psi_sdoAccFinished(tSdoComFinished* pSdoComFinParam_p );
+tPsiStatus psi_sdoAccFinished(const tSdoComFinished* pSdoComFinParam_p );
 tPsiStatus psi_closeSdoChannels(void);
 
 

@@ -14,7 +14,7 @@ the synchronous and asynchronous tasks.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright 2014 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 * Copyright (c) 2016, Kalycito Infotech Private Ltd
 * All rights reserved.
 *
@@ -678,7 +678,7 @@ void psi_pdoProcFinished(tPsiPdoDir pdoDir_p)
 \ingroup module_psi
 */
 //------------------------------------------------------------------------------
-tPsiStatus psi_sdoAccFinished(tSdoComFinished* pSdoComFinHdl_p )
+tPsiStatus psi_sdoAccFinished(const tSdoComFinished* pSdoComFinHdl_p )
 {
     tPsiStatus ret = kPsiSuccessful;
 

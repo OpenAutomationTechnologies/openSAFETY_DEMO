@@ -10,7 +10,7 @@ This file contains a demo CN application event handler.
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
-Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 Copyright (c) 2013, SYSTEC electronic GmbH
 Copyright (c) 2016, Kalycito Infotech Private Ltd
 All rights reserved.
@@ -85,16 +85,13 @@ static tEventCb pfnEventCb_l = NULL;
 //------------------------------------------------------------------------------
 // local function prototypes
 //------------------------------------------------------------------------------
-static tOplkError processStateChangeEvent(tOplkApiEventType eventType_p,
-                                          tOplkApiEventArg* pEventArg_p,
+static tOplkError processStateChangeEvent(const tEventNmtStateChange* pNmtStateChange_p,
                                           void* pUserArg_p);
 
-static tOplkError processErrorWarningEvent(tOplkApiEventType eventType_p,
-                                           tOplkApiEventArg* pEventArg_p,
+static tOplkError processErrorWarningEvent(const tEventError* pInternalError_p,
                                            void* pUserArg_p);
 
-static tOplkError processUserObdAccessEvent(tOplkApiEventType eventType_p,
-                                            tOplkApiEventArg* pEventArg_p,
+static tOplkError processUserObdAccessEvent(tObdAlConHdl* pParam_p,
                                             void* pUserArg_p);
 
 //============================================================================//
@@ -134,26 +131,24 @@ The function implements the applications stack event handler.
 */
 //------------------------------------------------------------------------------
 tOplkError processEvents(tOplkApiEventType eventType_p,
-                         tOplkApiEventArg* pEventArg_p,
+                         const tOplkApiEventArg* pEventArg_p,
                          void* pUserArg_p)
 {
     tOplkError          ret = kErrorOk;
 
-    UNUSED_PARAMETER(pUserArg_p);
-
     switch (eventType_p)
     {
         case kOplkApiEventNmtStateChange:
-            ret = processStateChangeEvent(eventType_p, pEventArg_p, pUserArg_p);
+            ret = processStateChangeEvent(&pEventArg_p->nmtStateChange, pUserArg_p);
             break;
 
         case kOplkApiEventCriticalError:
         case kOplkApiEventWarning:
-            ret = processErrorWarningEvent(eventType_p, pEventArg_p, pUserArg_p);
+            ret = processErrorWarningEvent(&pEventArg_p->internalError, pUserArg_p);
             break;
 
         case kOplkApiEventUserObdAccess:
-            ret = processUserObdAccessEvent(eventType_p, pEventArg_p, pUserArg_p);
+            ret = processUserObdAccessEvent(pEventArg_p->userObdAccess.pUserObdAccHdl, pUserArg_p);
             break;
 
         default:
@@ -186,19 +181,15 @@ The function processes state change events.
 \return The function returns a tOplkError error code.
 */
 //------------------------------------------------------------------------------
-static tOplkError processStateChangeEvent(tOplkApiEventType eventType_p,
-                                          tOplkApiEventArg* pEventArg_p,
+static tOplkError processStateChangeEvent(const tEventNmtStateChange* pNmtStateChange_p,
                                           void* pUserArg_p)
 {
-    tEventNmtStateChange*       pNmtStateChange = &pEventArg_p->nmtStateChange;
-
-    UNUSED_PARAMETER(eventType_p);
     UNUSED_PARAMETER(pUserArg_p);
 
     PRINTF("StateChangeEvent(0x%X) originating event = 0x%X (%s)\n",
-           pNmtStateChange->newNmtState,
-           pNmtStateChange->nmtEvent,
-           debugstr_getNmtEventStr(pNmtStateChange->nmtEvent));
+           pNmtStateChange_p->newNmtState,
+           pNmtStateChange_p->nmtEvent,
+           debugstr_getNmtEventStr(pNmtStateChange_p->nmtEvent));
 
     return kErrorOk;
 }
@@ -216,51 +207,47 @@ The function processes error and warning events.
 \return The function returns a tOplkError error code.
 */
 //------------------------------------------------------------------------------
-static tOplkError processErrorWarningEvent(tOplkApiEventType eventType_p,
-                                           tOplkApiEventArg* pEventArg_p,
+static tOplkError processErrorWarningEvent(const tEventError* pInternalError_p,
                                            void* pUserArg_p)
 {
     // error or warning occurred within the stack or the application
     // on error the API layer stops the NMT state machine
 
-    tEventError*            pInternalError = &pEventArg_p->internalError;
-
-    UNUSED_PARAMETER(eventType_p);
     UNUSED_PARAMETER(pUserArg_p);
 
     PRINTF("Err/Warn: Source = %s (%02X) EplError = %s (0x%03X)\n",
-                debugstr_getEventSourceStr(pInternalError->eventSource),
-                pInternalError->eventSource,
-                debugstr_getRetValStr(pInternalError->oplkError),
-                pInternalError->oplkError);
+                debugstr_getEventSourceStr(pInternalError_p->eventSource),
+                pInternalError_p->eventSource,
+                debugstr_getRetValStr(pInternalError_p->oplkError),
+                pInternalError_p->oplkError);
 
     PRINTF("Err/Warn: Source = %s (%02X) EplError = %s (0x%03X)\n",
-                debugstr_getEventSourceStr(pInternalError->eventSource),
-                pInternalError->eventSource,
-                debugstr_getRetValStr(pInternalError->oplkError),
-                pInternalError->oplkError);
+                debugstr_getEventSourceStr(pInternalError_p->eventSource),
+                pInternalError_p->eventSource,
+                debugstr_getRetValStr(pInternalError_p->oplkError),
+                pInternalError_p->oplkError);
 
     // check additional argument
-    switch (pInternalError->eventSource)
+    switch (pInternalError_p->eventSource)
     {
         case kEventSourceEventk:
         case kEventSourceEventu:
             // error occurred within event processing
             // either in kernel or in user part
             PRINTF(" OrgSource = %s %02X\n",
-                     debugstr_getEventSourceStr(pInternalError->errorArg.eventSource),
-                     pInternalError->errorArg.eventSource);
+                     debugstr_getEventSourceStr(pInternalError_p->errorArg.eventSource),
+                     pInternalError_p->errorArg.eventSource);
 
             PRINTF(" OrgSource = %s %02X\n",
-                     debugstr_getEventSourceStr(pInternalError->errorArg.eventSource),
-                     pInternalError->errorArg.eventSource);
+                     debugstr_getEventSourceStr(pInternalError_p->errorArg.eventSource),
+                     pInternalError_p->errorArg.eventSource);
             break;
 
         case kEventSourceDllk:
             // error occurred within the data link layer (e.g. interrupt processing)
             // the DWORD argument contains the DLL state and the NMT event
-            PRINTF(" val = %X\n", pInternalError->errorArg.uintArg);
-            PRINTF(" val = %X\n", pInternalError->errorArg.uintArg);
+            PRINTF(" val = %X\n", pInternalError_p->errorArg.uintArg);
+            PRINTF(" val = %X\n", pInternalError_p->errorArg.uintArg);
             break;
 
         default:
@@ -283,28 +270,25 @@ The function processes user specific non indexed Object access events.
 \return The function returns a tOplkError error code.
 */
 //------------------------------------------------------------------------------
-static tOplkError processUserObdAccessEvent(tOplkApiEventType eventType_p,
-                                            tOplkApiEventArg* pEventArg_p,
+static tOplkError processUserObdAccessEvent(tObdAlConHdl* pParam_p,
                                             void* pUserArg_p)
 {
-    tObdAlConHdl*            pParam = pEventArg_p->userObdAccess.pUserObdAccHdl;
     tOplkError               oplkret = kErrorOk;
 
-    UNUSED_PARAMETER(eventType_p);
     UNUSED_PARAMETER(pUserArg_p);
 
-    switch (pParam->index)
+    switch (pParam_p->index)
     {
-        #if(((PSI_MODULE_INTEGRATION) & (PSI_MODULE_CC)) != 0)
+#if(((PSI_MODULE_INTEGRATION) & (PSI_MODULE_CC)) != 0)
         case 0x2000:
-            oplkret = cc_obdAccessCb(pParam);
+            oplkret = cc_obdAccessCb(pParam_p);
             break;
-        #endif
-        #if(((PSI_MODULE_INTEGRATION) & (PSI_MODULE_SSDO)) != 0)
+#endif
+#if(((PSI_MODULE_INTEGRATION) & (PSI_MODULE_SSDO)) != 0)
         case 0x2130:
-            oplkret = rssdo_obdAccessCb(pParam);
+            oplkret = rssdo_obdAccessCb(pParam_p);
             break;
-        #endif
+#endif
         default:
             break;
     }

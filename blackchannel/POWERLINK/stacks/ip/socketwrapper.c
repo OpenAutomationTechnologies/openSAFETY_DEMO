@@ -12,7 +12,7 @@ This module connects the IP stack with the SDO/UDP module.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright 2013 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 * Copyright (c) 2016, Kalycito Infotech Pvt. Ltd.
 * All rights reserved.
 *
@@ -223,7 +223,7 @@ tOplkError socketwrapper_send(tSocketWrapper pSocketWrapper_p,
     if (!pInstance->fInitialized)
         return kErrorSdoUdpSocketError;
 
-    udpInfo.pData = pData_p;
+    udpInfo.pData = (void*)pData_p;
     udpInfo.len = dataSize_p;
     udpInfo.localPort = instance_l.socketAddress.port;
     udpInfo.localHost.S_un.S_addr = instance_l.socketAddress.ipAddress;

@@ -14,7 +14,7 @@ buffers which can be accessed by the application processor.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright 2014 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 * Copyright (c) 2016, Kalycito Infotech Private Ltd
 * All rights reserved.
 *
@@ -134,7 +134,7 @@ static tPsiStatus psi_processPlk(tMainInstance* pInstance_p);
 static void psi_switchOffPlk(void);
 static void psi_enterCriticalSection(UINT8 fEnable_p);
 static tOplkError psi_userEventCb(tOplkApiEventType eventType_p,
-                                    tOplkApiEventArg* pEventArg_p,
+                                    const tOplkApiEventArg* pEventArg_p,
                                     void* pUserArg_p);
 
 static tOplkError psi_syncCb(void);
@@ -243,7 +243,8 @@ int main (void)
 
 ExitShutdown:
     // Shutdown POWERLINK stack
-    oplk_shutdown();
+    oplk_destroy();
+    oplk_exit();
 
 Exit:
     edrv2veth_exit();
@@ -323,19 +324,25 @@ static tPsiStatus psi_initPlk(tMainInstance* pInstance_p)
 
 
     // Initialize object dictionary
-        oplkret = obdcreate_initObd(&initParam.obdInitParam);
-        if (oplkret != kErrorOk)
-         {
-            PRINTF("obdcreate_initObd() failed with \"%s\" (0x%04x)\n", debugstr_getRetValStr(oplkret), oplkret);
-            ret = kPsiMainPlkStackInitError;
-         }
+    oplkret = obdcreate_initObd(&initParam.obdInitParam);
+    if (oplkret != kErrorOk)
+     {
+        PRINTF("obdcreate_initObd() failed with \"%s\" (0x%04x)\n", debugstr_getRetValStr(oplkret), oplkret);
+        ret = kPsiMainPlkStackInitError;
+     }
 
     // initialize POWERLINK stack
-    oplkret = oplk_init(&initParam);
-
+    oplkret = oplk_initialize();
     if (oplkret != kErrorOk)
     {
-        PRINTF("oplk_init() failed (Error:0x%x)!\n", NMT_MAX_NODE_ID);
+        PRINTF("oplk_initialize() failed with \"%s\" (0x%04x)\n", debugstr_getRetValStr(oplkret), oplkret);
+        ret = kPsiMainPlkStackInitError;
+    }
+
+    oplkret = oplk_create(&initParam);
+    if (oplkret != kErrorOk)
+    {
+        PRINTF("oplk_create() failed with \"%s\" (0x%04x)\n", debugstr_getRetValStr(oplkret), oplkret);
         ret = kPsiMainPlkStackInitError;
     }
 
@@ -478,7 +485,7 @@ The function implements the applications stack event handler.
 */
 //------------------------------------------------------------------------------
 static tOplkError psi_userEventCb(tOplkApiEventType eventType_p,
-                                  tOplkApiEventArg* pEventArg_p,
+                                  const tOplkApiEventArg* pEventArg_p,
                                   void* pUserArg_p)
 {
     tOplkError  oplkret = kErrorOk;
@@ -567,6 +574,7 @@ static tOplkError psi_userEventCb(tOplkApiEventType eventType_p,
         case kOplkApiEventReceivedNonPlk:
         {
             tOplkApiEventReceivedNonPlk*    pFrameInfo = &pEventArg_p->receivedEth;
+
             ret = edrv2veth_receiveHandler((UINT8*)pFrameInfo->pFrame,
                                             pFrameInfo->frameSize);
             break;
