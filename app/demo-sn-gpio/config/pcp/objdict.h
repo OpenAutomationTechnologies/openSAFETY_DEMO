@@ -71,7 +71,7 @@ OBD_BEGIN()
 
         // Object 1008h: NMT_ManufactDevName_VS
         OBD_BEGIN_INDEX_RAM(0x1008, 0x01, FALSE)
-           OBD_SUBINDEX_RAM_VSTRING(0x1008, 0x00, kObdAccR, device_name, OBD_MAX_STRING_SIZE, "openPOWERLINK device")
+           OBD_SUBINDEX_RAM_VSTRING(0x1008, 0x00, kObdAccR, device_name, OBD_MAX_STRING_SIZE, "openSAFETY_DEMO")
         OBD_END_INDEX(0x1008)
 
         // Object 1009h: NMT_ManufactHwVers_VS
@@ -128,7 +128,7 @@ OBD_BEGIN()
             OBD_SUBINDEX_RAM_VAR_RG(0x1030, 0x01, kObdTypeUInt16, kObdAccR, tObdUnsigned16, InterfaceIndex_U16, 0x01, 0x00, 0x0A)
             OBD_SUBINDEX_RAM_VSTRING(0x1030, 0x02, kObdAccR, InterfaceDescription_VSTR, 0x20, "Interface 1")
             OBD_SUBINDEX_RAM_VAR(0x1030, 0x03, kObdTypeUInt8, kObdAccR, tObdUnsigned8, InterfaceType_U8, 0x06)
-            OBD_SUBINDEX_RAM_VAR(0x1030, 0x04, kObdTypeUInt16, kObdAccR, tObdUnsigned16, InterfaceMtu_U16, 1518)
+            OBD_SUBINDEX_RAM_VAR(0x1030, 0x04, kObdTypeUInt16, kObdAccR, tObdUnsigned16, InterfaceMtu_U16, 1500)
             OBD_SUBINDEX_RAM_OSTRING(0x1030, 0x05, kObdAccR, InterfacePhysAddress_OSTR, 0x06)
             OBD_SUBINDEX_RAM_VSTRING(0x1030, 0x06, kObdAccR, InterfaceName_VSTR, 0x20, "Interface 1")
             OBD_SUBINDEX_RAM_VAR_RG(0x1030, 0x07, kObdTypeUInt8, kObdAccR, tObdUnsigned8, InterfaceOperStatus_U8, 0x01, 0x00, 0x01)
@@ -337,7 +337,7 @@ OBD_BEGIN()
         // Object 1E4Ah: NWL_IpGroup_REC
         OBD_BEGIN_INDEX_RAM(0x1E4A, 0x06, FALSE)
             OBD_SUBINDEX_RAM_VAR(0x1E4A, 0x00, kObdTypeUInt8, kObdAccConst, tObdUnsigned8, NumberOfEntries, 0x03)
-            OBD_SUBINDEX_RAM_VAR(0x1E4A, 0x01, kObdTypeBool, kObdAccSRW, tObdBoolean, Forwarding_BOOL, 0x00)
+            OBD_SUBINDEX_RAM_VAR(0x1E4A, 0x01, kObdTypeBool, kObdAccR, tObdBoolean, Forwarding_BOOL, 0x00)
             OBD_SUBINDEX_RAM_VAR(0x1E4A, 0x02, kObdTypeUInt16, kObdAccSRW, tObdUnsigned16, DefaultTTL_U16, 64)
             OBD_SUBINDEX_RAM_VAR(0x1E4A, 0x03, kObdTypeUInt32, kObdAccR, tObdUnsigned32, ForwardDatagrams_U32, 0x00000000)
         OBD_END_INDEX(0x1E4A)

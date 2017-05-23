@@ -290,7 +290,7 @@ static tOplkError processUserObdAccessEvent(tObdAlConHdl* pParam_p,
             break;
 #endif
         default:
-            break;
+            oplkret = kErrorObdIndexNotExist;
     }
     return oplkret;
 }
