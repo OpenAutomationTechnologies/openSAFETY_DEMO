@@ -30,6 +30,7 @@ The partitioning of the system into application and network part allows a good
 separation of safety related and non-safety related code as well as the exchange
 of the underlying network interface.
 
+> Current version: \ref sect_rev_v110
 
 # openSAFETY_DEMO {#sect_main_sysdesc_oS_demo}
 

@@ -63,6 +63,8 @@ SET (DEMO_SAFETY_APP_TARGET_NAME "${PROJECT_NAME}.elf" CACHE INTERNAL "")
 ########################################################################
 # Create user options
 ########################################################################
+SET (OS_DEMO_VERSION "${openSAFETY_DEMO_VERSION}" CACHE INTERNAL "")
+
 SET(CFG_SAPL_SN_UDID "{0x02U,0x12U,0x34U,0x01U,0x02U,0x03U}" CACHE STRING "Unique id of this SN")
 
 SET(CFG_SAPL_SN_VENDORID "0x00021234UL" CACHE STRING "Vendor ID (0x1018/0x1)")

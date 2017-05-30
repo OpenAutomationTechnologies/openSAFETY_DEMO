@@ -169,7 +169,7 @@ int main (void)
     platform_init();
 
     DEBUG_TRACE(DEBUG_LVL_ALWAYS, "\n\n********************************************************************\n");
-    DEBUG_TRACE(DEBUG_LVL_ALWAYS, "\n\topenSAFETY SafetyNode Demo \n\n ");
+    DEBUG_TRACE(DEBUG_LVL_ALWAYS, "\n\topenSAFETY SafetyNode Demo V%s \n\n ", OS_DEMO_VERSION);
     DEBUG_TRACE(DEBUG_LVL_ALWAYS, "\tStack version: \t\t%s\n", EPLS_k_STACK_VERSION );
     DEBUG_TRACE(DEBUG_LVL_ALWAYS, "\tConfiguration: \t\t%s\n", EPLS_k_CONFIGURATION_STRING );
     DEBUG_TRACE(DEBUG_LVL_ALWAYS, "\tTarget System: \t\t%s\n", EPLS_k_TARGET_STRING );
