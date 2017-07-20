@@ -10,7 +10,7 @@ PCP and enable to pass a different configuration to the POWERLINK processor.
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
-Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -54,7 +54,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define CONFIG_IDENT_SERIAL_NUMBER      0x00000000      /**< Serial number of the node */
 
 
-#define MAC_VENDOR_ID   0x02,0x12,0x34                      /**< Vendor specific part of the MAC address */
+#define MAC_VENDOR_ID   0x12,0x34,0x56                      /**< Vendor specific part of the MAC address */
 #define MAC_ADDR        {MAC_VENDOR_ID,0x56,0x78,0x9A}      /**< MAC address of the CN */
 #define IP_ADDR         0xc0a86401                          /**< IP-Address 192.168.100.1 (Object: 0x1E40/0x02) (don't care the last byte!) */
 #define SUBNET_MASK     0xFFFFFF00                          /**< Subnet mask 255.255.255.0 (Object: 0x1E40/0x03) */
