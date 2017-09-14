@@ -18,7 +18,7 @@ channel to the PLC.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright 2014 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright 2017 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -108,7 +108,7 @@ typedef struct
 static tErrhInstance errHanInstance_l SAFE_INIT_SEKTOR;
 
 #ifdef _DEBUG
-static char *errSource[] = { "Invalid", "EPS", "HNF", "SHNF", "SAPL", "Periph", "XCom" };
+static char *errSource[] = { "Invalid", "openSAFETY", "HNF", "SHNF", "SAPL", "Periph", "XCom" };
 #endif
 
 /*----------------------------------------------------------------------------*/
