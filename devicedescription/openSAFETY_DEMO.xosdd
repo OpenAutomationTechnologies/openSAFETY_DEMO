@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><osdd xmlns="http://www.ethernet-powerlink.org/osdd" xmlns:ns2="http://www.ethernet-powerlink.org/osdd/Localize" Version="1.5">
-    <Module DefaultCRC32="0x446f9e64" Name="openSAFETY_DEMO" id="openSAFETY_DEMO" openSafetyRelease="1.5">
+    <Module DefaultCRC32="0x31d45524" Name="openSAFETY_DEMO" id="openSAFETY_DEMO" openSafetyRelease="1.5">
         <Description>openSAFETY_DEMO</Description>
         <Languages>
             <Default CRC32="0x91f44ef6"/>
@@ -9,7 +9,7 @@
                 <VendorID>12:34:56</VendorID>
                 <ProductCode>0x0001</ProductCode>
                 <Revision>
-                    <Date>2016-04-12T13:16:00</Date>
+                    <Date>2018-03-02T13:00:00</Date>
                     <Number>1.0.0</Number>
                 </Revision>
             </DeviceInformation>

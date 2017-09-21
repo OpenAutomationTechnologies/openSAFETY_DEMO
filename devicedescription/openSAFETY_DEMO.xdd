@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 ****************************************************************************
-
-  (c) Bernecker + Rainer Industrie-Elektronik Ges.m.b.H.
-      B&R Strasse 1, A-5142 Eggelsberg
-      www.br-automation.com
-
   Description:  Device Description for a CiA DS401 POWERLINK CN
 
   License Agreement
 
-  Copyright 2017 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+  Copyright (c) 2018, B&R Industrial Automation GmbH
   All rights reserved.
 
   Redistribution and use in source and binary forms,
@@ -61,21 +56,21 @@
         <ProfileBody
                 xsi:type="ProfileBody_Device_Powerlink"
                 fileName="openSAFETY_DEMO.xdd"
-                fileCreator="Bernecker+Rainer Industrie-Elektronik Ges.m.b.H."
+                fileCreator="B&amp;R Industrial Automation GmbH"
                 fileCreationDate="2011-04-01"
                 fileCreationTime="10:00:00+02:00"
-                fileModificationDate="2017-05-30"
+                fileModificationDate="2018-03-02"
                 fileModificationTime="13:00:00+02:00"
-                fileModifiedBy="Bernecker+Rainer Industrie-Elektronik Ges.m.b.H."
-                fileVersion="01.00"
-                supportedLanguages="en de">
+                fileModifiedBy="B&amp;R Industrial Automation GmbH"
+                fileVersion="01.02"
+                supportedLanguages="en">
             <DeviceIdentity>
                 <vendorName>Unknown vendor</vendorName>
                 <vendorID>0x00000000</vendorID>
                 <productName>openSAFETY_DEMO</productName>
                 <version versionType="HW">1.00</version>
                 <version versionType="SW">1.00</version>
-                <version versionType="FW">OPLK V2.5.2</version>
+                <version versionType="FW">OPLK V2.6.2</version>
             </DeviceIdentity>
             <DeviceFunction>
                 <capabilities>
@@ -91,11 +86,9 @@
                         <characteristic>
                             <characteristicName>
                                 <label lang="en">Maximum Operational Voltage</label>
-                                <label lang="de">Maximale Betriebsspannung</label>
                             </characteristicName>
                             <characteristicContent>
                                 <label lang="en">36 Volts</label>
-                                <label lang="de">36 Volt</label>
                             </characteristicContent>
                         </characteristic>
                         <characteristic>
@@ -131,46 +124,38 @@
                     <struct name="Index2130_S01" uniqueID="UID_DT_Index2130_S01">
                         <varDeclaration name="Index2130_USINT" uniqueID="Index2130_USINT" size="27">
                             <label lang="en">This is the SSDO/SNMT0 channel</label>
-                            <label lang="de">Das ist der SSDO/SNMT0 Kanal</label>
                             <USINT />
                         </varDeclaration>
                     </struct>
                     <struct name="Index4000_S01" uniqueID="UID_DT_Index4000_S01">
                         <varDeclaration name="TxSPDO_Data_header" uniqueID="Index4000_header" size="4">
                             <label lang="en">TSPDO-Data</label>
-                            <label lang="de">TSPDO-Daten</label>
                             <USINT />
                         </varDeclaration>
                         <varDeclaration name="SafeInput01" uniqueID="Index4000_SI01" size="1">
                             <label lang="en">SafeInput01</label>
-                            <label lang="de">SafeInput01</label>
                             <USINT />
                         </varDeclaration>
                         <varDeclaration name="SafeInput02" uniqueID="Index4000_SI02" size="1">
                             <label lang="en">SafeInput02</label>
-                            <label lang="de">SafeInput02</label>
                             <USINT />
                         </varDeclaration>
                         <varDeclaration name="SafeInput03" uniqueID="Index4000_SI03" size="1">
                             <label lang="en">SafeInput03</label>
-                            <label lang="de">SafeInput03</label>
                             <USINT />
                         </varDeclaration>
                         <varDeclaration name="SafeInput04" uniqueID="Index4000_SI04" size="1">
                             <label lang="en">SafeInput04</label>
-                            <label lang="de">SafeInput04</label>
                             <USINT />
                         </varDeclaration>
                         <varDeclaration name="TxSPDO_Data_footer" uniqueID="Index4000_footer" size="11">
                             <label lang="en">TSPDO-Data</label>
-                            <label lang="de">STSPDO-Daten</label>
                             <USINT />
                         </varDeclaration>
                     </struct>
                     <struct name="Index4001_S01" uniqueID="UID_DT_Index4001_S01">
                         <varDeclaration name="Index4001_USINT" uniqueID="Index4001_USINT" size="19">
                             <label lang="en">This is the TSPDO0 channel</label>
-                            <label lang="de">Das ist der TSPDO0 Kanal</label>
                             <USINT />
                         </varDeclaration>
                     </struct>
@@ -179,17 +164,14 @@
                     <!-- Defined a parameter which is assigned to a object/subObject via its uniqueID -->
                     <parameter uniqueID="UID_DOM_Index2130_S01" access="read">
                         <label lang="en">SSDO stub data</label>
-                        <label lang="de">SSDO Stub Daten</label>
                         <dataTypeIDRef uniqueIDRef="UID_DT_Index2130_S01" />
                     </parameter>
                     <parameter uniqueID="UID_DOM_Index4000_S01" access="read">
                         <label lang="en">TxSPDO-data</label>
-                        <label lang="de">TxSPDO-Daten</label>
                         <dataTypeIDRef uniqueIDRef="UID_DT_Index4000_S01" />
                     </parameter>
                     <parameter uniqueID="UID_DOM_Index4001_S01" access="readWrite">
                         <label lang="en">RxSPDO-data</label>
-                        <label lang="de">RxSPDO-Daten</label>
                         <dataTypeIDRef uniqueIDRef="UID_DT_Index4001_S01" />
                     </parameter>
                 </parameterList>
@@ -212,14 +194,14 @@
         <ProfileBody
                 xsi:type="ProfileBody_CommunicationNetwork_Powerlink"
                 fileName="openSAFETY_DEMO.xdd"
-                fileCreator="Bernecker+Rainer Industrie-Elektronik Ges.m.b.H."
+                fileCreator="B&amp;R Industrial Automation GmbH"
                 fileCreationDate="2011-04-01"
                 fileCreationTime="10:00:00+02:00"
-                fileModificationDate="2017-05-30"
+                fileModificationDate="2018-03-02"
                 fileModificationTime="13:00:00+02:00"
-                fileModifiedBy="Bernecker+Rainer Industrie-Elektronik Ges.m.b.H."
-                fileVersion="01.00"
-                supportedLanguages="en de">
+                fileModifiedBy="B&amp;R Industrial Automation GmbH"
+                fileVersion="01.02"
+                supportedLanguages="en">
             <ApplicationLayers>
                 <identity>
                     <vendorID>0x00000000</vendorID>
@@ -314,16 +296,16 @@
                     <!-- Communication Profile Area (0x1000 - 0x1FFF): defined by EPSG 301 -->
                     <Object index="1000" name="NMT_DeviceType_U32" objectType="7" dataType="0007" accessType="const" PDOmapping="no" defaultValue="0x00000000"/>
                     <Object index="1001" name="ERR_ErrorRegister_U8" objectType="7" dataType="0005" accessType="ro" PDOmapping="optional" defaultValue="0"/>
-                    <Object index="1006" name="NMT_CycleLen_U32" objectType="7" dataType="0007" accessType="rw" PDOmapping="no" defaultValue="1000"/>
+                    <Object index="1006" name="NMT_CycleLen_U32" objectType="7" dataType="0007" accessType="rw" PDOmapping="no" lowLimit="400" highLimit="100000" />
                     <Object index="1008" name="NMT_ManufactDevName_VS" objectType="7" dataType="0009" accessType="const" PDOmapping="no" defaultValue="openSAFETY_DEMO"/>
                     <Object index="1009" name="NMT_ManufactHwVers_VS" objectType="7" dataType="0009" accessType="const" PDOmapping="no" defaultValue="1.00"/>
-                    <Object index="100A" name="NMT_ManufactSwVers_VS" objectType="7" dataType="0009" accessType="const" PDOmapping="no" defaultValue="OPLK V2.5.2"/>
+                    <Object index="100A" name="NMT_ManufactSwVers_VS" objectType="7" dataType="0009" accessType="const" PDOmapping="no" defaultValue="OPLK V2.6.2"/>
                     <Object index="1018" name="NMT_IdentityObject_REC" objectType="9">
                         <SubObject subIndex="00" name="NumberOfEntries" objectType="7" dataType="0005" accessType="const" PDOmapping="no" defaultValue="4"/>
                         <SubObject subIndex="01" name="VendorId_U32" objectType="7" dataType="0007" accessType="const" PDOmapping="no" defaultValue="0x00000000"/>
                         <SubObject subIndex="02" name="ProductCode_U32" objectType="7" dataType="0007" accessType="const" PDOmapping="no" defaultValue="0x00000001"/>
                         <SubObject subIndex="03" name="RevisionNo_U32" objectType="7" dataType="0007" accessType="const" PDOmapping="no" defaultValue="0x00010020"/>
-                        <SubObject subIndex="04" name="SerialNo_U32" objectType="7" dataType="0007" accessType="const" PDOmapping="no" defaultValue="0x00000000"/>
+                        <SubObject subIndex="04" name="SerialNo_U32" objectType="7" dataType="0007" accessType="const" PDOmapping="no"/>
                     </Object>
                     <Object index="1020" name="CFM_VerifyConfiguration_REC" objectType="9">
                         <SubObject subIndex="00" name="NumberOfEntries" objectType="7" dataType="0005" accessType="const" defaultValue="2"/>
@@ -599,20 +581,20 @@
                         <SubObject subIndex="FD" name="RelativeLatencyDiff" objectType="7" dataType="0007" accessType="ro" PDOmapping="no" defaultValue="0"/>
                         <SubObject subIndex="FE" name="RelativeLatencyDiff" objectType="7" dataType="0007" accessType="ro" PDOmapping="no" defaultValue="0"/>
                     </Object>
-                    <Object index="1300" name="SDO_SequLayerTimeout_U32" objectType="7" PDOmapping="no" accessType="rw" dataType="0007" defaultValue="15000" />
+                    <Object index="1300" name="SDO_SequLayerTimeout_U32" objectType="7" PDOmapping="no" accessType="rw" dataType="0007" lowLimit="100" defaultValue="15000" />
                     <Object index="1400" name="PDO_RxCommParam_00h_REC" objectType="9">
                         <SubObject subIndex="00" name="NumberOfEntries" objectType="7" dataType="0005" accessType="const" PDOmapping="no" defaultValue="2"/>
-                        <SubObject subIndex="01" name="NodeID_U8" objectType="7" dataType="0005" accessType="rw" PDOmapping="no" defaultValue="0"/>
+                        <SubObject subIndex="01" name="NodeID_U8" objectType="7" dataType="0005" accessType="rw" PDOmapping="no" highLimit="254" defaultValue="0"/>
                         <SubObject subIndex="02" name="MappingVersion_U8" objectType="7" dataType="0005" accessType="rw" PDOmapping="no" defaultValue="0"/>
                     </Object>
                     <Object index="1401" name="PDO_RxCommParam_01h_REC" objectType="9">
                         <SubObject subIndex="00" name="NumberOfEntries" objectType="7" dataType="0005" accessType="const" PDOmapping="no" defaultValue="2"/>
-                        <SubObject subIndex="01" name="NodeID_U8" objectType="7" dataType="0005" accessType="rw" PDOmapping="no" defaultValue="0"/>
+                        <SubObject subIndex="01" name="NodeID_U8" objectType="7" dataType="0005" accessType="rw" PDOmapping="no" highLimit="254" defaultValue="0"/>
                         <SubObject subIndex="02" name="MappingVersion_U8" objectType="7" dataType="0005" accessType="rw" PDOmapping="no" defaultValue="0"/>
                     </Object>
                     <Object index="1402" name="PDO_RxCommParam_02h_REC" objectType="9">
                         <SubObject subIndex="00" name="NumberOfEntries" objectType="7" dataType="0005" accessType="const" PDOmapping="no" defaultValue="2"/>
-                        <SubObject subIndex="01" name="NodeID_U8" objectType="7" dataType="0005" accessType="rw" PDOmapping="no" defaultValue="0"/>
+                        <SubObject subIndex="01" name="NodeID_U8" objectType="7" dataType="0005" accessType="rw" PDOmapping="no" highLimit="254" defaultValue="0"/>
                         <SubObject subIndex="02" name="MappingVersion_U8" objectType="7" dataType="0005" accessType="rw" PDOmapping="no" defaultValue="0"/>
                     </Object>
                     <Object index="1600" name="PDO_RxMappParam_00h_AU64" objectType="8">
@@ -1024,7 +1006,7 @@
                     </Object>
                     <Object index="1F82" name="NMT_FeatureFlags_U32" objectType="7" dataType="0007" accessType="const" PDOmapping="no" defaultValue="0x00050267"/>
                     <Object index="1F83" name="NMT_EPLVersion_U8" objectType="7" dataType="0005" accessType="const" PDOmapping="no" defaultValue="0x20"/>
-                    <Object index="1F8C" name="NMT_CurrNMTState_U8" objectType="7" dataType="0005" PDOmapping="optional" accessType="ro"/>
+                    <Object index="1F8C" name="NMT_CurrNMTState_U8" objectType="7" dataType="0005" PDOmapping="no" accessType="ro"/>
                     <Object index="1F8D" name="NMT_PResPayloadLimitList_AU16" objectType="8" dataType="0006">
                         <SubObject subIndex="00" name="NumberOfEntries" objectType="7" dataType="0005" accessType="rw" PDOmapping="no" defaultValue="254"/>
                         <SubObject subIndex="01" name="PResPayloadLimit" objectType="7" dataType="0006" accessType="rw" PDOmapping="no" defaultValue="36"/>
@@ -1297,7 +1279,7 @@
                         <SubObject subIndex="06" name="ASndMaxLatency_U32" objectType="7" dataType="0007" accessType="const" PDOmapping="no" defaultValue="2000"/>
                         <SubObject subIndex="07" name="MultiplCycleCnt_U8" objectType="7" dataType="0005" accessType="rw" PDOmapping="no" defaultValue="0"/>
                         <SubObject subIndex="08" name="AsyncMTU_U16" objectType="7" dataType="0006" accessType="rw" PDOmapping="no" lowLimit="300" highLimit="1482" defaultValue="300"/>
-                        <SubObject subIndex="09" name="Prescaler_U16" objectType="7" dataType="0006" accessType="rw" defaultValue="2" PDOmapping="no" />
+                        <SubObject subIndex="09" name="Prescaler_U16" objectType="7" dataType="0006" accessType="rw" PDOmapping="no" lowLimit="0" highLimit="1000" defaultValue="2" />
                         <SubObject subIndex="0A" name="PResMode_U8" objectType="7" dataType="0005" accessType="ro" PDOmapping="no" lowLimit="0" highLimit="1" defaultValue="0"/>
                         <SubObject subIndex="0B" name="PResTimeFirst_U32" objectType="7" dataType="0007" accessType="ro" PDOmapping="no" defaultValue="0"/>
                         <SubObject subIndex="0C" name="PResTimeSecond_U32" objectType="7" dataType="0007" accessType="ro" PDOmapping="no" defaultValue="0"/>
