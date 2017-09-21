@@ -30,7 +30,7 @@ The partitioning of the system into application and network part allows a good
 separation of safety related and non-safety related code as well as the exchange
 of the underlying network interface.
 
-> Current version: \ref sect_rev_v110
+> Current version: \ref sect_rev_v120
 
 # openSAFETY_DEMO {#sect_main_sysdesc_oS_demo}
 
@@ -79,7 +79,7 @@ documentation of the stack in the folder
 
 The openSAFETY protocol stack is processed on the application processor.
 This open source stack can be downloaded from
-http://sourceforge.net/projects/opensafety.
+https://sourceforge.net/projects/opensafety/.
 
 
 
@@ -111,10 +111,10 @@ application.
   by opening the `.md` with a text editor.
 * The software manual can be generated from the markdown
   documentation and the in source-code documentation with the tools
-  [Doxygen](http://www.doxygen.org) and [CMake](http://www.cmake.org). Therefore
-  Doxygen version greater or equal 1.8 is required. The software manual will be
-  created in HTML format under `build/doc/html`.
-  [Graphviz] (http://www.graphviz.org/) is used for generating graph
+  [Doxygen](http://www.doxygen.org) and [CMake](https://www.cmake.org).
+  Therefore Doxygen version greater or equal 1.8 is required.
+  The software manual will be created in HTML format under `build/doc/html`.
+  [Graphviz] (https://www.graphviz.org/) is used for generating graph
   visualisations and diagrams.
 
   To generate the documentation enter the following commands according to your
@@ -123,12 +123,13 @@ application.
 ### Build command on Windows {#sect_main_build_doc_windows}
 
 One possibility for building the documentation is to use
-[MinGW and MSYS](http://sourceforge.net/projects/mingw).
+[MinGW and MSYS](https://sourceforge.net/projects/mingw).
 When installed, open a MSYS terminal and carry on with the steps
 mentioned in \ref sect_main_build_doc_linux.
 
 Another possibility is to use the tools of a Visual Studio installation.
-Open the `Visual Studio Command Prompt` and enter the following commands:
+Open the `Visual Studio Command Prompt`, change to the openSAFETY_DEMO root
+directory and enter the following commands:
 
       > cd build
       > cmake -G"NMake Makefiles" ../
@@ -136,8 +137,8 @@ Open the `Visual Studio Command Prompt` and enter the following commands:
 
 
 ### Build command on Linux {#sect_main_build_doc_linux}
-Open a terminal where the path to `make`, `doxygen` and `CMake` is set and enter
-the following commands:
+Open a terminal where the path to `make`, `doxygen` and `CMake` is set,
+change to the openSAFETY_DEMO root directory and enter the following commands:
 
       > cd build
       > cmake -G"Unix Makefiles" ../
@@ -167,4 +168,5 @@ GitHub and via git:
    execute the following statements:
 
         > git clone --recursive https://github.com/OpenAutomationTechnologies/openSAFETY_DEMO.git openSAFETY_DEMO
-        > git checkout -b V1.5.0
+        > cd openSAFETY_DEMO
+        > git checkout -b mybranch tags/V1.2.0 && git submodule update --recursive

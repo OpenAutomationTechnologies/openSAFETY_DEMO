@@ -800,7 +800,7 @@ INPUT                  = @DOXYFILE_SOURCE_DIR@/doxygen \
                          @DOXYFILE_SOURCE_DIR@/ipcore/triplebuffer.md \
                          @DOXYFILE_SOURCE_DIR@/ipcore/openmac.md \
                          @DOXYFILE_SOURCE_DIR@/userguide/customisations.md \
-                         @DOXYFILE_SOURCE_DIR@/userguide/web_osdd_checker.md \
+                         @DOXYFILE_SOURCE_DIR@/userguide/epsg_osdd_check.md \
                          @DOXYFILE_SOURCE_DIR@/software/index.md \
                          @DOXYFILE_SOURCE_DIR@/software/group_applications.txt \
                          @DOXYFILE_SOURCE_DIR@/software/group_sn.txt \

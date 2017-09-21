@@ -15,10 +15,13 @@ in a separate build directory which keeps your sources clean. The
 openSAFETY_DEMO project already provides the folder `build` in the root
 directory.
 
-> **IMPORTANT:** If the **target platform** consists of several processors with
-> **different architectures** a **second or third build folder may be created**
-> by the user. This also applies when changing the kind of
-> compilation (native, cross compilation) and different toolchain files.
+> **IMPORTANT:** When building for different architectures or platforms,
+> **separate build directories** have to be created
+> (e.g. /build_fpga, /build_mc, /build_doc, ..) or the build directory has to
+> be emptied.
+> This also applies when changing toolchain files or changing from native
+> to cross compilation.
+> See \ref sect_cmake_commandline for an example.
 
 # CMake usage {#sect_cmake}
 
@@ -40,14 +43,21 @@ generators of CMake.
   command line. Refer to the sections **Target specific configuration option**
   throughout the documentation to view available options to pass to CMake.
 
-- Inside the shell enter the build directory and execute CMake in the build
-  directory with the path to the source directory as a parameter.
+- Inside the shell enter the build directory or create a new one
+  and execute CMake in this directory with the path to the
+  source directory as a parameter.
+
+  To create a new directory, change to the openSAFETY_DEMO root directory and
+  type the following command. [YOUR_NUCLEO_BUILD_DIRECTORY] is a freely chosen
+  name, e.g. `build_nucleo`.
+
+        > mkdir [YOUR_NUCLEO_BUILD_DIRECTORY]
 
   Example:
 
-        > cd build
+        > cd [YOUR_NUCLEO_BUILD_DIRECTORY]
         > cmake -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain-arm-cortexm4-gnueabi.cmake \
-        >       -DCFG_STM32_HAL_LIB_LOC=/c/dev/STM32Cube_FW_F4_V1.10.0/ -DCFG_PROG_FLASH_ENABLE=ON \
+        >       -DCFG_STM32_HAL_LIB_LOC=/c/dev/STM32Cube_FW_F4_V1.21.0/ -DCFG_PROG_FLASH_ENABLE=ON \
         >       -DCFG_DUAL_CHANNEL=dual-channel -DCMAKE_BUILD_TYPE=Debug ../
 
   The example above will generate Unix style Makefiles for the stm32f401 platform
@@ -68,6 +78,19 @@ generators of CMake.
         > make all
 
   for building all targets.
+
+- To build the software for an additional target (change of toolchain-file or
+  changing between native and cross-compiilation), delete the content
+  of the existing build directory and execute cmake or create a new directory,
+  change there and execute cmake.
+
+  Example using the additional build directory `build_fpga`,
+  starting in the openSAFETY_DEMO root directory:
+
+        > mkdir build_fpga
+        > cd build_fpga
+        > cmake -G"Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain-altera-nios2-gnu.cmake ../
+        > make all
 
 ## cmake-gui {#sect_cmake_gui}
 

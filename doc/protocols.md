@@ -38,7 +38,7 @@ implements a TCP/IP stack, it gets a private IP address from class C within the
 network 192.168.100.0 where the host part equals the POWERLINK node ID.
 
 For more information about the protocol see the following pages:
-- http://www.ethernet-powerlink.org
+- http://openpowerlink.sourceforge.net
 - https://sourceforge.net/projects/openpowerlink
 - https://sourceforge.net/projects/openconf
 
@@ -68,5 +68,5 @@ inhomogeneous networks. Special openSAFETY Domain Gateways enable communication
 between openSAFETY domains.
 
 For more information about the protocol see the following pages:
-- http://www.open-safety.org/
+- https://www.open-safety.org/
 - https://sourceforge.net/projects/opensafety

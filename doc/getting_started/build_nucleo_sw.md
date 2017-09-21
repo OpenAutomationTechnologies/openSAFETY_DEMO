@@ -26,8 +26,11 @@ in order to do this:
 
 1. Create a build environment with **bash** shell, the **GNU CoreUtils** and the
    **gcc-arm-none-eabi** compiler. (See \subpage page_install_software)
+
 2. Inside the shell enter the build directory or create a new directory
-   and change there.
+   and change there. Consider \ref sect_gs_cmake_buildsw_outofsource
+   when building for different targets or changing between native and
+   cross-compilation.
 
    - Execute CMake in the build directory with the path to the source directory
      as a parameter.
@@ -35,9 +38,11 @@ in order to do this:
      If passing other paths than the toolchain file and the source
      directory to **cmake**, make sure to use absolute paths.
 
-            > cd build
+     Example starting from the openSAFETY_DEMO root directory:
+
+            > cd [YOUR_NUCLEO_BUILD_DIRECTORY]
             > cmake -G"Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain-arm-cortexm3-gnueabi.cmake \
-            >       -DCFG_STM32_HAL_LIB_LOC=[PATH_TO_STM32Cube_FW_F1_V1.2.0] ../
+            >       -DCFG_STM32_HAL_LIB_LOC=[PATH_TO_STM32Cube_FW_F1_V1.6.0] ../
 
      This will generate Unix style Makefiles for the stm32f103rb platform with
      the default configuration. See the section \ref sect_gs_cmake_options and
@@ -96,21 +101,10 @@ CFG_DUAL_CHANNEL | selection between single and dual channelled application | si
 
 - **CFG_STM32_HAL_LIB_LOC**
 
- Specify the path to the stm32f103 HAL library (**STM32CubeF1 V 1.2.0**).
- Get it from: http://www.st.com/web/catalog/tools/FM147/CL1794/SC961/SS1743/LN1897/PF260820
+ Specify the path to the stm32f103 HAL library (**STM32CubeF1 V 1.6.0**).
+ Get it from: http://www.st.com/en/embedded-software/stm32cubef1.html
 
  Value: Path to the HAL library
- > **IMPORTANT**:
- > There is a bug in Version 1.2.0 of the STM32CubeF1 software.
- > Open the file
- > `[STM32CubeDirectory]/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.c`
- > and comment the following lines in function `HAL_SPI_Receive_DMA()`:
- >
- > ~~~~~~~~~~~~~~~~~~~~~{.c}
- >   /*hspi->hdmatx->XferHalfCpltCallback = 0;*/
- >   /*hspi->hdmatx->XferCpltCallback     = 0;*/
- >   /*hspi->hdmatx->XferErrorCallback    = 0;*/
- > ~~~~~~~~~~~~~~~~~~~~~
 
 - **CFG_ARM_BOARD_TYPE**
 
@@ -150,9 +144,11 @@ in order to do this:
      If passing other paths than the toolchain file and the source
      directory to **cmake**, make sure to use absolute paths.
 
-            > cd build
+     Example starting from the openSAFETY_DEMO root directory:
+
+            > cd [YOUR_NUCLEO_BUILD_DIRECTORY]
             > cmake -G"Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain-arm-cortexm4-gnueabi.cmake \
-            >       -DCFG_STM32_HAL_LIB_LOC=[PATH_TO_STM32Cube_FW_F4_V1.10.0] ../
+            >       -DCFG_STM32_HAL_LIB_LOC=[PATH_TO_STM32Cube_FW_F4_V1.21.0] ../
 
      This will generate Unix style Makefiles for the stm32f401re platform with
      the default configuration. See the section \ref sect_gs_cmake_options and
@@ -211,8 +207,8 @@ CFG_DUAL_CHANNEL | selection between single and dual channelled application | si
 
 - **CFG_STM32_HAL_LIB_LOC**
 
- Specify the path to the stm32f401 HAL library (**STM32Cube_FW_F4_V1.10.0**).
- Get it from: http://www.st.com/web/catalog/tools/FM147/CL1794/SC961/SS1743/LN1897/PF259243
+ Specify the path to the stm32f401 HAL library (**STM32Cube_FW_F4_V1.21.0**).
+ Get it from: http://www.st.com/en/embedded-software/stm32cubef4.html
 
  Value: Path to the HAL library
 
@@ -272,7 +268,7 @@ through the code and set breakpoints.
 > C/C++ Remote Application Debug Configuration go to
 > `Help -> Install New Software`.
 > In the new window select the entry that matches your version of Eclipse
-> e.g. "[VERSION] - http://download.eclipse.org/releases/[VERSION]" from the
+> e.g. "[VERSION] - https://download.eclipse.org/releases/[VERSION]" from the
 > `Work with` drop down menu.
 > Enter "hardware" in the filter text box and install
 > `C/C++ GDB Hardware Debugging` from the section

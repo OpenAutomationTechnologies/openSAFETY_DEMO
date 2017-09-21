@@ -74,7 +74,8 @@ shell where the path to the Quartus II toolchain is set.
 >   Programs -> Altera 13.0.1 -> Nios II EDS -> Nios II 13.0sp1 Command Shell`
 
 
-In this shell execute the following command:
+In this shell, change to the openSAFETY_DEMO root directory and execute the
+following command:
 
       > cd blackchannel/POWERLINK/misc/altera_nios2/scripts
       > ./create-this-fpga ../../../fpga/boards/[platform]/[board_name]/[example_name]

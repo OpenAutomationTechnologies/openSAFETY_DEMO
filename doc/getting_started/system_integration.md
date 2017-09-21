@@ -43,7 +43,7 @@ Make sure the tools are installed:
 
 For importing the openSAFETY_DEMO device, perform the following steps:
 
-### Automation Studio 4.2.7 and SafeDESIGNER 4.2 onwards {#sect_gs_as_osdd_import_new_as_sd}
+### Automation Studio 4.3.4 and SafeDESIGNER 4.3 onwards {#sect_gs_as_osdd_import_new_as_sd}
 
 1. Open Automation Studio and select `Tools -> Import Fieldbus Device...`
 2. Change to the folder **devicedescription** and select the
@@ -115,9 +115,9 @@ For importing the openSAFETY_DEMO device, perform the following steps:
 4. The status bar at the bottom of the Automation Studio should now show the
    connected PLC and its status.
 
-## Downloading the configuration and software to the PLC {#sect_gs_as_sw_setup}
+## Downloading the configuration and application to the PLC {#sect_gs_as_sw_setup}
 
-There are 2 possibilities to transfer the configuration and software to the
+There are 2 possibilities to transfer the configuration and application to the
 B&R PLC.
 
 > **Note:** If the compilation of the project aborts with an error stating
@@ -125,7 +125,7 @@ B&R PLC.
 > available version from the `Automation Runtime` drop-down
 > accessible via the menu `Project -> Change Runtime Versions...`
 
-- For downloading the configuration and software to the B&R PLC via network,
+- For downloading the configuration and application to the B&R PLC via network,
   perform the following steps:
 
   When the connection with the PLC is established, compile the Automation
@@ -134,7 +134,7 @@ B&R PLC.
   ![Automation Studio, Build toolbar, Transfer](as_build_toolbar.png)
   @image latex as_build_toolbar.png "Automation Studio, Build toolbar, Transfer" width=0.2\textwidth
 
-- For transferring the configuration and software via a Compact Flash card,
+- For transferring the configuration and application via a Compact Flash card,
   perform the following steps:
 
   If there is a Compact Flash card reader available, ensure the PLC is powered
@@ -146,9 +146,9 @@ B&R PLC.
   After the creation has finished, put the card back into the PLC.
   Power on the system again.
 
-## Downloading the SafePLC software {#sect_gs_as_safedesigner}
+## Downloading the SafePLC application {#sect_gs_as_safedesigner}
 
-To download the software to the safe PLC (B&R SafeLOGIC),
+To download the application to the safe PLC (B&R SafeLOGIC),
 perform the following steps:
 
 1. In the System Designer view of Automation Studio, open the
@@ -167,7 +167,7 @@ perform the following steps:
 
 4. Find the module SL1.M1 in the Safety View located in the left bottom corner
   of the SafeDESIGNER. Right-click on the module and  select `Remote Control`.
-  If downloading the software for the first time, a prompt will be shown
+  If downloading the application for the first time, a prompt will be shown
   asking to set a new password. Set the password to 123456 and confirm it.
   If a password is pre-set, but unknown, the SafeKEY can be formatted.
   Follow the instructions in the Automation Studio Help in
@@ -175,7 +175,7 @@ perform the following steps:
   connection elements -> Safety processor -> Selection switch and confirmation
   button`
 
-5. In the remote control window, select `Download` to download the software.
+5. In the remote control window, select `Download` to download the application.
 
    ![SafeDESIGNER Remote Control](as_sd_remote.png)
    @image latex as_sd_remote.png "SafeDESIGNER Remote Control" width=0.75\textwidth

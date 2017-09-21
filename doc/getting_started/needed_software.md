@@ -28,9 +28,9 @@ The software requirements are depending on the desired usage of the openSAFETY_D
 
    https://sourceforge.net/projects/mingw/
 
-  - CMake http://www.cmake.org/
+  - CMake https://www.cmake.org/
   - Doxygen http://www.stack.nl/~dimitri/doxygen/download.html
-  - GraphViz http://www.graphviz.org/Download.php
+  - GraphViz https://www.graphviz.org/Download.php
 
 
 ## 1. Usage of the pre-built binaries only {#sect_gs_req_sw1}
@@ -55,7 +55,7 @@ the following software is additionally needed to (1):
   extensible open-source system which allows managing build processes independent
   from operating systems and compilers
 
-  http://www.cmake.org/
+  https://www.cmake.org/
 
 - Windows operating systems only: MinGW (+ MSYS), see also \ref sect_gs_req_sw0
 
@@ -70,13 +70,13 @@ the following software is additionally needed to (1):
 
   contains the openPOWERLINK stack for POWERLINK communication.
   Using a stable release is recommended. The git repository version
-  of the openSAFETY_DEMO is using openPOWERLINK version 2.5.2.
+  of the openSAFETY_DEMO is using openPOWERLINK version 2.6.2.
 
 Download as archives
 
 If the openSAFETY Demo was downloaded as archive, get the packages here:
 
-- openSAFETY distribution 1.5 http://sourceforge.net/projects/opensafety
+- openSAFETY distribution 1.5 https://sourceforge.net/projects/opensafety
 
 - openPOWERLINK stack 2.5.0 or higher
   http://openpowerlink.sourceforge.net/web/openPOWERLINK/Download.html
@@ -123,11 +123,9 @@ following commands:
 
 - HAL Library for the used NUCLEO boards:
 
-  * NUCLEO-F103RB: STM32CubeF1 V1.2.0: http://www.st.com/en/embedded-software/stm32cubef1.html
-  > **IMPORTANT**: There is a bug in version 1.2.0 of the STM32CubeF1
-  > software. See \ref sect_gs_nucleo_buildsw_options_f103 for a workaround.
+  * NUCLEO-F103RB: STM32CubeF1 V1.6.0: http://www.st.com/en/embedded-software/stm32cubef1.html
 
-  * NUCLEO-F401RE: STM32CubeF4 V1.10.0: http://www.st.com/en/embedded-software/stm32cubef4.html
+  * NUCLEO-F401RE: STM32CubeF4 V1.21.0: http://www.st.com/en/embedded-software/stm32cubef4.html
 
   * Both versions of Nucleo: STM32CubeMX: http://www.st.com/en/development-tools/stm32cubemx.html
   > This enables the download of different versions of STM32Cube for
@@ -192,14 +190,14 @@ and putting the whole system into operation the following software is needed.
 Please contact your local B&R representation regarding further product
 information and purchasing.
 
-- Automation Studio 4.2.7 or higher
+- Automation Studio 4.3.4 or higher
 
   integrated development environment used, among others, for planning,
   implementing and configuring B&R control systems
 
-  http://www.br-automation.com/en/products/software/automation-studio/
+  https://www.br-automation.com/en/products/software/automation-studio/
 
-- SafeDESIGNER 4.2 or higher
+- SafeDESIGNER 4.3 or higher
 
   development environment for developing safe logic / the safe program
   for the SafePLC and configuring the openSAFETY safe nodes
@@ -228,7 +226,7 @@ information and purchasing.
   IDE for C/C++ development, used for developing software for the application
   processors
 
-  http://www.eclipse.org/downloads/
+  https://www.eclipse.org/downloads/
 
 - Wireshark
 

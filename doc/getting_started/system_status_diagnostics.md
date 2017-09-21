@@ -16,6 +16,8 @@ the debug output of the PCP can be monitored by opening a
 
         > nios2-terminal -i 0
 
+See \ref sect_gs_build_fpga_sw_debug_com for further information.
+
 # Nucleo Boards {#sect_gs_system_integration_status_nucleo}
 
 If the software of the Nucleo boards was built with CMAKE_BUILD_TYPE=Debug,
@@ -29,6 +31,9 @@ The following settings are needed for the COM port:
 - Paraity: none
 - Stop: 1 bit
 - Flow control: none
+
+See \ref sect_gs_nucleo_buildsw_debug and
+\ref sect_gs_nucleo_buildsw_debug_virtual_com for further information.
 
 # PLC {#sect_gs_system_integration_status_plc}
 
@@ -68,6 +73,13 @@ The logger can be opened via the menu `Open -> Logger` or by pressing `CTRL+L`.
 When the SafePLC is in RUN mode, the status of the variables of the
 openSAFETY_DEMO device can be observed in the SafeDESIGNER by
 clicking the button `Variable status`.
+
+> **Note:** The openSAFETY_DEMO device files contain a vendor ID, which may be
+> used only for test purposes or during development.
+> Therefore, the SafePLC will show a continuously fast flashing FAILSAFE LED.
+> This type of flashing indicates the usage of a test / pilot firmware,
+> an application created with a test / pilot version of SafeDESIGNER or
+> using a safety module with device files containing the test vendor ID.
 
 ![SafeDESIGNER, Variable status](as_sd_variablestatus.png)
 @image latex as_sd_variablestatus.png "SafeDESIGNER, Variable status" width=0.75\textwidth
@@ -206,4 +218,4 @@ Generally a system boot-up in respect to openSAFETY follows this sequence:
 
 For further information on the openSAFETY protocol, the frame types and services
 please refer to the **openSAFETY Profile Specification** located at
-http://www.ethernet-powerlink.org/en/downloads/technical-documents/.
+https://www.ethernet-powerlink.org/en/downloads/technical-documents/.

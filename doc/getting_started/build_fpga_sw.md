@@ -36,18 +36,21 @@ this the following build steps need to be executed:
      `Programs -> Altera 13.0.1 -> Nios II EDS -> Nios II 13.0sp1 Command Shell`
 
 2. Inside the shell change to the build directory or create a new directory
-   and change there.
+   and change there. Consider \ref sect_gs_cmake_buildsw_outofsource
+   when building for different targets or changing between native and
+   cross-compilation.
 
    - Execute CMake in the build directory with the path to the source
      directory as a parameter.
 
      If passing other paths than the toolchain file and the source directory
      to **cmake**, make sure to use absolute paths.
-     On Windows, use Windows-style drive letters.
-     Example:
-     `C:/openSAFETY_DEMO/blackchannel/fpga/boards/altera/terasic-de2-115/cn-pcp-spi`
+     On Windows, use Windows-style drive letters (e.g
+     `C:/openSAFETY_DEMO/blackchannel/fpga/boards/altera/terasic-de2-115/cn-pcp-spi`).
 
-            > cd build
+     Starting from the openSAFETY_DEMO root directory, type:
+
+            > cd [YOUR_FPGA_BUILD_DIRECTORY]
             > cmake -G"Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain-altera-nios2-gnu.cmake ../
 
      This will generate Unix style Makefiles for the Altera platform with the

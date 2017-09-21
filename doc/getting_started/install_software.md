@@ -297,17 +297,6 @@ and extract the content of the archive to any desired location.
 This location has to be selected afterwards, when building the firmware for
 the microcontroller.
 
- > **IMPORTANT**: There is a bug in Version 1.2.0 of the STM32CubeF1 software.
- > Open the file
- > `[STM32CubeDirectory]/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.c`
- > and comment the following lines in function `HAL_SPI_Receive_DMA()`:
- >
- > ~~~~~~~~~~~~~~~~~~~~~{.c}
- >   /*hspi->hdmatx->XferHalfCpltCallback = 0;*/
- >   /*hspi->hdmatx->XferCpltCallback     = 0;*/
- >   /*hspi->hdmatx->XferErrorCallback    = 0;*/
- > ~~~~~~~~~~~~~~~~~~~~~
-
 ## GNU ARM Compiler {#sect_gs_install_software_gnuarm}
 
 ### Windows:

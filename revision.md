@@ -5,9 +5,31 @@ Revision History {#page_revision}
 
 Revision history of the openSAFETY_DEMO.
 
+# V1.2.0    {#sect_rev_v120}
+
+This is the first release of the V1.2 release series.
+This release contains fixes and optimizations.
+
+Following is a summary of changes in V1.2.
+For a detailed revision history refer to the Git source code history.
+
+* `Features and changes:`
+  - Improve performance by adapting / correcting tightly coupled memory parts
+  - Update device description files regarding POWERLINK conformance and
+openSAFETY test vendor ID
+  - Update git submodule for openPOWERLINK
+  - Update documentation
+  - Stability improvements
+  - Update Cortex-M3 / M4 HAL libraries related code
+* `Fixes:`
+  - Fix build system issues
+  - Fix reset guarding SCM issue
+  - Fix logger messages with invalid timestamps
+
 # V1.1.0    {#sect_rev_v110}
 
-This is the latest release of the V1.1 release series. This release contains fixes and optimizations.
+This is the latest release of the V1.1 release series.
+This release contains fixes and optimizations.
 
 Following is a summary of changes in V1.1.
 For a detailed revision history refer to the Git source code history.

@@ -29,7 +29,7 @@
 
     <tab type="usergroup" url="" title="Tools and Features">
         <tab type="user" url="\ref page_user_customisations" title="How to customise the openSAFETY_DEMO"/>
-        <tab type="user" url="\ref page_web_osdd_checker" title="Checking and Securing OSDD files"/>
+        <tab type="user" url="\ref page_epsg_osdd_check" title="Checking OSDD files"/>
     </tab>
 
     <tab type="usergroup" url="\ref page_systemdesign" title="System Design">
