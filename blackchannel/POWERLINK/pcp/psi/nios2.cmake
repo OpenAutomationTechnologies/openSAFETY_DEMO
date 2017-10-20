@@ -47,7 +47,7 @@ SET( NIOS2_QSYS_SUB_CPU cpu_0 )
 SET( BSP_TYPE hal )
 SET( ALT_PCP_BSP_DIR ${ALT_BUILD_DIR}/bsp )
 
-SET( NIOS2_TC_I_MEM ${NIOS2_QSYS_SUB}_tc_i_mem )
+SET( NIOS2_TC_MEM ${NIOS2_QSYS_SUB}_tc_mem )
 
 # Path to the nios2 flash override file
 SET(ALT_FLASH_OVERRIDE ${ALT_MISC_DIR}/scripts/nios2-flash-override.txt)
@@ -92,7 +92,7 @@ SET( NIOS2_BSP_ARGS
                     "--set hal.linker.enable_alt_load_copy_exceptions false"
                     "--set hal.enable_clean_exit false"
                     "--set hal.enable_exit false"
-                    "--cmd add_section_mapping .tc_i_mem ${NIOS2_TC_I_MEM}"
+                    "--cmd add_section_mapping .tc_mem ${NIOS2_TC_MEM}"
                     "--set hal.make.bsp_cflags_optimization ${OPT_LEVEL}"
    )
 
@@ -119,7 +119,7 @@ MESSAGE ( STATUS  "Generate board support package: ${GEN_BSP_STDOUT}" )
 
 SET( ALT_BSP_QUEUE_ARGS
                        "--settings ${ALT_PCP_BSP_DIR}/settings.bsp"
-                       "--cmd puts [get_addr_span ${NIOS2_TC_I_MEM}]"
+                       "--cmd puts [get_addr_span ${NIOS2_TC_MEM}]"
    )
 
 # Get TCI memory size
@@ -135,9 +135,9 @@ IF( NOT ${GET_TCM_RES} MATCHES "0" )
     MESSAGE ( FATAL_ERROR "${ALT_BSP_QUEUE} failed with: ${GET_TCM_STDERR}" )
 ENDIF ( NOT  ${GET_TCM_RES} MATCHES "0" )
 
-SET( TCI_MEM_SIZE ${GET_TCM_STDOUT} )
+SET( TC_MEM_SIZE ${GET_TCM_STDOUT} )
 
-MESSAGE( STATUS "Size TCIMEM: ${TCI_MEM_SIZE}" )
+MESSAGE( STATUS "Size TCIMEM: ${TC_MEM_SIZE}" )
 
 #get definitions added with ADD_DEFINITIONS
 get_directory_property(DEF_LIST COMPILE_DEFINITIONS)
@@ -145,7 +145,7 @@ SET ( DEFINITIONS "" )
 GenerateCompileDefinitionFlagsFromList ("${DEF_LIST}" DEFINITIONS)
 
 # Generate application Makefile
-SET( APP_CFLAGS "${CMAKE_C_FLAGS} ${DEFINITIONS} -DALT_TCIMEM_SIZE=${TCI_MEM_SIZE}" )
+SET( APP_CFLAGS "${CMAKE_C_FLAGS} ${DEFINITIONS} -DALT_TCMEM_SIZE=${TC_MEM_SIZE}" )
 
 SET( ALT_APP_GEN_ARGS
                       "--bsp-dir ${ALT_PCP_BSP_DIR}"
