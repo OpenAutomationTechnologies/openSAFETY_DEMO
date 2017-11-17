@@ -18,7 +18,7 @@ Provides the interface from the SHNF to the slim interface library.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright 2014 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright 2017 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -697,20 +697,27 @@ static BOOL processApp(UINT32 rpdoRelTimeLow_p,
 
     if(hnfPsiInstance_l.pfnSpdoRxHandler_m != NULL)
     {
-        /* Call RSPDO receive handler () */
-        hnfPsiInstance_l.pfnSpdoRxHandler_m(&pRpdoImage_p->spdo0[0], RX_SPDO0_SIZE);
-
-        if(hnfPsiInstance_l.pfnSpdoTxCreate_m != NULL)
+        if (pRpdoImage_p != NULL)
         {
-            /* Call TSPDO transmit create */
-            hnfPsiInstance_l.pfnSpdoTxCreate_m();
+            /* Call RSPDO receive handler () */
+            hnfPsiInstance_l.pfnSpdoRxHandler_m(&pRpdoImage_p->spdo0[0], RX_SPDO0_SIZE);
 
-            if(hnfPsiInstance_l.pfnProcSync_m != NULL)
+            if(hnfPsiInstance_l.pfnSpdoTxCreate_m != NULL)
             {
-                /* Call the process sync callback function (Handles all actions of the end of the cycle) */
-                if(hnfPsiInstance_l.pfnProcSync_m())
+                /* Call TSPDO transmit create */
+                hnfPsiInstance_l.pfnSpdoTxCreate_m();
+
+                if(hnfPsiInstance_l.pfnProcSync_m != NULL)
                 {
-                    fReturn = TRUE;
+                    /* Call the process sync callback function (Handles all actions of the end of the cycle) */
+                    if(hnfPsiInstance_l.pfnProcSync_m())
+                    {
+                        fReturn = TRUE;
+                    }
+                }
+                else
+                {
+                    errh_postFatalError(kErrSourceHnf, kErrorCallbackNotInitialized, 0);
                 }
             }
             else
@@ -720,7 +727,7 @@ static BOOL processApp(UINT32 rpdoRelTimeLow_p,
         }
         else
         {
-            errh_postFatalError(kErrSourceHnf, kErrorCallbackNotInitialized, 0);
+            errh_postFatalError(kErrSourceHnf, kErrorInvalidParameter, 0);
         }
     }
     else
