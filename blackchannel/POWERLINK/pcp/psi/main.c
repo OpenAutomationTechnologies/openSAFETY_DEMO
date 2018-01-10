@@ -14,7 +14,7 @@ buffers which can be accessed by the application processor.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+* Copyright (c) 2018, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 * Copyright (c) 2016, Kalycito Infotech Private Ltd
 * All rights reserved.
 *
@@ -125,6 +125,7 @@ typedef struct
 //------------------------------------------------------------------------------
 
 static tMainInstance mainInstance_l;
+static tOplkApiSocTimeInfo socTimeStamp_l;
 
 //------------------------------------------------------------------------------
 // local function prototypes
@@ -221,6 +222,8 @@ int main (void)
     {
         goto ExitShutdown;
     }
+
+    psi_setNettime(&socTimeStamp_l.netTime);
 
     if ((ret = oplk_setNonPlkForward(TRUE)) != kErrorOk)
     {
@@ -613,10 +616,8 @@ static tOplkError psi_syncCb(void)
     tOplkError          oplkret = kErrorOk;
     tPsiStatus          ret     = kPsiSuccessful;
     tTimeInfo           time;
-    tNetTime*           pNetTime = NULL;
-    tOplkApiSocTimeInfo socTimeStamp;
 
-    ret = oplk_getSocTime(&socTimeStamp);
+    ret = oplk_getSocTime(&socTimeStamp_l);
     if (ret != kPsiSuccessful)
     {
         oplkret = kErrorInvalidOperation;
@@ -633,9 +634,9 @@ static tOplkError psi_syncCb(void)
     if (mainInstance_l.cycleTime != 0 &&
         mainInstance_l.plkState >= kNmtCsReadyToOperate)
     {
-        time.relativeTimeLow_m = (UINT32)socTimeStamp.relTime;
-        time.relativeTimeHigh_m = (UINT32)(socTimeStamp.relTime>>32);
-        time.fTimeValid_m = socTimeStamp.fValidRelTime;
+        time.relativeTimeLow_m = (UINT32)socTimeStamp_l.relTime;
+        time.relativeTimeHigh_m = (UINT32)(socTimeStamp_l.relTime>>32);
+        time.fTimeValid_m = socTimeStamp_l.fValidRelTime;
         time.fCnIsOperational_m = (mainInstance_l.plkState == kNmtCsOperational) ? TRUE : FALSE;
 
         ret = status_process(&time);
@@ -645,10 +646,8 @@ static tOplkError psi_syncCb(void)
             goto Exit;
         }
 
-        pNetTime = &socTimeStamp.netTime;
-
         // Handle synchronous task of slim interface
-        ret = psi_handleSync(pNetTime);
+        ret = psi_handleSync();
         if (ret != kPsiSuccessful)
         {
             oplkret = kErrorInvalidOperation;

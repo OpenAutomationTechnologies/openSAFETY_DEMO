@@ -14,7 +14,7 @@ the synchronous and asynchronous tasks.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+* Copyright (c) 2018, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 * Copyright (c) 2016, Kalycito Infotech Private Ltd
 * All rights reserved.
 *
@@ -480,6 +480,30 @@ Exit:
 
 //------------------------------------------------------------------------------
 /**
+\brief    Forward the pointer to nettime to related modules
+
+\param[in] pNetTime_p           Pointer to the current time information
+
+\return tPsiStatus
+\retval kPsiSuccessful          On success
+
+\ingroup module_log
+*/
+//------------------------------------------------------------------------------
+tPsiStatus psi_setNettime(tNetTime * pNetTime_p)
+{
+    tPsiStatus ret = kPsiSuccessful;
+
+#if(((PSI_MODULE_INTEGRATION) & (PSI_MODULE_LOGBOOK)) != 0 )
+    ret = log_setNettime(pNetTime_p);
+#endif
+
+    return ret;
+}
+
+
+//------------------------------------------------------------------------------
+/**
 \brief    Process psi background function
 
 Call modules where data needs to be forwarded in the background.
@@ -550,14 +574,12 @@ Exit:
 /**
 \brief    Process psi synchronous functions
 
-\param[in] pNetTime_p       Pointer to the current nettime
-
 Call modules where data needs to be forwarded in the synchronous interrupt.
 
 \ingroup module_psi
 */
 //------------------------------------------------------------------------------
-tPsiStatus psi_handleSync(tNetTime * pNetTime_p)
+tPsiStatus psi_handleSync(void)
 {
     tPsiStatus ret = kPsiSuccessful;
 #if(((PSI_MODULE_INTEGRATION) & (PSI_MODULE_SSDO)) != 0)
@@ -565,8 +587,6 @@ tPsiStatus psi_handleSync(tNetTime * pNetTime_p)
 #endif
 #if(((PSI_MODULE_INTEGRATION) & (PSI_MODULE_LOGBOOK)) != 0)
     UINT8 j;
-#else
-    UNUSED_PARAMETER(pNetTime_p);
 #endif
 
 #if(((PSI_MODULE_INTEGRATION) & (PSI_MODULE_CC)) != 0)
@@ -607,13 +627,6 @@ tPsiStatus psi_handleSync(tNetTime * pNetTime_p)
 #endif
 
 #if(((PSI_MODULE_INTEGRATION) & (PSI_MODULE_LOGBOOK)) != 0)
-    // Set logbook nettime
-    ret = log_setNettime(pNetTime_p);
-    if(ret != kPsiSuccessful)
-    {
-        goto Exit;
-    }
-
     // Process all instantiated logger channels
     for(j=0; j < kNumLogInstCount; j++)
     {

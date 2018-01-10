@@ -9,7 +9,7 @@ This file contains definitions for the slim interface main module.
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
-Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+Copyright (c) 2018, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -71,9 +71,10 @@ typedef enum {
 tPsiStatus psi_init(UINT8 nodeId_p, tPsiCritSec pfnCritSec_p);
 void psi_exit(void);
 tPsiStatus psi_configureModules(void);
+tPsiStatus psi_setNettime(tNetTime * pNetTime_p);
 
 tPsiStatus psi_handleAsync(void);
-tPsiStatus psi_handleSync(tNetTime * pNetTime_p);
+tPsiStatus psi_handleSync(void);
 
 void psi_pdoProcFinished(tPsiPdoDir pdoDir_p);
 tPsiStatus psi_sdoAccFinished(const tSdoComFinished* pSdoComFinParam_p );
