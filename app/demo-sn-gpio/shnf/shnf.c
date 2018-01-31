@@ -20,7 +20,7 @@ to the HNF. Also the frame CRCs are calculated inside this module.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright 2017 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright 2018 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -595,13 +595,13 @@ static BOOLEAN processRxSsdoSnmtFrame(UINT8* pPayload_p, UINT16 paylLen_p)
             {
                 /* Frame is passed to the stack but takes further calls of the process function to finish */
                 shnfInstance_l.ssdoRxStatus_m = kSsdoRxStatusBusy;
-                fReturn = TRUE;
             }
             else if(procRet == SSC_k_OK)
             {
-                /* Frame is finished without change to busy */
-                fReturn = TRUE;
+                /* Frame is finished without change to busy or processing was not successful, free frame */
+                hnf_finishedAsyncRxChannel0();
             }
+            fReturn = TRUE;
         }   /* no else: frame can only be posted when state machine is ready -> return false! */
     }
     else
