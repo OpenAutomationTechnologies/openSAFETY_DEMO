@@ -576,7 +576,7 @@ static tOplkError psi_userEventCb(tOplkApiEventType eventType_p,
 
         case kOplkApiEventReceivedNonPlk:
         {
-            tOplkApiEventReceivedNonPlk*    pFrameInfo = &pEventArg_p->receivedEth;
+            tOplkApiEventReceivedNonPlk*    pFrameInfo = (tOplkApiEventReceivedNonPlk*)&pEventArg_p->receivedEth;
 
             ret = edrv2veth_receiveHandler((UINT8*)pFrameInfo->pFrame,
                                             pFrameInfo->frameSize);

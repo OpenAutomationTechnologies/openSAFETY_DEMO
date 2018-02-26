@@ -12,7 +12,7 @@ This module connects the IP stack with the SDO/UDP module.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+* Copyright (c) 2018, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
 * Copyright (c) 2016, Kalycito Infotech Pvt. Ltd.
 * All rights reserved.
 *
@@ -211,7 +211,7 @@ The function sends the given data to the remote address.
 //------------------------------------------------------------------------------
 tOplkError socketwrapper_send(tSocketWrapper pSocketWrapper_p,
                               const tSocketWrapperAddress* pRemote_p,
-                              const UINT8* pData_p, UINT dataSize_p)
+                              const void* pData_p, size_t dataSize_p)
 {
     tSocketWrapInstance*    pInstance = (tSocketWrapInstance*)pSocketWrapper_p;
     INT                     error;
