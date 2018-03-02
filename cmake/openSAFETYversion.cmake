@@ -3,7 +3,7 @@
 # CMake file for the openSAFETY DEMO for getting / setting the openSAFETY
 # version
 #
-# Copyright (c) 2015, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+# Copyright (c) 2015, B&R Industrial Automation GmbH
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without

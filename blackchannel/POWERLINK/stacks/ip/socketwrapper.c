@@ -12,7 +12,7 @@ This module connects the IP stack with the SDO/UDP module.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2018, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+* Copyright (c) 2018, BB&R Industrial Automation GmbH
 * Copyright (c) 2016, Kalycito Infotech Pvt. Ltd.
 * All rights reserved.
 *

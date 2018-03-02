@@ -20,7 +20,7 @@ to the HNF. Also the frame CRCs are calculated inside this module.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright 2018 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2018, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,

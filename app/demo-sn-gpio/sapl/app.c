@@ -17,7 +17,7 @@ to the SCM. The application implements a gpio processing example.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright 2014 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2014, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,

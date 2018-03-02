@@ -10,7 +10,7 @@ provided from the Virtual Ethernet driver NoOs.
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
-Copyright (c) 2013, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+Copyright (c) 2013, B&R Industrial Automation GmbH
 Copyright (c) 2016, Kalycito Infotech Private Ltd
 All rights reserved.
 

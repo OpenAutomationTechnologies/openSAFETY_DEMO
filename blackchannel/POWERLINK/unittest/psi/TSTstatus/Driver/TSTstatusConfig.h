@@ -12,7 +12,7 @@ The configuration header provides the function prototypes for each module test
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright 2013 BERNECKER + RAINER, AUSTRIA, 5142 EGGELSBERG, B&R STRASSE 1
+* Copyright (c) 2013, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,

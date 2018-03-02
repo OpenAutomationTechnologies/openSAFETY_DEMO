@@ -14,7 +14,7 @@ buffers which can be accessed by the application processor.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2018, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+* Copyright (c) 2018, B&R Industrial Automation GmbH
 * Copyright (c) 2016, Kalycito Infotech Private Ltd
 * All rights reserved.
 *

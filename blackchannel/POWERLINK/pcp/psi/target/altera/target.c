@@ -11,7 +11,7 @@ slim interface.
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
-Copyright (c) 2014, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+Copyright (c) 2014, B&R Industrial Automation GmbH
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:

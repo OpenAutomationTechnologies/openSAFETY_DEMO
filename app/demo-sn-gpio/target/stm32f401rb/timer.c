@@ -16,7 +16,7 @@ system timer for stm32f401 (Cortex-M4).
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2017, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+* Copyright (c) 2017, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,

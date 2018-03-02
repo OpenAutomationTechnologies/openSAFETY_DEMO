@@ -9,7 +9,7 @@ The file contains internal definitions for the socketwrapper.
 
 /*------------------------------------------------------------------------------
 * License Agreement
-* Copyright (c) 2016, Bernecker+Rainer Industrie-Elektronik Ges.m.b.H. (B&R)
+* Copyright (c) 2016, B&R Industrial Automation GmbH
 * Copyright (c) 2016, Kalycito Infotech Pvt. Ltd
 * All rights reserved.
 
