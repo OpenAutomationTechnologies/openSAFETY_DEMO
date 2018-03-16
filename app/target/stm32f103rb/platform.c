@@ -16,7 +16,7 @@ stm32f103rb (Cortex-M3).
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2017, B&R Industrial Automation GmbH
+* Copyright (c) 2018, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -274,7 +274,7 @@ static BOOL uart2init(void)
     GPIO_InitStruct.Pin = USARTx_TX_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(USARTx_TX_GPIO_PORT, &GPIO_InitStruct);
 
     memset(&GPIO_InitStruct, 0, sizeof(GPIO_InitTypeDef));
@@ -318,7 +318,7 @@ static void initBenchmark(void)
 
     /* Init benchmark pins */
     GPIO_InitStructure.Pin = PINx_BENCHMARK_PIN0 | PINx_BENCHMARK_PIN1 | PINx_BENCHMARK_PIN2;
-    GPIO_InitStructure.Speed = GPIO_SPEED_MEDIUM;
+    GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_MEDIUM;
     GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
     HAL_GPIO_Init(PINx_BENCHMARK_PORT, &GPIO_InitStructure);
 }

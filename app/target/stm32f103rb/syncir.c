@@ -16,7 +16,7 @@ stm32f103rb (Cortex-M3).
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2017, B&R Industrial Automation GmbH
+* Copyright (c) 2018, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -134,7 +134,7 @@ BOOL syncir_init(tPlatformSyncIrq pfnSyncIrq_p)
     /* Configure SYNC interrupt pin */
     GPIO_InitStructure.Pin = IRx_SYNC_PIN;
     GPIO_InitStructure.Mode = GPIO_MODE_IT_RISING;
-    GPIO_InitStructure.Speed = GPIO_SPEED_MEDIUM;
+    GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_MEDIUM;
     GPIO_InitStructure.Pull = GPIO_PULLDOWN;
     HAL_GPIO_Init(IRx_SYNC_GPIO_PORT, &GPIO_InitStructure);
 

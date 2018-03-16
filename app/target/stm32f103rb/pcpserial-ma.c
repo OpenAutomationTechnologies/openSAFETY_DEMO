@@ -16,7 +16,7 @@ with the POWERLINK processor. (Target is the stm32f103rb board)
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2017, B&R Industrial Automation GmbH
+* Copyright (c) 2018, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -162,7 +162,7 @@ BOOL pcpserial_init(tHandlerParam * pTransParam_p, tPcpSerialTransferFin pfnTran
 
         /* SPI_NSS_Soft pin configuration */
         GPIO_InitStruct.Pin = SPIx_SSN_PIN;
-        GPIO_InitStruct.Speed = GPIO_SPEED_MEDIUM;
+        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
         GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
         GPIO_InitStruct.Pull = GPIO_PULLUP;
         HAL_GPIO_Init(SPIx_SSN_GPIO_PORT, &GPIO_InitStruct);
@@ -311,7 +311,7 @@ static void initGpio(void)
     GPIO_InitStruct.Pin = SPIx_SCK_PIN | SPIx_MISO_PIN | SPIx_MOSI_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(SPIx_GPIO_PORT, &GPIO_InitStruct);
 }
 

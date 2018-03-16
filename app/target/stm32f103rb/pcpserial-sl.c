@@ -16,7 +16,7 @@ with the POWERLINK processor. (Target is the stm32f103rb board)
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2017, B&R Industrial Automation GmbH
+* Copyright (c) 2018, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -268,7 +268,7 @@ static void initGpio(void)
     GPIO_InitStruct.Pin = SPIx_SCK_PIN | SPIx_SSN_PIN | SPIx_MOSI_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(SPIx_GPIO_PORT, &GPIO_InitStruct);
 
 }

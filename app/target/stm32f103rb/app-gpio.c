@@ -16,7 +16,7 @@ forwards it to the user application.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2017, B&R Industrial Automation GmbH
+* Copyright (c) 2018, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -140,12 +140,12 @@ UINT8 appgpio_init(void)
     inputInitSettings.Pin = GPIO_INPUT_PINS;
     inputInitSettings.Mode = GPIO_MODE_INPUT;
     inputInitSettings.Pull = GPIO_PULLDOWN;
-    inputInitSettings.Speed = GPIO_SPEED_LOW;   /* Ignored when pin is configured as input */
+    inputInitSettings.Speed = GPIO_SPEED_FREQ_LOW;   /* Ignored when pin is configured as input */
 
     outputInitSettings.Pin = GPIO_OUTPUT_PINS;
     outputInitSettings.Mode = GPIO_MODE_OUTPUT_PP;
     outputInitSettings.Pull = GPIO_NOPULL;
-    outputInitSettings.Speed = GPIO_SPEED_LOW;
+    outputInitSettings.Speed = GPIO_SPEED_FREQ_LOW;
 
     HAL_GPIO_Init (GPIO_PORT, & inputInitSettings);
     HAL_GPIO_Init (GPIO_PORT, & outputInitSettings);

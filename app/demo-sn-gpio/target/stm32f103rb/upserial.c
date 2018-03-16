@@ -16,7 +16,7 @@ uP-Master with the uP-Slave. (Target is the stm32f103rb board)
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2017, B&R Industrial Automation GmbH
+* Copyright (c) 2018, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -425,7 +425,7 @@ static void initGpio(void)
     GPIO_InitStruct.Pin = USARTx_RX_PIN | USARTx_TX_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(USARTx_GPIO_PORT, &GPIO_InitStruct);
 }
 
