@@ -16,7 +16,7 @@ uP-Master with the uP-Slave. (Target is the stm32f401re board)
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2017, B&R Industrial Automation GmbH
+* Copyright (c) 2018, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -79,12 +79,12 @@ uP-Master with the uP-Slave. (Target is the stm32f401re board)
 /* const defines                                                              */
 /*----------------------------------------------------------------------------*/
 #define USARTx                           USART1
-#define USARTx_CLK_ENABLE()              __USART1_CLK_ENABLE()
-#define DMAx_CLK_ENABLE()                __DMA2_CLK_ENABLE()
-#define USARTx_RX_GPIO_CLK_ENABLE()      __GPIOA_CLK_ENABLE()
-#define USARTx_TX_GPIO_CLK_ENABLE()      __GPIOA_CLK_ENABLE()
+#define USARTx_CLK_ENABLE()              __HAL_RCC_USART1_CLK_ENABLE()
+#define DMAx_CLK_ENABLE()                __HAL_RCC_DMA2_CLK_ENABLE()
+#define USARTx_RX_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE()
+#define USARTx_TX_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE()
 
-#define USARTx_CLK_DISABLE()             __USART1_CLK_DISABLE()
+#define USARTx_CLK_DISABLE()             __HAL_RCC_USART1_CLK_DISABLE()
 
 /* Definition for USARTx Pins */
 #define USARTx_RX_PIN                    GPIO_PIN_10
@@ -437,7 +437,7 @@ static void initGpio(void)
     GPIO_InitStruct.Pin = USARTx_RX_PIN | USARTx_TX_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = USARTx_ALT_FUNC;
     HAL_GPIO_Init(USARTx_GPIO_PORT, &GPIO_InitStruct);
 }

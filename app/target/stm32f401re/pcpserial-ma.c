@@ -16,7 +16,7 @@ with the POWERLINK processor. (Target is the stm32f401re board)
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2017, B&R Industrial Automation GmbH
+* Copyright (c) 2018, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -77,14 +77,14 @@ with the POWERLINK processor. (Target is the stm32f401re board)
 /* const defines                                                              */
 /*----------------------------------------------------------------------------*/
 #define SPIx                             SPI1
-#define SPIx_CLK_ENABLE()                __SPI1_CLK_ENABLE()
-#define DMAx_CLK_ENABLE()                __DMA2_CLK_ENABLE()
-#define SPIx_SCK_GPIO_CLK_ENABLE()       __GPIOA_CLK_ENABLE()
-#define SPIx_MISO_GPIO_CLK_ENABLE()      __GPIOA_CLK_ENABLE()
-#define SPIx_MOSI_GPIO_CLK_ENABLE()      __GPIOA_CLK_ENABLE()
-#define SPIx_NSS_GPIO_CLK_ENABLE()       __GPIOB_CLK_ENABLE()
+#define SPIx_CLK_ENABLE()                __HAL_RCC_SPI1_CLK_ENABLE()
+#define DMAx_CLK_ENABLE()                __HAL_RCC_DMA2_CLK_ENABLE()
+#define SPIx_SCK_GPIO_CLK_ENABLE()       __HAL_RCC_GPIOA_CLK_ENABLE()
+#define SPIx_MISO_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE()
+#define SPIx_MOSI_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE()
+#define SPIx_NSS_GPIO_CLK_ENABLE()       __HAL_RCC_GPIOB_CLK_ENABLE()
 
-#define SPIx_CLK_DISABLE()               __SPI1_CLK_DISABLE()
+#define SPIx_CLK_DISABLE()               __HAL_RCC_SPI1_CLK_DISABLE()
 
 /* Definition for SPIx Pins */
 #define SPIx_SCK_PIN                     GPIO_PIN_5
@@ -164,7 +164,7 @@ BOOL pcpserial_init(tHandlerParam * pTransParam_p, tPcpSerialTransferFin pfnTran
 
         /* SPI_NSS_Soft pin configuration */
         GPIO_InitStruct.Pin = SPIx_SSN_PIN;
-        GPIO_InitStruct.Speed = GPIO_SPEED_MEDIUM;
+        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
         GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
         GPIO_InitStruct.Pull = GPIO_PULLUP;
         HAL_GPIO_Init(SPIx_SSN_GPIO_PORT, &GPIO_InitStruct);
@@ -310,7 +310,7 @@ static void initGpio(void)
     GPIO_InitStruct.Pin = SPIx_SCK_PIN | SPIx_MISO_PIN | SPIx_MOSI_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FAST;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     GPIO_InitStruct.Alternate = SPIx_ALT_FUNC;
     HAL_GPIO_Init(SPIx_GPIO_PORT, &GPIO_InitStruct);
 }
@@ -336,12 +336,12 @@ static BOOL initSpi(void)
     SpiHandle_l.Init.Direction = SPI_DIRECTION_2LINES;
     SpiHandle_l.Init.CLKPhase = SPI_PHASE_1EDGE;
     SpiHandle_l.Init.CLKPolarity = SPI_POLARITY_LOW;
-    SpiHandle_l.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLED;
+    SpiHandle_l.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
     SpiHandle_l.Init.CRCPolynomial = 0;
     SpiHandle_l.Init.DataSize = SPI_DATASIZE_8BIT;
     SpiHandle_l.Init.FirstBit = SPI_FIRSTBIT_MSB;
     SpiHandle_l.Init.NSS = SPI_NSS_SOFT;
-    SpiHandle_l.Init.TIMode = SPI_TIMODE_DISABLED;
+    SpiHandle_l.Init.TIMode = SPI_TIMODE_DISABLE;
     SpiHandle_l.Init.Mode = SPI_MODE_MASTER;
     if(HAL_SPI_Init(&SpiHandle_l) == HAL_OK)
     {

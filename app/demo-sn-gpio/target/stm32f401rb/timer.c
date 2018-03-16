@@ -16,7 +16,7 @@ system timer for stm32f401 (Cortex-M4).
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2017, B&R Industrial Automation GmbH
+* Copyright (c) 2018, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -80,7 +80,7 @@ system timer for stm32f401 (Cortex-M4).
 
 /* Definition for TIMx clock resources */
 #define TIMx                       TIM1
-#define TIMx_CLK_ENABLE            __TIM1_CLK_ENABLE
+#define TIMx_CLK_ENABLE            __HAL_RCC_TIM1_CLK_ENABLE
 
 /*----------------------------------------------------------------------------*/
 /* local types                                                                */
@@ -146,7 +146,7 @@ UINT16 timer_getTickCount(void)
 {
     UINT64 usTime = 0;
 
-    usTime = (UINT32)__HAL_TIM_GetCounter(&TimerHandle_l);
+    usTime = (UINT32)__HAL_TIM_GET_COUNTER(&TimerHandle_l);
 
     return usTime;
 }
@@ -160,7 +160,7 @@ UINT16 timer_getTickCount(void)
 /*----------------------------------------------------------------------------*/
 void timer_setTickCount(UINT16 newVal_p)
 {
-    __HAL_TIM_SetCounter(&TimerHandle_l, newVal_p);
+    __HAL_TIM_SET_COUNTER(&TimerHandle_l, newVal_p);
 }
 
 /*============================================================================*/

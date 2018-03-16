@@ -16,7 +16,7 @@ flash memory for target stm32f103.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2017, B&R Industrial Automation GmbH
+* Copyright (c) 2018, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -251,8 +251,8 @@ BOOLEAN nvs_erase(UINT32 offset_p)
     HAL_FLASH_Unlock();
 
     /* Fill EraseInit structure*/
-    EraseInitHandle_l.TypeErase = TYPEERASE_SECTORS;
-    EraseInitHandle_l.VoltageRange = VOLTAGE_RANGE_3;
+    EraseInitHandle_l.TypeErase = FLASH_TYPEERASE_SECTORS;
+    EraseInitHandle_l.VoltageRange = FLASH_VOLTAGE_RANGE_3;
     EraseInitHandle_l.Sector = getSector(address);
     EraseInitHandle_l.NbSectors = 1;
 
@@ -303,7 +303,7 @@ static BOOLEAN progUint32(UINT32 address_p, UINT32 * pData_p)
 {
     BOOLEAN retVal = FALSE;
 
-    if(HAL_FLASH_Program(TYPEPROGRAM_WORD, address_p, (UINT64)(*pData_p)) == HAL_OK)
+    if(HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, address_p, (UINT64)(*pData_p)) == HAL_OK)
     {
         retVal = TRUE;
     }
@@ -325,7 +325,7 @@ static BOOLEAN progUint16(UINT32 address_p, UINT16 * pData_p)
 {
     BOOLEAN retVal = FALSE;
 
-    if(HAL_FLASH_Program(TYPEPROGRAM_HALFWORD, address_p, (UINT64)(*pData_p)) == HAL_OK)
+    if(HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, address_p, (UINT64)(*pData_p)) == HAL_OK)
     {
         retVal = TRUE;
     }
@@ -348,7 +348,7 @@ static BOOLEAN progUint8(UINT32 address_p, UINT8 * pData_p)
     BOOLEAN retVal = FALSE;
 
     /* Perform half word write access */
-    if(HAL_FLASH_Program(TYPEPROGRAM_BYTE, address_p, (UINT64)(*pData_p)) == HAL_OK)
+    if(HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, address_p, (UINT64)(*pData_p)) == HAL_OK)
     {
         retVal = TRUE;
     }

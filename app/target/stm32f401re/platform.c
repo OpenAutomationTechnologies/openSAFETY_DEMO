@@ -16,7 +16,7 @@ implementation.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2017, B&R Industrial Automation GmbH
+* Copyright (c) 2018, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -66,12 +66,12 @@ implementation.
 /*----------------------------------------------------------------------------*/
 /* Definition for USARTx clock resources */
 #define USARTx                           USART2
-#define USARTx_CLK_ENABLE()              __USART2_CLK_ENABLE();
-#define USARTx_RX_GPIO_CLK_ENABLE()      __GPIOA_CLK_ENABLE()
-#define USARTx_TX_GPIO_CLK_ENABLE()      __GPIOA_CLK_ENABLE()
+#define USARTx_CLK_ENABLE()              __HAL_RCC_USART2_CLK_ENABLE();
+#define USARTx_RX_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE()
+#define USARTx_TX_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE()
 
-#define USARTx_FORCE_RESET()             __USART2_FORCE_RESET()
-#define USARTx_RELEASE_RESET()           __USART2_RELEASE_RESET()
+#define USARTx_FORCE_RESET()             __HAL_RCC_USART2_FORCE_RESET()
+#define USARTx_RELEASE_RESET()           __HAL_RCC_USART2_RELEASE_RESET()
 
 /* Definition for USARTx Pins */
 #define USARTx_TX_PIN                    GPIO_PIN_2
@@ -226,7 +226,7 @@ static BOOL systemClockInit(void)
     RCC_OscInitTypeDef RCC_OscInitStruct;
 
     /* Enable Power Control clock */
-    __PWR_CLK_ENABLE();
+    __HAL_RCC_PWR_CLK_ENABLE();
 
     /* The voltage scaling allows optimizing the power consumption when the device is
      clocked below the maximum system frequency, to update the voltage scaling value
@@ -278,7 +278,7 @@ static BOOL uart2init(void)
     memset(&UartHandle_l, 0, sizeof(UART_HandleTypeDef));
 
     /* Enable GPIO TX/RX clock */
-    __GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOA_CLK_ENABLE();
 
     memset(&GPIO_InitStruct, 0, sizeof(GPIO_InitTypeDef));
 
@@ -286,7 +286,7 @@ static BOOL uart2init(void)
     GPIO_InitStruct.Pin = USARTx_TX_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FAST;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     GPIO_InitStruct.Alternate = USARTx_TX_AF;
     HAL_GPIO_Init(USARTx_TX_GPIO_PORT, &GPIO_InitStruct);
 
@@ -332,7 +332,7 @@ static void initBenchmark(void)
 
     /* Init benchmark pins */
     GPIO_InitStructure.Pin = PINx_BENCHMARK_PIN0 | PINx_BENCHMARK_PIN1 | PINx_BENCHMARK_PIN2;
-    GPIO_InitStructure.Speed = GPIO_SPEED_MEDIUM;
+    GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_MEDIUM;
     GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
     HAL_GPIO_Init(PINx_BENCHMARK_PORT, &GPIO_InitStructure);
 }
