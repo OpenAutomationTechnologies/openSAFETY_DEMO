@@ -22,7 +22,7 @@ all memory structures and the initialization data of each object.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2014, B&R Industrial Automation GmbH
+* Copyright (c) 2018, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -230,10 +230,16 @@ SOD_cfg_TO_RAM_ROM SOD_t_OBJECT *SAPL_ps_OD[EPLS_cfg_MAX_INSTANCES]=
     SAPL_s_OD_INST_0
 };
 
+SOD_t_ENTRY_VIRT SAPL_s_SOD_VIRT_INST =
+{
+    {0, EPLS_k_BOOLEAN, 0x1UL, NULL}, SOD_k_END_OF_THE_OD, SOD_k_END_OF_THE_OD, 0xFF, 0xFF, NULL, NULL, (SOD_t_CLBK)0
+};
+
+
 /* dummy for virtual SOD */
 const SOD_t_ENTRY_VIRT *const SAPL_ps_SOD_VIRT[EPLS_cfg_MAX_INSTANCES] =
 {
-    NULL
+    &SAPL_s_SOD_VIRT_INST
 };
 
 /*============================================================================*/
