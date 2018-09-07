@@ -630,6 +630,11 @@ static tOplkError psi_syncCb(void)
 
     psi_pdoProcFinished(tPdoDirRpdo);
 
+    psi_pdoProcFinished(tPdoDirTpdo);
+    oplkret = oplk_exchangeAppPdoIn();
+    if (oplkret != kErrorOk)
+        goto Exit;
+
     // CN is configured (cycle time is set)
     if (mainInstance_l.cycleTime != 0 &&
         mainInstance_l.plkState >= kNmtCsReadyToOperate)
@@ -654,12 +659,6 @@ static tOplkError psi_syncCb(void)
             goto Exit;
         }
     }
-
-    oplkret = oplk_exchangeAppPdoIn();
-    if (oplkret != kErrorOk)
-        goto Exit;
-
-    psi_pdoProcFinished(tPdoDirTpdo);
 
 Exit:
     return oplkret;
