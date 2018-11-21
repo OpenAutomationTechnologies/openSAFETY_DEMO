@@ -547,7 +547,7 @@ spdo is created in every cycle.
 /*----------------------------------------------------------------------------*/
 static void buildTxSpdoFrame(void)
 {
-    UINT8 numFreeSpdoFrms = 1U; /* number of free SPDO frames can be sent per call of the SSC_BuildTxFrames */
+    UINT16 numFreeSpdoFrms = 1U; /* number of free SPDO frames can be sent per call of the SSC_BuildTxFrames */
     UINT32 consTime;
 
     if(stateh_getSnState() == kSnStateOperational)
