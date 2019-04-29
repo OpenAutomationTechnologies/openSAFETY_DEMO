@@ -61,7 +61,7 @@ the following software is additionally needed to (1):
 
 ### openSAFETY Demo related software
 
-- openSAFETY distribution 1.5
+- openSAFETY distribution 1.5.2
 
   contains the openSAFETY stack and additional tools needed for the
   openSAFETY_DEMO
@@ -76,7 +76,7 @@ Download as archives
 
 If the openSAFETY Demo was downloaded as archive, get the packages here:
 
-- openSAFETY distribution 1.5 https://sourceforge.net/projects/opensafety
+- openSAFETY distribution 1.5.2 https://sourceforge.net/projects/opensafety
 
 - openPOWERLINK stack 2.5.0 or higher
   http://openpowerlink.sourceforge.net/web/openPOWERLINK/Download.html
@@ -123,7 +123,7 @@ following commands:
 
 - HAL Library for the used NUCLEO boards:
 
-  * NUCLEO-F103RB: STM32CubeF1 V1.6.0: http://www.st.com/en/embedded-software/stm32cubef1.html
+  * NUCLEO-F103RB: STM32CubeF1 V1.7.0: http://www.st.com/en/embedded-software/stm32cubef1.html
 
   * NUCLEO-F401RE: STM32CubeF4 V1.21.0: http://www.st.com/en/embedded-software/stm32cubef4.html
 
@@ -190,7 +190,7 @@ and putting the whole system into operation the following software is needed.
 Please contact your local B&R representation regarding further product
 information and purchasing.
 
-- Automation Studio 4.3.4 or higher
+- Automation Studio 4.5.3 or higher
 
   integrated development environment used, among others, for planning,
   implementing and configuring B&R control systems

@@ -30,7 +30,7 @@ The partitioning of the system into application and network part allows a good
 separation of safety related and non-safety related code as well as the exchange
 of the underlying network interface.
 
-> Current version: \ref sect_rev_v120
+> Current version: \ref sect_rev_v121
 
 # openSAFETY_DEMO {#sect_main_sysdesc_oS_demo}
 
@@ -169,4 +169,4 @@ GitHub and via git:
 
         > git clone --recursive https://github.com/OpenAutomationTechnologies/openSAFETY_DEMO.git openSAFETY_DEMO
         > cd openSAFETY_DEMO
-        > git checkout -b mybranch tags/V1.2.0 && git submodule update --recursive
+        > git checkout -b mybranch tags/V1.2.1 && git submodule update --recursive

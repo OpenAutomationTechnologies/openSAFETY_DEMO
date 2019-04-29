@@ -5,6 +5,21 @@ Revision History {#page_revision}
 
 Revision history of the openSAFETY_DEMO.
 
+# V1.2.1    {#sect_rev_v121}
+
+This is the latest (intermediate) release of the V1.2 release series.
+This release contains fixes and optimizations.
+
+Following is a summary of changes in V1.2.1.
+For a detailed revision history refer to the Git source code history.
+
+* `Features and changes:`
+  - Improve latency of TxPDO data
+  - Use openSAFETY stack 1.5.2
+  - Update documentation
+  - Improve display of device info in design tool with new device description file
+
+
 # V1.2.0    {#sect_rev_v120}
 
 This is the first release of the V1.2 release series.
