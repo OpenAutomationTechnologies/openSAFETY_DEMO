@@ -5,7 +5,7 @@
 
   License Agreement
 
-  Copyright (c) 2018, B&R Industrial Automation GmbH
+  Copyright (c) 2019, B&R Industrial Automation GmbH
   All rights reserved.
 
   Redistribution and use in source and binary forms,
@@ -59,10 +59,10 @@
                 fileCreator="B&amp;R Industrial Automation GmbH"
                 fileCreationDate="2011-04-01"
                 fileCreationTime="10:00:00+02:00"
-                fileModificationDate="2018-03-02"
+                fileModificationDate="2019-05-31"
                 fileModificationTime="13:00:00+02:00"
                 fileModifiedBy="B&amp;R Industrial Automation GmbH"
-                fileVersion="01.02"
+                fileVersion="01.03"
                 supportedLanguages="en">
             <DeviceIdentity>
                 <vendorName>Unknown vendor</vendorName>
@@ -119,62 +119,80 @@
                 </capabilities>
             </DeviceFunction>
             <ApplicationProcess>
-                <dataTypeList>
-                    <!-- Define memory layout of an object using a structure -->
-                    <struct name="Index2130_S01" uniqueID="UID_DT_Index2130_S01">
-                        <varDeclaration name="Index2130_USINT" uniqueID="Index2130_USINT" size="27">
-                            <label lang="en">This is the SSDO/SNMT0 channel</label>
-                            <USINT />
-                        </varDeclaration>
-                    </struct>
-                    <struct name="Index4000_S01" uniqueID="UID_DT_Index4000_S01">
-                        <varDeclaration name="TxSPDO_Data_header" uniqueID="Index4000_header" size="4">
-                            <label lang="en">TSPDO-Data</label>
-                            <USINT />
-                        </varDeclaration>
-                        <varDeclaration name="SafeInput01" uniqueID="Index4000_SI01" size="1">
-                            <label lang="en">SafeInput01</label>
-                            <USINT />
-                        </varDeclaration>
-                        <varDeclaration name="SafeInput02" uniqueID="Index4000_SI02" size="1">
-                            <label lang="en">SafeInput02</label>
-                            <USINT />
-                        </varDeclaration>
-                        <varDeclaration name="SafeInput03" uniqueID="Index4000_SI03" size="1">
-                            <label lang="en">SafeInput03</label>
-                            <USINT />
-                        </varDeclaration>
-                        <varDeclaration name="SafeInput04" uniqueID="Index4000_SI04" size="1">
-                            <label lang="en">SafeInput04</label>
-                            <USINT />
-                        </varDeclaration>
-                        <varDeclaration name="TxSPDO_Data_footer" uniqueID="Index4000_footer" size="11">
-                            <label lang="en">TSPDO-Data</label>
-                            <USINT />
-                        </varDeclaration>
-                    </struct>
-                    <struct name="Index4001_S01" uniqueID="UID_DT_Index4001_S01">
-                        <varDeclaration name="Index4001_USINT" uniqueID="Index4001_USINT" size="19">
-                            <label lang="en">This is the TSPDO0 channel</label>
-                            <USINT />
-                        </varDeclaration>
-                    </struct>
-                </dataTypeList>
                 <parameterList>
-                    <!-- Defined a parameter which is assigned to a object/subObject via its uniqueID -->
-                    <parameter uniqueID="UID_DOM_Index2130_S01" access="read">
-                        <label lang="en">SSDO stub data</label>
-                        <dataTypeIDRef uniqueIDRef="UID_DT_Index2130_S01" />
+                    <!-- Define memory layout of an object using parameter group and parameters -->
+                    <!-- TxSPDO safety container -->
+                    <parameter uniqueID="SafeInput01" access="read">
+                        <label lang="en">SafeInput01</label>
+                        <description lang="en">SafeInput01</description>
+                        <USINT />
                     </parameter>
-                    <parameter uniqueID="UID_DOM_Index4000_S01" access="read">
-                        <label lang="en">TxSPDO-data</label>
-                        <dataTypeIDRef uniqueIDRef="UID_DT_Index4000_S01" />
+                    <parameter uniqueID="SafeInput02" access="read">
+                        <label lang="en">SafeInput02</label>
+                        <description lang="en">SafeInput02</description>
+                        <USINT />
                     </parameter>
-                    <parameter uniqueID="UID_DOM_Index4001_S01" access="readWrite">
-                        <label lang="en">RxSPDO-data</label>
-                        <dataTypeIDRef uniqueIDRef="UID_DT_Index4001_S01" />
+                    <parameter uniqueID="SafeInput03" access="read">
+                        <label lang="en">SafeInput03</label>
+                        <description lang="en">SafeInput03</description>
+                        <USINT />
+                    </parameter>
+                    <parameter uniqueID="SafeInput04" access="read">
+                        <label lang="en">SafeInput04</label>
+                        <description lang="en">SafeInput04</description>
+                        <USINT />
+                    </parameter>
+                    <parameter uniqueID="TxSPDO_footer_byte11" access="read">
+                        <label lang="en">TxSPDO_footer_byte11</label>
+                        <description lang="en">TxSPDO_footer_byte11</description>
+                        <USINT />
+                    </parameter>
+                    <!-- Define memory layout of an object using parameter group and parameters -->
+                    <!-- RxSPDO safety container -->
+                    <parameter uniqueID="RxSPDO_byte19" access="write">
+                        <label lang="en">RxSPDO_byte19</label>
+                        <USINT/>
+                    </parameter>
+
+                    <parameter uniqueID="Cfg_SSDOStubAddr_Value" access="readWrite">
+                        <label lang="en">SSDO Stub Address</label>
+                        <description lang="en">SSDO Stub Address</description>
+                        <UDINT />
+                        <defaultValue value="0" />
+                    </parameter>
+                    <parameter uniqueID="Cfg_SLOGAddr_Value" access="readWrite">
+                        <label lang="en">SSDO Stub Address</label>
+                        <description lang="en">SSDO Stub Address</description>
+                        <UDINT />
+                        <defaultValue value="0" />
                     </parameter>
                 </parameterList>
+                <parameterGroupList>
+                    <!-- Defined parameterGroups which are assigned to an object/subObject via its uniqueID -->
+                    <parameterGroup uniqueID="PG_TxSPDO_DOM" bitOffset="0">
+                        <label lang="en">TxSPDO</label>
+                        <parameterRef uniqueIDRef="SafeInput01" visible="true" bitOffset="32"/>
+                        <parameterRef uniqueIDRef="SafeInput02" visible="true" bitOffset="40"/>
+                        <parameterRef uniqueIDRef="SafeInput03" visible="true" bitOffset="48"/>
+                        <parameterRef uniqueIDRef="SafeInput04" visible="true" bitOffset="56"/>
+                        <parameterRef uniqueIDRef="TxSPDO_footer_byte11" visible="false" bitOffset="144"/>
+                    </parameterGroup>
+                    <parameterGroup uniqueID="PG_RxSPDO_DOM" bitOffset="0">
+                        <label lang="en">RxSPDO</label>
+                        <parameterRef uniqueIDRef="RxSPDO_byte19" visible="false" bitOffset="144"/>
+                    </parameterGroup>
+
+                    <!-- parameterGroups for module configuration without related "Properties" parameterGroups -->
+                    <!-- to hide objects configured by the PLC from the user  -->
+                    <parameterGroup uniqueID="CfgEntry_SSDOStub_PG" kindOfAccess="MOD_CfgEntry" groupLevelVisible="true">
+                        <label lang="en">SSDO Stub Address</label>
+                        <parameterRef uniqueIDRef="Cfg_SSDOStubAddr_Value" bitOffset="0" />
+                    </parameterGroup>
+                    <parameterGroup uniqueID="CfgEntry_SLOG_PG" kindOfAccess="MOD_CfgEntry" groupLevelVisible="true">
+                        <label lang="en">SLOG Address</label>
+                        <parameterRef uniqueIDRef="Cfg_SLOGAddr_Value" bitOffset="0" />
+                    </parameterGroup>
+                </parameterGroupList>
             </ApplicationProcess>
         </ProfileBody>
     </ISO15745Profile>
@@ -197,7 +215,7 @@
                 fileCreator="B&amp;R Industrial Automation GmbH"
                 fileCreationDate="2011-04-01"
                 fileCreationTime="10:00:00+02:00"
-                fileModificationDate="2018-03-02"
+                fileModificationDate="2009-05-31"
                 fileModificationTime="13:00:00+02:00"
                 fileModifiedBy="B&amp;R Industrial Automation GmbH"
                 fileVersion="01.02"
@@ -1551,27 +1569,27 @@
 
                     <Object index="2110" name="SSDOStub_REC" objectType="9">
                         <SubObject subIndex="00" name="NumberOfEntries" objectType="7" dataType="0005" accessType="const" PDOmapping="no" defaultValue="1"/>
-                        <SubObject subIndex="01" name="SSDOStubAddress_U32" objectType="7" dataType="0007" accessType="rw" PDOmapping="no" defaultValue="0"/>
+                        <SubObject subIndex="01" name="SSDOStubAddress_U32" objectType="7" dataType="0007" accessType="rw" PDOmapping="no" uniqueIDRef="CfgEntry_SSDOStub_PG"/>
                     </Object>
 
                     <Object index="2130" name="SSDOStub_REC" objectType="9">
                         <SubObject subIndex="00" name="NumberOfEntries" objectType="7" dataType="0005" accessType="const" PDOmapping="no" defaultValue="1"/>
-                        <SubObject subIndex="01" name="SSDOStubData_DOM" objectType="7" uniqueIDRef="UID_DOM_Index2130_S01"/>
+                        <SubObject subIndex="01" name="SSDOStubData_DOM" objectType="7" dataType="000F" accessType="wo" PDOmapping="no" />
                     </Object>
 
                     <Object index="2403" name="LoggerAddress_REC" objectType="9">
                         <SubObject subIndex="00" name="NumberOfEntries" objectType="7" dataType="0005" accessType="const" PDOmapping="no" defaultValue="1"/>
-                        <SubObject subIndex="01" name="LoggerAddress_U32" objectType="7" dataType="0007" accessType="rw" PDOmapping="no" defaultValue="0"/>
+                        <SubObject subIndex="01" name="LoggerAddress_U32" objectType="7" dataType="0007" accessType="rw" PDOmapping="no" uniqueIDRef="CfgEntry_SLOG_PG"/>
                     </Object>
 
                     <Object index="4000" name="TxSPDO" objectType="9">
                         <SubObject subIndex="00" name="NumberOfEntries" objectType="7" dataType="0005" accessType="const" PDOmapping="no" defaultValue="1"/>
-                        <SubObject subIndex="01" name="TxSPDO_DOM" objectType="7" PDOmapping="TPDO" uniqueIDRef="UID_DOM_Index4000_S01"/>
+                        <SubObject subIndex="01" name="TxSPDO_DOM" objectType="7" PDOmapping="TPDO" uniqueIDRef="PG_TxSPDO_DOM"/>
                     </Object>
 
                     <Object index="4001" name="RxSPDO" objectType="9">
                         <SubObject subIndex="00" name="NumberOfEntries" objectType="7" dataType="0005" accessType="const" PDOmapping="no" defaultValue="1"/>
-                        <SubObject subIndex="01" name="RxSPDO_DOM" objectType="7" PDOmapping="RPDO" uniqueIDRef="UID_DOM_Index4001_S01"/>
+                        <SubObject subIndex="01" name="RxSPDO_DOM" objectType="7" PDOmapping="RPDO" uniqueIDRef="PG_RxSPDO_DOM"/>
                     </Object>
 
                     <!-- Standardised Device Profile Area (0x6000 - 0x9FFF): may be used according to a CiA device profile. The profile to be used is given by NMT_DeviceType_U32 -->
