@@ -104,6 +104,19 @@
          type = "int";
       }
    }
+   element pcp_0_powerlink_led
+   {
+      datum _sortIndex
+      {
+         value = "7";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
    element openmac_0.pktBuf
    {
       datum baseAddress
@@ -120,14 +133,6 @@
          type = "int";
       }
    }
-   element node_switch_pio.s1
-   {
-      datum baseAddress
-      {
-         value = "11568";
-         type = "String";
-      }
-   }
    element pcp_0_powerlink_led.s1
    {
       datum baseAddress
@@ -136,24 +141,19 @@
          type = "String";
       }
    }
+   element node_switch_pio.s1
+   {
+      datum baseAddress
+      {
+         value = "11568";
+         type = "String";
+      }
+   }
    element sram_0
    {
       datum _sortIndex
       {
          value = "4";
-         type = "int";
-      }
-      datum sopceditor_expanded
-      {
-         value = "1";
-         type = "boolean";
-      }
-   }
-   element pcp_0_powerlink_led
-   {
-      datum _sortIndex
-      {
-         value = "7";
          type = "int";
       }
       datum sopceditor_expanded
@@ -219,7 +219,7 @@
  <parameter name="projectName" value="ink-de2-115.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1487571853593" />
+ <parameter name="timeStamp" value="1559309872869" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk50" internal="clk50.clk_in" type="clock" dir="end" />
