@@ -16,7 +16,7 @@ all memory structures and the initialization data of each object.
 /*------------------------------------------------------------------------------
 * License Agreement
 *
-* Copyright (c) 2014, B&R Industrial Automation GmbH
+* Copyright (c) 2020, B&R Industrial Automation GmbH
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms,
@@ -320,8 +320,8 @@ SOD_cfg_TO_RAM_ROM SOD_t_OBJECT SAPL_s_OD_INST_0[]=
     {0x100C, 0x02, {RW | CRC , U8 , 0x1UL, &b_0_def_100C_02 }, &s_0_act_general.lifeGuard.ucLifeTimeFactor , &s_rg_b_1_255 , SOD_k_NO_CALLBACK},
 
     /* Pre-Operational signal */
-    {0x100D, 0x00, {RW , U32, 0x4UL, &dw_0_def_100D_00 }, &s_0_act_general.numRetriesRG.ulRefreshPreOp , NULL , SOD_k_NO_CALLBACK},
-    {0x100E, 0x00, {RW , U8 , 0x1UL, &b_0_def_100E_00 }, &s_0_act_general.refreshIntRG.ucNoRetries , NULL , SOD_k_NO_CALLBACK},
+    {0x100D, 0x00, {RW , U32, 0x4UL, &dw_0_def_100D_00 }, &s_0_act_general.refreshIntRG.ulRefreshPreOp , NULL , SOD_k_NO_CALLBACK},
+    {0x100E, 0x00, {RW , U8 , 0x1UL, &b_0_def_100E_00 }, &s_0_act_general.numRetriesRG.ucNoRetries , NULL , SOD_k_NO_CALLBACK},
 
     /* Device Vendor Information */
     {0x1018, 0x00, {CONS , U8 , 0x1UL, &b_noE_7 },    &b_noE_7 , NULL, SOD_k_NO_CALLBACK},

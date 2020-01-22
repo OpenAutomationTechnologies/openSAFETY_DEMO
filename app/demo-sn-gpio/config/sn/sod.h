@@ -7,7 +7,7 @@
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
-Copyright (c) 2014, B&R Industrial Automation GmbH
+Copyright (c) 2020, B&R Industrial Automation GmbH
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -135,20 +135,20 @@ typedef struct
 } tSOD_LifeGuard;
 
 /**
- *  \brief Structure of SOD index 100D [Number of Retries for Reset Guarding]
+ *  \brief Structure of SOD index 100D [Refresh interval of Reset Guarding]
  */
 typedef struct
 {
     uint32_t    ulRefreshPreOp;        /**< pre-operational signal interval */
-} tSOD_NumRetriesRG;
+} tSOD_RefreshIntRG;
 
 /**
- *  \brief Structure of SOD index 100E [Refresh interval of Reset Guarding]
+ *  \brief Structure of SOD index 100E [Number of Retries for Reset Guarding]
  */
 typedef struct
 {
     uint8_t     ucNoRetries;          /**< number of retries */
-} tSOD_RefreshIntRG;
+} tSOD_NumRetriesRG;
 
 /**
  * This structure contains the SOD variables which are hosted by EPS.
@@ -232,8 +232,8 @@ typedef struct
 {
     tSOD_ErrRegister      errRegister;                              /**< Object 0x1001/00 error register */
     tSOD_LifeGuard        lifeGuard;                                /**< Object 0x100C life guard */
-    tSOD_NumRetriesRG     numRetriesRG;                             /**< Object 0x100D Pre-Operational signal */
-    tSOD_RefreshIntRG     refreshIntRG;                             /**< Object 0x100E Refresh interrupt */
+    tSOD_RefreshIntRG     refreshIntRG;                             /**< Object 0x100D Refresh interval for reset guarding */
+    tSOD_NumRetriesRG     numRetriesRG;                             /**< Object 0x100E Number of retries for reset guarding */
     tSOD_DevVendInfo      devVendInfo;                              /**< Object 0x1018 Device Vendor Information */
     tSOD_CommonComParam   commonComParam;
     tSOD_RxComParam       aRxComParam[SPDO_cfg_MAX_NO_RX_SPDO];
@@ -272,3 +272,4 @@ extern BOOLEAN SHNF_SOD_ConsTimeBase_CLBK(BYTE_B_INSTNUM_ SOD_t_SERVICE e_srvc,
 
 
 #endif /* _INC_sod_H_ */
+
